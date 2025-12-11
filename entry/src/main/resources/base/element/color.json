@@ -30,11 +30,11 @@
     },
     {
       "name": "profile_gradient_start",
-      "value": "#667EEA"
+      "value": "#FF8A5C"
     },
     {
       "name": "profile_gradient_end",
-      "value": "#764BA2"
+      "value": "#FF6B6B"
     },
     {
       "name": "profile_avatar_gradient_start",
@@ -50,11 +50,11 @@
     },
     {
       "name": "profile_shadow_color",
-      "value": "#10000000"
+      "value": "#15000000"
     },
     {
       "name": "profile_menu_icon_bg",
-      "value": "#F0F4FF"
+      "value": "#FFF4EF"
     },
     {
       "name": "profile_stat_icon_1",
@@ -62,19 +62,19 @@
     },
     {
       "name": "profile_stat_icon_2",
-      "value": "#4ECDC4"
+      "value": "#6FCF97"
     },
     {
       "name": "profile_stat_icon_3",
-      "value": "#FFE66D"
+      "value": "#F2C94C"
     },
     {
       "name": "profile_icon_bg",
-      "value": "#F0F4FF"
+      "value": "#FFEDE7"
     },
     {
       "name": "profile_icon_color",
-      "value": "#667EEA"
+      "value": "#FF6B6B"
     }
   ]
 }

@@ -1,40 +1,37 @@
 /*
  * Copyright (c) 2023 Huawei Device Co., Ltd.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * ...
  */
 
 import { CommonConstants as Const } from '../../common/constants/CommonConstants';
 import { router } from '@kit.ArkUI';
+import { BusinessError } from '@kit.BasicServicesKit';
 import { ProfileViewModel, QuickEntryModel, RecentOrderModel } from '../viewmodel/ProfileViewModel';
 import { ProfileMenuItem } from '../model/UserInfo';
 import ProfileHeaderComponent from '../view/ProfileHeaderComponent';
 import ProfileItemComponent from '../view/ProfileItemComponent';
 
-/**
- * Profile page for displaying user information.
- */
 @Entry
 @Component
 struct ProfilePage {
-  /**
-   * Profile view model.
-   */
   @State viewModel: ProfileViewModel = new ProfileViewModel();
-
-  /**
-   * Top rectangle height for status bar.
-   */
   @StorageLink('topRectHeight') topRectHeight: number = 0;
+
+  // 快捷入口图标
+  private quickIcons: string[] = ['👛', '🎫', '🎁', '🎧'];
+
+  @Styles cardStyle() {
+    .width('100%')
+    .backgroundColor(Color.White)
+    .borderRadius(16)
+    .shadow({
+      radius: 20,
+      color: '#0D000000',
+      offsetX: 0,
+      offsetY: 4
+    })
+    .padding(16)
+  }
 
   aboutToAppear(): void {
     this.viewModel.initUserInfo();
@@ -45,442 +42,298 @@ struct ProfilePage {
 
   build() {
     Stack({ alignContent: Alignment.Top }) {
-      // 渐变背景
+      // 1. 渐变背景
       Column()
-        .width(Const.FULL_WIDTH)
-        .height($r('app.float.profile_header_bg_height'))
+        .width('100%')
+        .height(320)
         .linearGradient({
           angle: 180,
-          colors: [[$r('app.color.profile_gradient_start'), 0.0], [$r('app.color.profile_gradient_end'), 1.0]]
+          colors: [['#FF8A3C', 0.0], ['#FFB36B', 1.0]]
         })
+        .borderRadius({ bottomLeft: 24, bottomRight: 24 })
 
-      // 主要内容
-      Scroll() {
-        Column() {
-          // 返回按钮 - 深色胶囊样式
-          Row() {
-            Text('返回')
-              .fontSize(16)
-              .fontColor(Color.White)
-              .fontWeight(FontWeight.Medium)
-              .padding({ left: 18, right: 18, top: 10, bottom: 10 })
-              .backgroundColor('#665B7BFA')
-              .borderRadius(22)
-              .shadow({
-                radius: 8,
-                color: '#33000000',
-                offsetX: 0,
-                offsetY: 3
-              })
-              .onClick(() => {
-                router.back();
-              })
-          }
-          .width(Const.FULL_WIDTH)
-          .height(60)
-          .padding({
-            left: $r('app.float.profile_padding_horizontal'),
-            right: $r('app.float.profile_padding_horizontal'),
-            top: 12,
-            bottom: 8
-          })
-          .justifyContent(FlexAlign.Start)
-          .alignItems(VerticalAlign.Center)
+      List({ space: 12 }) {
 
-          // Header section with gradient background
-          ProfileHeaderComponent({ userInfo: this.viewModel.userInfo })
-          // 标签与编辑
+        // --- 顶部导航栏 ---
+        ListItem() {
           Row() {
             Row() {
-              Text('会员')
-                .fontSize(12)
-                .fontColor('#5B7BFA')
-                .padding({ left: 10, right: 10, top: 6, bottom: 6 })
-                .backgroundColor('#E9EDFF')
-                .borderRadius(14)
-              Text('积分 1024')
-                .fontSize(12)
-                .fontColor('#5B7BFA')
-                .padding({ left: 10, right: 10, top: 6, bottom: 6 })
-                .backgroundColor('#E9EDFF')
-                .borderRadius(14)
-                .margin({ left: 8 })
-            }
-            .alignItems(VerticalAlign.Center)
-            Blank()
-            Text('编辑资料')
-              .fontSize(13)
-              .fontColor(Color.White)
-              .padding({ left: 12, right: 12, top: 6, bottom: 6 })
-              .backgroundColor('#334A90E2')
-              .borderRadius(16)
-          }
-          .width(Const.FULL_WIDTH)
-          .padding({
-            left: $r('app.float.profile_padding_horizontal'),
-            right: $r('app.float.profile_padding_horizontal'),
-            top: 4
-          })
-
-          // 统计信息卡片
-          Row() {
-            this.buildStatCard($r('app.string.profile_stat_orders'), '0', $r('app.color.profile_stat_icon_1'))
-            this.buildStatCard($r('app.string.profile_stat_favorites'), '0', $r('app.color.profile_stat_icon_2'))
-            this.buildStatCard($r('app.string.profile_stat_points'), '0', $r('app.color.profile_stat_icon_3'))
-          }
-          .width(Const.FULL_WIDTH)
-          .height(100)
-          .padding({
-            left: $r('app.float.profile_padding_horizontal'),
-            right: $r('app.float.profile_padding_horizontal')
-          })
-          .justifyContent(FlexAlign.SpaceEvenly)
-          .margin({ top: $r('app.float.profile_stat_margin_top') })
-
-          // 快捷入口
-          Column() {
-            Row() {
-              Text($r('app.string.profile_quick_title'))
+              Text('❮')
+                .fontSize(18)
+                .fontColor(Color.White)
+                .fontWeight(FontWeight.Bold)
+              Text('返回')
                 .fontSize(16)
+                .fontColor(Color.White)
                 .fontWeight(FontWeight.Medium)
-                .fontColor(Color.Black)
-              Blank()
-              Text($r('app.string.profile_action_more'))
-                .fontSize(14)
-                .fontColor($r('app.color.profile_text_secondary'))
+                .margin({ left: 4 })
             }
-            .width(Const.FULL_WIDTH)
-            .padding({
-              left: $r('app.float.profile_padding_horizontal'),
-              right: $r('app.float.profile_padding_horizontal'),
-              top: 8,
-              bottom: 8
+            .padding({ left: 12, right: 16, top: 8, bottom: 8 })
+            .backgroundColor('rgba(255,255,255,0.2)')
+            .borderRadius(20)
+            .backdropBlur(10)
+            .onClick(() => {
+              try { router.back(); } catch (err) {}
             })
-
-          Flex({ wrap: FlexWrap.Wrap, justifyContent: FlexAlign.Start }) {
-            ForEach(this.viewModel.quickEntries, (item: QuickEntryModel) => {
-              Text(item.title)
-                .fontSize(14)
-                .fontColor(Color.Black)
-                .padding({ left: 14, right: 14, top: 10, bottom: 10 })
-                .backgroundColor('#F6F7FB')
-                .borderRadius(16)
-                .margin({ right: 10, bottom: 10 })
-                .onClick(() => {
-                  if (item.actionType === 'service') {
-                    router.pushUrl({ url: 'userprofile/pages/AiServicePage' });
-                    return;
-                  }
-                  this.viewModel.onMenuItemClick(item.actionType);
-                })
-            })
+            Blank()
+            Text('⚙️')
+              .fontSize(24)
+              .onClick(() => this.viewModel.onMenuItemClick('account'))
           }
-          .width(Const.FULL_WIDTH)
-          .padding({
-            left: $r('app.float.profile_padding_horizontal'),
-            right: $r('app.float.profile_padding_horizontal'),
-            bottom: 4
-          })
-          }
-          .width(Const.FULL_WIDTH)
-          .margin({ top: 8 })
+          .width('100%')
+          .padding({ left: 16, right: 16, top: 12 })
+          .alignItems(VerticalAlign.Center)
+        }
 
-          // Menu items section
+        // --- 用户头像与信息 + 黑金会员卡 ---
+        ListItem() {
           Column() {
-            ForEach(this.viewModel.menuItems, (item: ProfileMenuItem, index: number) => {
-              ProfileItemComponent({
-                menuItem: item,
-                onItemClick: (actionType: string) => {
-                  this.viewModel.onMenuItemClick(actionType);
+            // 1. 用户基本信息组件
+            ProfileHeaderComponent({ userInfo: this.viewModel.userInfo })
+
+            // 2. 黑金会员卡片
+            Row() {
+              // 左侧：等级与图标
+              Row() {
+                Text('💎')
+                  .fontSize(18)
+                  .margin({ right: 8 })
+
+                Column() {
+                  Text('钻石会员 Lv.5')
+                    .fontSize(14)
+                    .fontColor('#FFE4B5') // 浅金色
+                    .fontWeight(FontWeight.Bold)
+                  Text('本月已省 88 元')
+                    .fontSize(10)
+                    .fontColor('rgba(255,228,181, 0.7)') // 半透明金
+                    .margin({ top: 2 })
+                }
+                .alignItems(HorizontalAlign.Start)
+              }
+
+              Blank()
+
+              // 右侧：查看权益
+              Row() {
+                Text('查看权益')
+                  .fontSize(12)
+                  .fontColor('#FFE4B5')
+                Text(' ›')
+                  .fontSize(18)
+                  .fontColor('#FFE4B5')
+                  .margin({ bottom: 2 })
+              }
+              .backgroundColor('rgba(255,255,255,0.1)') // 按钮背景微亮
+              .padding({ left: 10, right: 8, top: 4, bottom: 4 })
+              .borderRadius(12)
+            }
+            .width('100%')
+            .height(60)
+            // 黑金渐变背景
+            .linearGradient({
+              angle: 90,
+              colors: [['#333333', 0.0], ['#454545', 1.0]]
+            })
+            .borderRadius(16)
+            .padding({ left: 16, right: 16 })
+            .alignItems(VerticalAlign.Center)
+            .margin({ top: 16 })
+            .shadow({ radius: 10, color: 'rgba(0,0,0,0.15)', offsetY: 4 })
+          }
+          .width('100%')
+          .padding({ left: 16, right: 16, bottom: 20 })
+        }
+
+        // --- 悬浮统计卡片 ---
+        ListItem() {
+          Row() {
+            this.buildStatItem($r('app.string.profile_stat_orders'), '12', $r('app.color.profile_stat_icon_1'))
+            Divider().vertical(true).height(24).color('#F1F3F5')
+            this.buildStatItem($r('app.string.profile_stat_favorites'), '85', $r('app.color.profile_stat_icon_2'))
+            Divider().vertical(true).height(24).color('#F1F3F5')
+            this.buildStatItem($r('app.string.profile_stat_points'), '2041', $r('app.color.profile_stat_icon_3'))
+          }
+          .cardStyle()
+          .justifyContent(FlexAlign.SpaceEvenly)
+          .height(90)
+        }
+        .padding({ left: 16, right: 16 })
+        .margin({ top: -30 })
+
+        // --- 快捷入口 ---
+        ListItem() {
+          Column() {
+            this.buildSectionTitle($r('app.string.profile_quick_title'))
+            Grid() {
+              ForEach(this.viewModel.quickEntries, (item: QuickEntryModel, index: number) => {
+                GridItem() {
+                  Column() {
+                    Text(this.quickIcons[index % this.quickIcons.length])
+                      .fontSize(32)
+                      .margin({ bottom: 8 })
+                    Text(item.title)
+                      .fontSize(13)
+                      .fontColor('#333333')
+                  }
+                  .width('100%')
+                  .onClick(() => {
+                    if (item.actionType === 'service') {
+                      try { router.pushUrl({ url: 'userprofile/pages/AiServicePage' }); } catch (e) {}
+                      return;
+                    }
+                    this.viewModel.onMenuItemClick(item.actionType);
+                  })
                 }
               })
-              if (index < this.viewModel.menuItems.length - 1) {
-                Divider()
-                  .color($r('app.color.profile_divider_color'))
-                  .strokeWidth(0.5)
-                  .margin({
-                    left: $r('app.float.profile_padding_horizontal'),
-                    right: $r('app.float.profile_padding_horizontal')
-                  })
-              }
-            }, (item: ProfileMenuItem, index: number) => `${item.actionType}_${index}`)
-          }
-          .width(Const.FULL_WIDTH)
-          .margin({ top: $r('app.float.profile_menu_margin_top') })
-          .borderRadius($r('app.float.profile_menu_radius'))
-          .backgroundColor(Color.White)
-          .shadow({
-            radius: 8,
-            color: $r('app.color.profile_shadow_color'),
-            offsetX: 0,
-            offsetY: 2
-          })
-
-          // 最近订单 / 收藏
-          Column() {
-            Row() {
-              Text($r('app.string.profile_recent_title'))
-                .fontSize(16)
-                .fontWeight(FontWeight.Medium)
-                .fontColor(Color.Black)
-              Blank()
-              Text($r('app.string.profile_action_more'))
-                .fontSize(14)
-                .fontColor($r('app.color.profile_text_secondary'))
             }
-            .width(Const.FULL_WIDTH)
-            .padding({
-              left: $r('app.float.profile_padding_horizontal'),
-              right: $r('app.float.profile_padding_horizontal'),
-              top: 12,
-              bottom: 8
-            })
+            .columnsTemplate('1fr 1fr 1fr 1fr')
+            .rowsGap(16)
+            .height(90)
+            .margin({ top: 12 })
+          }
+          .cardStyle()
+        }
+        .padding({ left: 16, right: 16 })
 
+        // --- 最近订单 ---
+        ListItem() {
+          Column() {
+            this.buildSectionTitle($r('app.string.profile_recent_title'), true)
             Column() {
               ForEach(this.viewModel.recentOrders, (item: RecentOrderModel, index: number) => {
                 Row() {
+                  Rect().width(40).height(40).radius(4).fill('#F5F5F5').margin({ right: 12 })
                   Column() {
-                    Text(item.name)
-                      .fontSize(15)
-                      .fontColor(Color.Black)
-                      .fontWeight(FontWeight.Medium)
-                    Row() {
-                      Text(item.status)
-                        .fontSize(12)
-                        .fontColor('#5B7BFA')
-                        .padding({ left: 8, right: 8, top: 4, bottom: 4 })
-                        .backgroundColor('#E9EDFF')
-                        .borderRadius(12)
-                      Text(item.date)
-                        .fontSize(12)
-                        .fontColor($r('app.color.profile_text_secondary'))
-                        .margin({ left: 8 })
-                    }
-                    .margin({ top: 4 })
+                    Text(item.name).fontSize(15).fontColor(Color.Black).fontWeight(FontWeight.Medium).maxLines(1).textOverflow({ overflow: TextOverflow.Ellipsis })
+                    Text(item.date).fontSize(12).fontColor('#999').margin({ top: 4 })
                   }
-                  .layoutWeight(1)
-
-                  Text(item.price)
-                    .fontSize(15)
-                    .fontWeight(FontWeight.Medium)
-                    .fontColor($r('app.color.focus_color'))
+                  .layoutWeight(1).alignItems(HorizontalAlign.Start)
+                  Column() {
+                    Text(item.price).fontSize(16).fontWeight(FontWeight.Bold).fontColor('#E95B27')
+                    Text(item.status).fontSize(12).fontColor(item.status === '进行中' ? '#E95B27' : '#999').margin({ top: 4 })
+                  }
+                  .alignItems(HorizontalAlign.End)
                 }
-                .width(Const.FULL_WIDTH)
-                .padding({
-                  left: $r('app.float.profile_padding_horizontal'),
-                  right: $r('app.float.profile_padding_horizontal'),
-                  top: 10,
-                  bottom: 10
-                })
-
-                if (index < this.viewModel.recentOrders.length - 1) {
-                  Divider()
-                    .color($r('app.color.profile_divider_color'))
-                    .strokeWidth(0.5)
-                    .margin({
-                      left: $r('app.float.profile_padding_horizontal'),
-                      right: $r('app.float.profile_padding_horizontal')
-                    })
-                }
+                .width('100%').padding({ top: 12, bottom: 12 })
+                if (index < this.viewModel.recentOrders.length - 1) { Divider().color('#F1F3F5') }
               })
             }
+            .margin({ top: 8 })
           }
-          .width(Const.FULL_WIDTH)
-          .margin({ top: 12 })
-          .borderRadius($r('app.float.profile_menu_radius'))
-          .backgroundColor(Color.White)
-          .shadow({
-            radius: 8,
-            color: $r('app.color.profile_shadow_color'),
-            offsetX: 0,
-            offsetY: 2
-          })
-
-          // User info details section
-          Column() {
-            ProfileItemComponent({
-              menuItem: {
-                title: $r('app.string.profile_phone'),
-                icon: $r('app.media.ic_more'),
-                actionType: 'phone',
-                showArrow: true
-              },
-              onItemClick: (actionType: string) => {
-                this.viewModel.onMenuItemClick(actionType);
-              }
-            })
-            Divider()
-              .color($r('app.color.profile_divider_color'))
-              .strokeWidth(0.5)
-              .margin({
-                left: $r('app.float.profile_padding_horizontal'),
-                right: $r('app.float.profile_padding_horizontal')
-              })
-            ProfileItemComponent({
-              menuItem: {
-                title: $r('app.string.profile_email'),
-                icon: $r('app.media.ic_more'),
-                actionType: 'email',
-                showArrow: true
-              },
-              onItemClick: (actionType: string) => {
-                this.viewModel.onMenuItemClick(actionType);
-              }
-            })
-            Divider()
-              .color($r('app.color.profile_divider_color'))
-              .strokeWidth(0.5)
-              .margin({
-                left: $r('app.float.profile_padding_horizontal'),
-                right: $r('app.float.profile_padding_horizontal')
-              })
-            ProfileItemComponent({
-              menuItem: {
-                title: $r('app.string.profile_address'),
-                icon: $r('app.media.ic_more'),
-                actionType: 'address',
-                showArrow: true
-              },
-              onItemClick: (actionType: string) => {
-                this.viewModel.onMenuItemClick(actionType);
-              }
-            })
-          }
-          .width(Const.FULL_WIDTH)
-          .margin({ top: $r('app.float.profile_menu_margin_top') })
-          .borderRadius($r('app.float.profile_menu_radius'))
-          .backgroundColor(Color.White)
-          .shadow({
-            radius: 8,
-            color: $r('app.color.profile_shadow_color'),
-            offsetX: 0,
-            offsetY: 2
-          })
-          .margin({ bottom: $r('app.float.profile_bottom_margin') })
-
-          // 更多设置
-          Column() {
-            Row() {
-              Text($r('app.string.profile_settings_title'))
-                .fontSize(16)
-                .fontWeight(FontWeight.Medium)
-                .fontColor(Color.Black)
-            }
-            .width(Const.FULL_WIDTH)
-            .padding({
-              left: $r('app.float.profile_padding_horizontal'),
-              right: $r('app.float.profile_padding_horizontal'),
-              top: 12,
-              bottom: 6
-            })
-
-            Column() {
-              ProfileItemComponent({
-                menuItem: {
-                  title: $r('app.string.profile_settings_account'),
-                  icon: $r('app.media.ic_more'),
-                  actionType: 'account',
-                  showArrow: true
-                },
-                onItemClick: (actionType: string) => {
-                  this.viewModel.onMenuItemClick(actionType);
-                }
-              })
-              Divider()
-                .color($r('app.color.profile_divider_color'))
-                .strokeWidth(0.5)
-                .margin({
-                  left: $r('app.float.profile_padding_horizontal'),
-                  right: $r('app.float.profile_padding_horizontal')
-                })
-              ProfileItemComponent({
-                menuItem: {
-                  title: $r('app.string.profile_settings_notify'),
-                  icon: $r('app.media.ic_more'),
-                  actionType: 'notify',
-                  showArrow: true
-                },
-                onItemClick: (actionType: string) => {
-                  this.viewModel.onMenuItemClick(actionType);
-                }
-              })
-              Divider()
-                .color($r('app.color.profile_divider_color'))
-                .strokeWidth(0.5)
-                .margin({
-                  left: $r('app.float.profile_padding_horizontal'),
-                  right: $r('app.float.profile_padding_horizontal')
-                })
-              ProfileItemComponent({
-                menuItem: {
-                  title: $r('app.string.profile_settings_logout'),
-                  icon: $r('app.media.ic_more'),
-                  actionType: 'logout',
-                  showArrow: true
-                },
-                onItemClick: (actionType: string) => {
-                  this.viewModel.onMenuItemClick(actionType);
-                }
-              })
-            }
-          }
-          .width(Const.FULL_WIDTH)
-          .margin({ top: 12, bottom: $r('app.float.profile_bottom_margin') })
-          .borderRadius($r('app.float.profile_menu_radius'))
-          .backgroundColor(Color.White)
-          .shadow({
-            radius: 8,
-            color: $r('app.color.profile_shadow_color'),
-            offsetX: 0,
-            offsetY: 2
-          })
+          .cardStyle()
         }
-        .width(Const.FULL_WIDTH)
+        .padding({ left: 16, right: 16 })
+
+        // --- 常用菜单 ---
+        ListItem() {
+          Column() {
+            this.buildMenuItem($r('app.string.profile_phone'), '138****0000', true)
+            Divider().color('#F1F3F5').margin({ left: 44 })
+            this.buildMenuItem($r('app.string.profile_address'), '我的收货地址', true)
+            Divider().color('#F1F3F5').margin({ left: 44 })
+            this.buildMenuItem($r('app.string.profile_settings_account'), '', true)
+            Divider().color('#F1F3F5').margin({ left: 44 })
+            this.buildMenuItem($r('app.string.profile_settings_notify'), '', true)
+          }
+          .cardStyle()
+          .padding({ top: 0, bottom: 0, left: 16, right: 16 })
+        }
+        .padding({ left: 16, right: 16 })
+
+        // --- 退出登录 ---
+        ListItem() {
+          Text($r('app.string.profile_settings_logout'))
+            .width('100%')
+            .textAlign(TextAlign.Center)
+            .fontSize(16)
+            .fontColor('#FF4040')
+            .fontWeight(FontWeight.Medium)
+            .padding(14)
+            .backgroundColor(Color.White)
+            .borderRadius(16)
+            .onClick(() => { this.viewModel.onMenuItemClick('logout'); })
+        }
+        .padding({ left: 16, right: 16, bottom: 30 })
       }
-      .width(Const.FULL_WIDTH)
-      .height(Const.FULL_HEIGHT)
-      .padding({
-        top: this.getUIContext().px2vp(this.topRectHeight)
-      })
+      .width('100%')
+      .height('100%')
+      .scrollBar(BarState.Off)
+      .edgeEffect(EdgeEffect.Spring)
     }
-    .width(Const.FULL_WIDTH)
-    .height(Const.FULL_HEIGHT)
-    .backgroundColor($r('app.color.home_background_color'))
+    .backgroundColor('#F6F6F6')
+    .padding({ top: this.getUIContext().px2vp(this.topRectHeight) })
+  }
+
+  // --- 修复部分：将 Builders 展开为正确的格式 ---
+
+  @Builder
+  buildStatItem(title: ResourceStr, value: string, iconColor: ResourceColor) {
+    Column() {
+      Text(value)
+        .fontSize(20)
+        .fontWeight(FontWeight.Bold)
+        .fontColor('#333')
+      Text(title)
+        .fontSize(12)
+        .fontColor('#999')
+        .margin({ top: 4 })
+    }
+    .alignItems(HorizontalAlign.Center)
   }
 
   @Builder
-  buildStatCard(title: ResourceStr, value: string, iconColor: ResourceColor) {
-    Column() {
-      Stack({ alignContent: Alignment.Center }) {
-        Circle({ width: 40, height: 40 })
-          .fill(iconColor)
-          .opacity(0.15)
-        Circle({ width: 24, height: 24 })
-          .fill(iconColor)
-      }
-      .margin({ bottom: $r('app.float.profile_stat_icon_margin_bottom') })
-
-      Text(value)
-        .fontSize($r('app.float.profile_stat_value_font_size'))
-        .fontColor(Color.Black)
+  buildSectionTitle(title: ResourceStr, showMore: boolean = false) {
+    Row() {
+      Text(title)
+        .fontSize(16)
         .fontWeight(FontWeight.Bold)
-        .margin({ bottom: $r('app.float.profile_stat_value_margin_bottom') })
+        .fontColor('#333')
+      Blank()
+      if (showMore) {
+        Row() {
+          Text($r('app.string.profile_action_more'))
+            .fontSize(13)
+            .fontColor('#999')
+          Text('›')
+            .fontSize(18)
+            .fontColor('#999')
+            .margin({ left: 2, bottom: 2 })
+        }
+      }
+    }
+    .width('100%')
+    .padding({ bottom: 8 })
+  }
+
+  @Builder
+  buildMenuItem(title: ResourceStr, value: string, showArrow: boolean) {
+    Row() {
+      Circle({ width: 24, height: 24 })
+        .fill('#FFF5EC')
+        .margin({ right: 12 })
 
       Text(title)
-        .fontSize($r('app.float.profile_stat_title_font_size'))
-        .fontColor($r('app.color.profile_text_secondary'))
+        .fontSize(15)
+        .fontColor('#333')
+
+      Blank()
+
+      if (value) {
+        Text(value)
+          .fontSize(14)
+          .fontColor('#999')
+          .margin({ right: 4 })
+      }
+
+      if (showArrow) {
+        Text('›')
+          .fontSize(20)
+          .fontColor('#CCC')
+      }
     }
-    .width($r('app.float.profile_stat_card_width'))
-    .height($r('app.float.profile_stat_card_height'))
-    .padding(12)
-    .borderRadius($r('app.float.profile_stat_card_radius'))
-    .backgroundColor(Color.White)
-    .shadow({
-      radius: $r('app.float.profile_shadow_radius'),
-      color: $r('app.color.profile_shadow_color'),
-      offsetX: 0,
-      offsetY: 2
-    })
+    .width('100%')
+    .height(56)
+    .alignItems(VerticalAlign.Center)
   }
 }
-

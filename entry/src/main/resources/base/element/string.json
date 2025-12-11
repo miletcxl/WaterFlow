@@ -145,6 +145,14 @@
       "value": "查看全部"
     },
     {
+      "name": "ai_service_back",
+      "value": "返回"
+    },
+    {
+      "name": "ai_service_send",
+      "value": "发送"
+    },
+    {
       "name": "ai_service_title",
       "value": "AI客服"
     },
