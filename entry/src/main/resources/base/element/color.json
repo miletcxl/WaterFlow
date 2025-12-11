@@ -15,6 +15,66 @@
     {
       "name": "home_background_color",
       "value": "#F1F3F5"
+    },
+    {
+      "name": "profile_avatar_bg",
+      "value": "#4A90E2"
+    },
+    {
+      "name": "profile_text_secondary",
+      "value": "#999999"
+    },
+    {
+      "name": "profile_divider_color",
+      "value": "#E5E5E5"
+    },
+    {
+      "name": "profile_gradient_start",
+      "value": "#667EEA"
+    },
+    {
+      "name": "profile_gradient_end",
+      "value": "#764BA2"
+    },
+    {
+      "name": "profile_avatar_gradient_start",
+      "value": "#4A90E2"
+    },
+    {
+      "name": "profile_avatar_gradient_end",
+      "value": "#357ABD"
+    },
+    {
+      "name": "profile_avatar_shadow_color",
+      "value": "#40000000"
+    },
+    {
+      "name": "profile_shadow_color",
+      "value": "#10000000"
+    },
+    {
+      "name": "profile_menu_icon_bg",
+      "value": "#F0F4FF"
+    },
+    {
+      "name": "profile_stat_icon_1",
+      "value": "#FF6B6B"
+    },
+    {
+      "name": "profile_stat_icon_2",
+      "value": "#4ECDC4"
+    },
+    {
+      "name": "profile_stat_icon_3",
+      "value": "#FFE66D"
+    },
+    {
+      "name": "profile_icon_bg",
+      "value": "#F0F4FF"
+    },
+    {
+      "name": "profile_icon_color",
+      "value": "#667EEA"
     }
   ]
 }

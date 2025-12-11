@@ -191,6 +191,174 @@
     {
       "name": "footer_text_height",
       "value": "20vp"
+    },
+    {
+      "name": "profile_avatar_size",
+      "value": "80vp"
+    },
+    {
+      "name": "profile_avatar_radius",
+      "value": "40vp"
+    },
+    {
+      "name": "profile_avatar_text_size",
+      "value": "32fp"
+    },
+    {
+      "name": "profile_header_margin_top",
+      "value": "40vp"
+    },
+    {
+      "name": "profile_header_padding_bottom",
+      "value": "30vp"
+    },
+    {
+      "name": "profile_name_font_size",
+      "value": "20fp"
+    },
+    {
+      "name": "profile_name_margin_top",
+      "value": "16vp"
+    },
+    {
+      "name": "profile_signature_font_size",
+      "value": "14fp"
+    },
+    {
+      "name": "profile_signature_margin_top",
+      "value": "8vp"
+    },
+    {
+      "name": "profile_padding_horizontal",
+      "value": "16vp"
+    },
+    {
+      "name": "profile_menu_margin_top",
+      "value": "16vp"
+    },
+    {
+      "name": "profile_menu_radius",
+      "value": "12vp"
+    },
+    {
+      "name": "profile_menu_item_height",
+      "value": "56vp"
+    },
+    {
+      "name": "profile_menu_icon_size",
+      "value": "24vp"
+    },
+    {
+      "name": "profile_menu_icon_margin_right",
+      "value": "12vp"
+    },
+    {
+      "name": "profile_menu_font_size",
+      "value": "16fp"
+    },
+    {
+      "name": "profile_menu_arrow_size",
+      "value": "16vp"
+    },
+    {
+      "name": "profile_divider_width",
+      "value": "0.5vp"
+    },
+    {
+      "name": "profile_icon_size",
+      "value": "24vp"
+    },
+    {
+      "name": "profile_icon_margin_left",
+      "value": "12vp"
+    },
+    {
+      "name": "profile_header_bg_height",
+      "value": "280vp"
+    },
+    {
+      "name": "profile_back_icon_size",
+      "value": "24vp"
+    },
+    {
+      "name": "profile_back_button_height",
+      "value": "56vp"
+    },
+    {
+      "name": "profile_back_button_top",
+      "value": "8vp"
+    },
+    {
+      "name": "profile_avatar_border_width",
+      "value": "4vp"
+    },
+    {
+      "name": "profile_avatar_shadow_radius",
+      "value": "12vp"
+    },
+    {
+      "name": "profile_shadow_radius",
+      "value": "8vp"
+    },
+    {
+      "name": "profile_stat_margin_top",
+      "value": "24vp"
+    },
+    {
+      "name": "profile_stat_card_height",
+      "value": "100vp"
+    },
+    {
+      "name": "profile_stat_card_width",
+      "value": "100vp"
+    },
+    {
+      "name": "profile_stat_card_padding",
+      "value": "12vp"
+    },
+    {
+      "name": "profile_stat_card_radius",
+      "value": "16vp"
+    },
+    {
+      "name": "profile_stat_icon_size",
+      "value": "40vp"
+    },
+    {
+      "name": "profile_stat_icon_inner_size",
+      "value": "24vp"
+    },
+    {
+      "name": "profile_stat_icon_margin_bottom",
+      "value": "8vp"
+    },
+    {
+      "name": "profile_stat_value_font_size",
+      "value": "20fp"
+    },
+    {
+      "name": "profile_stat_value_margin_bottom",
+      "value": "4vp"
+    },
+    {
+      "name": "profile_stat_title_font_size",
+      "value": "12fp"
+    },
+    {
+      "name": "profile_menu_icon_bg_size",
+      "value": "40vp"
+    },
+    {
+      "name": "profile_bottom_margin",
+      "value": "24vp"
+    },
+    {
+      "name": "profile_back_button_bg_size",
+      "value": "40vp"
+    },
+    {
+      "name": "profile_icon_bg_size",
+      "value": "40vp"
     }
   ]
 }

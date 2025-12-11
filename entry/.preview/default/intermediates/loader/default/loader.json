@@ -1,0 +1,23 @@
+{
+  "modulePathMap": {
+    "entry": "E:\\homework_lab\\WaterFlow\\entry"
+  },
+  "compileMode": "esmodule",
+  "projectRootPath": "E:\\homework_lab\\WaterFlow",
+  "nodeModulesPath": "E:\\homework_lab\\WaterFlow\\entry\\.preview\\default\\intermediates\\loader_out\\default\\node_modules",
+  "byteCodeHarInfo": {},
+  "declarationEntry": [],
+  "moduleName": "entry",
+  "hspNameOhmMap": {},
+  "harNameOhmMap": {},
+  "packageManagerType": "ohpm",
+  "compileEntry": [],
+  "otherCompileFiles": [],
+  "dynamicImportLibInfo": {},
+  "routerMap": [],
+  "hspResourcesMap": {},
+  "updateVersionInfo": {},
+  "anBuildOutPut": "E:\\homework_lab\\WaterFlow\\entry\\.preview\\default\\intermediates\\loader_out\\default\\an\\arm64-v8a",
+  "anBuildMode": "type",
+  "buildConfigPath": ".preview\\config\\buildConfig.json"
+}

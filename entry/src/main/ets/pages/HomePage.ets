@@ -14,10 +14,12 @@
  */
 
 import { CommonConstants as Const } from '../common/constants/CommonConstants';
+import { router } from '@kit.ArkUI';
 import ClassifyComponent from '../view/ClassifyComponent';
 import SearchComponent from '../view/SearchComponent';
 import SwiperComponent from '../view/SwiperComponent';
 import WaterFlowComponent from '../view/WaterFlowComponent';
+import UserIconComponent from '../userprofile/view/UserIconComponent';
 
 /**
  * The home page consists of four components: search component,
@@ -36,7 +38,33 @@ struct HomePage {
         .height($r('app.float.image_background_height'))
         .objectFit(ImageFit.Cover)
       Column() {
-        SearchComponent()
+        // 顶部导航栏：搜索框和个人信息入口
+        Row() {
+          SearchComponent()
+            .layoutWeight(1)
+          // 个人信息入口按钮 - 圆形图标加文字
+          UserIconComponent({
+            iconColor: $r('app.color.profile_icon_color'),
+            iconSize: 40,
+            text: '我'
+          })
+          .shadow({
+            radius: 4,
+            color: '#15000000',
+            offsetX: 0,
+            offsetY: 2
+          })
+          .margin({ left: $r('app.float.profile_icon_margin_left') })
+          .onClick(() => {
+            router.pushUrl({
+              url: 'userprofile/pages/ProfilePage'
+            }).catch((err: Error) => {
+              console.error(`Failed to navigate to profile page. Code: ${err.message}`);
+            });
+          })
+        }
+        .width(Const.FULL_WIDTH)
+        .alignItems(VerticalAlign.Center)
         ClassifyComponent()
         SwiperComponent()
         WaterFlowComponent()

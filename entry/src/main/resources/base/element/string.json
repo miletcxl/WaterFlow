@@ -51,6 +51,106 @@
     {
       "name": "footer_text",
       "value": "It's been to the end."
+    },
+    {
+      "name": "profile_default_name",
+      "value": "未登录"
+    },
+    {
+      "name": "profile_phone",
+      "value": "手机号"
+    },
+    {
+      "name": "profile_email",
+      "value": "邮箱"
+    },
+    {
+      "name": "profile_address",
+      "value": "地址"
+    },
+    {
+      "name": "profile_stat_orders",
+      "value": "订单"
+    },
+    {
+      "name": "profile_stat_favorites",
+      "value": "收藏"
+    },
+    {
+      "name": "profile_stat_points",
+      "value": "积分"
+    },
+    {
+      "name": "profile_quick_title",
+      "value": "快捷入口"
+    },
+    {
+      "name": "profile_quick_orders",
+      "value": "订单"
+    },
+    {
+      "name": "profile_quick_coupons",
+      "value": "优惠券"
+    },
+    {
+      "name": "profile_quick_address",
+      "value": "收货地址"
+    },
+    {
+      "name": "profile_quick_service",
+      "value": "客服"
+    },
+    {
+      "name": "profile_recent_title",
+      "value": "最近订单 / 收藏"
+    },
+    {
+      "name": "profile_order_pending",
+      "value": "待发货"
+    },
+    {
+      "name": "profile_order_shipping",
+      "value": "运输中"
+    },
+    {
+      "name": "profile_order_finished",
+      "value": "已完成"
+    },
+    {
+      "name": "profile_settings_title",
+      "value": "更多设置"
+    },
+    {
+      "name": "profile_settings_account",
+      "value": "账号与安全"
+    },
+    {
+      "name": "profile_settings_notify",
+      "value": "通知设置"
+    },
+    {
+      "name": "profile_settings_logout",
+      "value": "退出登录"
+    },
+    {
+      "name": "profile_action_more",
+      "value": "查看全部"
+    },
+    {
+      "name": "ai_service_title",
+      "value": "AI客服"
+    },
+    {
+      "name": "ai_service_placeholder",
+      "value": "请描述您的问题…"
+    },
+    {
+      "name": "ai_service_empty",
+      "value": "请输入您的问题"
+    },
+    {
+      "name": "ai_service_mock_reply",
+      "value": "AI客服已收到，我们会尽快回复您。"
     }
   ]
 }
