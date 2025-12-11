@@ -16,7 +16,6 @@
 import { CommonConstants as Const } from '../../common/constants/CommonConstants';
 import { router } from '@kit.ArkUI';
 import { ProfileViewModel, QuickEntryModel, RecentOrderModel } from '../viewmodel/ProfileViewModel';
-import { router } from '@kit.ArkUI';
 import { ProfileMenuItem } from '../model/UserInfo';
 import ProfileHeaderComponent from '../view/ProfileHeaderComponent';
 import ProfileItemComponent from '../view/ProfileItemComponent';

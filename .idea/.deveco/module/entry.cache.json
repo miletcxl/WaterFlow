@@ -5,7 +5,6 @@
 	"BuildOptions":{
 		"SELECT_BUILD_TARGET":"default",
 		"BUILD_PATH":{
-<<<<<<< HEAD
 			"OUTPUT_METADATA_JSON":"E:\\homework_lab\\WaterFlow\\entry\\build\\default\\intermediates\\hap_metadata\\default\\output_metadata.json",
 			"OUTPUT_PATH":"E:\\homework_lab\\WaterFlow\\entry\\build\\default\\outputs\\default",
 			"RES_PATH":"E:\\homework_lab\\WaterFlow\\entry\\build\\default\\intermediates\\res\\default",
@@ -18,20 +17,6 @@
 			"MANIFEST_JSON":"E:\\homework_lab\\WaterFlow\\entry\\build\\default\\intermediates\\manifest\\default",
 			"JS_LITE_ASSETS_PATH":"E:\\homework_lab\\WaterFlow\\entry\\build\\default\\intermediates\\loader_out_lite\\default",
 			"JS_SUPER_VISUAL_PATH":"E:\\homework_lab\\WaterFlow\\entry\\build\\default\\cache\\default\\default@CompileJS\\jsbundle"
-=======
-			"OUTPUT_METADATA_JSON":"C:\\Users\\21462\\Desktop\\WaterFlow\\entry\\build\\default\\intermediates\\hap_metadata\\default\\output_metadata.json",
-			"OUTPUT_PATH":"C:\\Users\\21462\\Desktop\\WaterFlow\\entry\\build\\default\\outputs\\default",
-			"RES_PATH":"C:\\Users\\21462\\Desktop\\WaterFlow\\entry\\build\\default\\intermediates\\res\\default",
-			"ETS_SUPER_VISUAL_PATH":"C:\\Users\\21462\\Desktop\\WaterFlow\\entry\\build\\default\\cache\\default\\default@CompileArkTS\\esmodule",
-			"JS_ASSETS_PATH":"C:\\Users\\21462\\Desktop\\WaterFlow\\entry\\build\\default\\intermediates\\loader_out\\default",
-			"SOURCE_MAP_DIR":"C:\\Users\\21462\\Desktop\\WaterFlow\\entry\\build\\default\\intermediates\\source_map\\default",
-			"INTERMEDIA_PATH":"C:\\Users\\21462\\Desktop\\WaterFlow\\entry\\build\\default\\intermediates",
-			"RES_PROFILE_PATH":"C:\\Users\\21462\\Desktop\\WaterFlow\\entry\\build\\default\\intermediates\\res\\default\\resources\\base\\profile",
-			"WORKER_LOADER":"C:\\Users\\21462\\Desktop\\WaterFlow\\entry\\build\\default\\intermediates\\loader\\default\\loader.json",
-			"MANIFEST_JSON":"C:\\Users\\21462\\Desktop\\WaterFlow\\entry\\build\\default\\intermediates\\manifest\\default",
-			"JS_LITE_ASSETS_PATH":"C:\\Users\\21462\\Desktop\\WaterFlow\\entry\\build\\default\\intermediates\\loader_out_lite\\default",
-			"JS_SUPER_VISUAL_PATH":"C:\\Users\\21462\\Desktop\\WaterFlow\\entry\\build\\default\\cache\\default\\default@CompileJS\\jsbundle"
->>>>>>> c370204f5125b100f0718948c2e7d4cf123029c8
 		}
 	}
 }

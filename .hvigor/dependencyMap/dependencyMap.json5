@@ -1,5 +1,1 @@
-<<<<<<< HEAD
 {"basePath":"E:\\homework_lab\\WaterFlow\\.hvigor\\dependencyMap\\dependencyMap.json5","rootDependency":"./oh-package.json5","dependencyMap":{"entry":"./entry/oh-package.json5"},"modules":[{"name":"entry","srcPath":"..\\..\\..\\entry"}]}
-=======
-{"basePath":"C:\\Users\\21462\\Desktop\\WaterFlow\\.hvigor\\dependencyMap\\dependencyMap.json5","rootDependency":"./oh-package.json5","dependencyMap":{"entry":"./entry/oh-package.json5"},"modules":[{"name":"entry","srcPath":"..\\..\\..\\entry"}]}
->>>>>>> c370204f5125b100f0718948c2e7d4cf123029c8

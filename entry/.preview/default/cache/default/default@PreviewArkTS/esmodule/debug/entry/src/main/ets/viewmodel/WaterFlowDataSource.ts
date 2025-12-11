@@ -1,9 +1,5 @@
-<<<<<<< HEAD
-import type ProductItem from './ProductItem';
-=======
 import ProductItem from "@bundle:com.huawei.waterflow/entry/ets/viewmodel/ProductItem";
 import type { IProductItem } from "@bundle:com.huawei.waterflow/entry/ets/viewmodel/ProductItem";
->>>>>>> c370204f5125b100f0718948c2e7d4cf123029c8
 /**
  * Water flow data source.
  */
@@ -13,12 +9,6 @@ export class WaterFlowDataSource implements IDataSource {
     /**
      * Set water flow data array.
      *
-<<<<<<< HEAD
-     * @param {ProductItem[]} productDataArray Displaying water flow Data.
-     */
-    public setDataArray(productDataArray: ProductItem[]): void {
-        this.dataArray = productDataArray;
-=======
      * @param {IProductItem[]} productDataArray Displaying water flow Data.
      */
     public setDataArray(productDataArray: IProductItem[]): void {
@@ -30,7 +20,6 @@ export class WaterFlowDataSource implements IDataSource {
         this.listeners.forEach((listener: DataChangeListener) => {
             listener.onDataReloaded();
         });
->>>>>>> c370204f5125b100f0718948c2e7d4cf123029c8
     }
     /**
      * Get the total number of data records.

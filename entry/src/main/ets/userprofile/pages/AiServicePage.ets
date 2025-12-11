@@ -6,7 +6,7 @@ import promptAction from '@ohos.promptAction';
 import { router } from '@kit.ArkUI';
 
 class ChatMessage {
-  content: string = '';
+  content: ResourceStr = '';
   isSelf: boolean = false;
 }
 
@@ -57,7 +57,7 @@ struct AiServicePage {
                   .padding({ left: 12, right: 12, top: 10, bottom: 10 })
                   .borderRadius(12)
               }
-              .alignItems(ItemAlign.Start)
+              .alignItems(HorizontalAlign.Start)
               if (item.isSelf) {
                 Blank()
               }
@@ -110,7 +110,7 @@ struct AiServicePage {
     const selfMsg: ChatMessage = { content: this.inputText.trim(), isSelf: true };
     this.messages.push(selfMsg);
     // Mock AI reply
-    const aiMsg: ChatMessage = { content: $r('app.string.ai_service_mock_reply') as unknown as string, isSelf: false };
+    const aiMsg: ChatMessage = { content: $r('app.string.ai_service_mock_reply'), isSelf: false };
     this.messages.push(aiMsg);
     this.inputText = '';
   }

@@ -53,10 +53,10 @@ export default class ProfileItemComponent extends ViewPU {
             Row.create();
             Row.debugLine("entry/src/main/ets/userprofile/view/ProfileItemComponent.ets(35:5)", "entry");
             Row.width(Const.FULL_WIDTH);
-            Row.height({ "id": 16777257, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
+            Row.height({ "id": 16777281, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
             Row.padding({
-                left: { "id": 16777262, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
-                right: { "id": 16777262, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" }
+                left: { "id": 16777286, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
+                right: { "id": 16777286, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" }
             });
             Row.alignItems(VerticalAlign.Center);
             Row.backgroundColor(Color.White);
@@ -74,18 +74,18 @@ export default class ProfileItemComponent extends ViewPU {
                     this.observeComponentCreation2((elmtId, isInitialRender) => {
                         Stack.create({ alignContent: Alignment.Center });
                         Stack.debugLine("entry/src/main/ets/userprofile/view/ProfileItemComponent.ets(38:9)", "entry");
-                        Stack.margin({ right: { "id": 16777255, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" } });
+                        Stack.margin({ right: { "id": 16777279, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" } });
                     }, Stack);
                     this.observeComponentCreation2((elmtId, isInitialRender) => {
-                        Circle.create({ width: { "id": 16777343, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" }, height: { "id": 16777343, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" } });
+                        Circle.create({ width: { "id": 16777278, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" }, height: { "id": 16777278, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" } });
                         Circle.debugLine("entry/src/main/ets/userprofile/view/ProfileItemComponent.ets(39:11)", "entry");
-                        Circle.fill({ "id": 16777331, "type": 10001, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
+                        Circle.fill({ "id": 16777230, "type": 10001, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
                     }, Circle);
                     this.observeComponentCreation2((elmtId, isInitialRender) => {
                         Image.create(this.menuItem.icon);
                         Image.debugLine("entry/src/main/ets/userprofile/view/ProfileItemComponent.ets(41:11)", "entry");
-                        Image.width({ "id": 16777256, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
-                        Image.height({ "id": 16777256, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
+                        Image.width({ "id": 16777280, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
+                        Image.height({ "id": 16777280, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
                     }, Image);
                     Stack.pop();
                 });
@@ -102,7 +102,7 @@ export default class ProfileItemComponent extends ViewPU {
             Text.create(this.menuItem.title);
             Text.debugLine("entry/src/main/ets/userprofile/view/ProfileItemComponent.ets(49:7)", "entry");
             // Title
-            Text.fontSize({ "id": 16777254, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
+            Text.fontSize({ "id": 16777277, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
             // Title
             Text.fontColor(Color.Black);
             // Title
@@ -118,11 +118,11 @@ export default class ProfileItemComponent extends ViewPU {
             if (this.menuItem.showArrow) {
                 this.ifElseBranchUpdateFunction(0, () => {
                     this.observeComponentCreation2((elmtId, isInitialRender) => {
-                        Image.create({ "id": 16777319, "type": 20000, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
+                        Image.create({ "id": 16777378, "type": 20000, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
                         Image.debugLine("entry/src/main/ets/userprofile/view/ProfileItemComponent.ets(57:9)", "entry");
-                        Image.width({ "id": 16777253, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
-                        Image.height({ "id": 16777253, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
-                        Image.fillColor({ "id": 16777223, "type": 10001, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
+                        Image.width({ "id": 16777276, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
+                        Image.height({ "id": 16777276, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
+                        Image.fillColor({ "id": 16777235, "type": 10001, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
                     }, Image);
                 });
             }

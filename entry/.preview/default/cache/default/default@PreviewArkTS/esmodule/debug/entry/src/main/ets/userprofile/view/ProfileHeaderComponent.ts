@@ -42,9 +42,9 @@ export default class ProfileHeaderComponent extends ViewPU {
             Column.debugLine("entry/src/main/ets/userprofile/view/ProfileHeaderComponent.ets(31:5)", "entry");
             Column.width(Const.FULL_WIDTH);
             Column.padding({
-                left: { "id": 16777262, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
-                right: { "id": 16777262, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
-                bottom: { "id": 16777252, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" }
+                left: { "id": 16777286, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
+                right: { "id": 16777286, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
+                bottom: { "id": 16777272, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" }
             });
             Column.alignItems(HorizontalAlign.Center);
         }, Column);
@@ -53,7 +53,7 @@ export default class ProfileHeaderComponent extends ViewPU {
             Stack.create({ alignContent: Alignment.Center });
             Stack.debugLine("entry/src/main/ets/userprofile/view/ProfileHeaderComponent.ets(33:7)", "entry");
             // Avatar with border and shadow
-            Stack.margin({ top: { "id": 16777251, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" } });
+            Stack.margin({ top: { "id": 16777271, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" } });
         }, Stack);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             If.create();
@@ -62,17 +62,17 @@ export default class ProfileHeaderComponent extends ViewPU {
                     this.observeComponentCreation2((elmtId, isInitialRender) => {
                         Image.create(this.userInfo.avatar);
                         Image.debugLine("entry/src/main/ets/userprofile/view/ProfileHeaderComponent.ets(35:11)", "entry");
-                        Image.width({ "id": 16777248, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
-                        Image.height({ "id": 16777248, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
-                        Image.borderRadius({ "id": 16777247, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
+                        Image.width({ "id": 16777262, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
+                        Image.height({ "id": 16777262, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
+                        Image.borderRadius({ "id": 16777260, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
                         Image.objectFit(ImageFit.Cover);
                         Image.border({
-                            width: { "id": 16777336, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
+                            width: { "id": 16777259, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
                             color: Color.White
                         });
                         Image.shadow({
-                            radius: { "id": 16777337, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
-                            color: { "id": 16777328, "type": 10001, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
+                            radius: { "id": 16777261, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
+                            color: { "id": 16777224, "type": 10001, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
                             offsetX: 0,
                             offsetY: 4
                         });
@@ -86,25 +86,25 @@ export default class ProfileHeaderComponent extends ViewPU {
                         Column.create();
                         Column.debugLine("entry/src/main/ets/userprofile/view/ProfileHeaderComponent.ets(52:11)", "entry");
                         // Default avatar placeholder with gradient
-                        Column.width({ "id": 16777248, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
+                        Column.width({ "id": 16777262, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
                         // Default avatar placeholder with gradient
-                        Column.height({ "id": 16777248, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
+                        Column.height({ "id": 16777262, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
                         // Default avatar placeholder with gradient
-                        Column.borderRadius({ "id": 16777247, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
+                        Column.borderRadius({ "id": 16777260, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
                         // Default avatar placeholder with gradient
                         Column.linearGradient({
                             angle: 135,
-                            colors: [[{ "id": 16777327, "type": 10001, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" }, 0.0], [{ "id": 16777326, "type": 10001, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" }, 1.0]]
+                            colors: [[{ "id": 16777223, "type": 10001, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" }, 0.0], [{ "id": 16777222, "type": 10001, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" }, 1.0]]
                         });
                         // Default avatar placeholder with gradient
                         Column.border({
-                            width: { "id": 16777336, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
+                            width: { "id": 16777259, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
                             color: Color.White
                         });
                         // Default avatar placeholder with gradient
                         Column.shadow({
-                            radius: { "id": 16777337, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
-                            color: { "id": 16777328, "type": 10001, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
+                            radius: { "id": 16777261, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
+                            color: { "id": 16777224, "type": 10001, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
                             offsetX: 0,
                             offsetY: 4
                         });
@@ -112,7 +112,7 @@ export default class ProfileHeaderComponent extends ViewPU {
                     this.observeComponentCreation2((elmtId, isInitialRender) => {
                         Text.create(this.userInfo.userName.length > 0 ? this.userInfo.userName.charAt(0) : 'U');
                         Text.debugLine("entry/src/main/ets/userprofile/view/ProfileHeaderComponent.ets(53:13)", "entry");
-                        Text.fontSize({ "id": 16777249, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
+                        Text.fontSize({ "id": 16777263, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
                         Text.fontColor(Color.White);
                         Text.fontWeight(FontWeight.Bold);
                     }, Text);
@@ -127,16 +127,16 @@ export default class ProfileHeaderComponent extends ViewPU {
         Stack.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             // User name
-            Text.create(this.userInfo.userName || { "id": 16777296, "type": 10003, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
+            Text.create(this.userInfo.userName || { "id": 16777338, "type": 10003, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
             Text.debugLine("entry/src/main/ets/userprofile/view/ProfileHeaderComponent.ets(80:7)", "entry");
             // User name
-            Text.fontSize({ "id": 16777260, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
+            Text.fontSize({ "id": 16777284, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
             // User name
             Text.fontColor(Color.White);
             // User name
             Text.fontWeight(FontWeight.Bold);
             // User name
-            Text.margin({ top: { "id": 16777261, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" } });
+            Text.margin({ top: { "id": 16777285, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" } });
         }, Text);
         // User name
         Text.pop();
@@ -148,10 +148,10 @@ export default class ProfileHeaderComponent extends ViewPU {
                     this.observeComponentCreation2((elmtId, isInitialRender) => {
                         Text.create(this.userInfo.signature);
                         Text.debugLine("entry/src/main/ets/userprofile/view/ProfileHeaderComponent.ets(88:9)", "entry");
-                        Text.fontSize({ "id": 16777263, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
+                        Text.fontSize({ "id": 16777288, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
                         Text.fontColor(Color.White);
                         Text.opacity(0.9);
-                        Text.margin({ top: { "id": 16777264, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" } });
+                        Text.margin({ top: { "id": 16777289, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" } });
                         Text.maxLines(2);
                         Text.textOverflow({ overflow: TextOverflow.Ellipsis });
                     }, Text);

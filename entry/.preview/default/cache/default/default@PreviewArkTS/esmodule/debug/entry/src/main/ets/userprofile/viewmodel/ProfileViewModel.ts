@@ -50,26 +50,26 @@ export class ProfileViewModel {
     initMenuItems(): void {
         this.menuItems = [
             {
-                title: { "id": 16777357, "type": 10003, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
-                icon: { "id": 16777319, "type": 20000, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
+                title: { "id": 16777355, "type": 10003, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
+                icon: { "id": 16777378, "type": 20000, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
                 actionType: 'order',
                 showArrow: true
             },
             {
-                title: { "id": 16777356, "type": 10003, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
-                icon: { "id": 16777319, "type": 20000, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
+                title: { "id": 16777354, "type": 10003, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
+                icon: { "id": 16777378, "type": 20000, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
                 actionType: 'favorite',
                 showArrow: true
             },
             {
                 title: '收货地址',
-                icon: { "id": 16777319, "type": 20000, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
+                icon: { "id": 16777378, "type": 20000, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
                 actionType: 'address',
                 showArrow: true
             },
             {
                 title: '设置',
-                icon: { "id": 16777319, "type": 20000, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
+                icon: { "id": 16777378, "type": 20000, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
                 actionType: 'settings',
                 showArrow: true
             }
@@ -80,10 +80,10 @@ export class ProfileViewModel {
      */
     initQuickEntries(): void {
         this.quickEntries = [
-            this.createQuickEntry({ "id": 16777369, "type": 10003, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" }, 'order'),
-            this.createQuickEntry({ "id": 16777368, "type": 10003, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" }, 'coupon'),
-            this.createQuickEntry({ "id": 16777367, "type": 10003, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" }, 'address'),
-            this.createQuickEntry({ "id": 16777370, "type": 10003, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" }, 'service')
+            this.createQuickEntry({ "id": 16777346, "type": 10003, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" }, 'order'),
+            this.createQuickEntry({ "id": 16777345, "type": 10003, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" }, 'coupon'),
+            this.createQuickEntry({ "id": 16777344, "type": 10003, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" }, 'address'),
+            this.createQuickEntry({ "id": 16777347, "type": 10003, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" }, 'service')
         ];
     }
     /**
@@ -91,9 +91,9 @@ export class ProfileViewModel {
      */
     initRecentOrders(): void {
         this.recentOrders = [
-            this.createRecentOrder('小米无线鼠标', '￥79', { "id": 16777365, "type": 10003, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" }, '08-21'),
-            this.createRecentOrder('台灯阅读灯', '￥129', { "id": 16777366, "type": 10003, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" }, '08-19'),
-            this.createRecentOrder('咖啡豆 500g', '￥89', { "id": 16777364, "type": 10003, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" }, '08-16')
+            this.createRecentOrder('小米无线鼠标', '￥79', { "id": 16777341, "type": 10003, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" }, '08-21'),
+            this.createRecentOrder('台灯阅读灯', '￥129', { "id": 16777342, "type": 10003, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" }, '08-19'),
+            this.createRecentOrder('咖啡豆 500g', '￥89', { "id": 16777340, "type": 10003, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" }, '08-16')
         ];
     }
     /**

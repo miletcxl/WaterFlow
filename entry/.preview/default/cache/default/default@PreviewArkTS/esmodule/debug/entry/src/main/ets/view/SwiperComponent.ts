@@ -31,11 +31,7 @@ export default class SwiperComponent extends ViewPU {
     }
     private dotIndicator: DotIndicator;
     aboutToAppear() {
-<<<<<<< HEAD
         this.dotIndicator.selectedColor({ "id": 16777220, "type": 10001, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
-=======
-        this.dotIndicator.selectedColor({ "id": 16777237, "type": 10001, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
->>>>>>> c370204f5125b100f0718948c2e7d4cf123029c8
     }
     initialRender() {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
@@ -47,13 +43,8 @@ export default class SwiperComponent extends ViewPU {
             Swiper.width(Const.FULL_WIDTH);
             Swiper.displayCount(1);
             Swiper.margin({
-<<<<<<< HEAD
-                top: { "id": 16777285, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
-                bottom: { "id": 16777284, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" }
-=======
-                top: { "id": 16777292, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
-                bottom: { "id": 16777291, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" }
->>>>>>> c370204f5125b100f0718948c2e7d4cf123029c8
+                top: { "id": 16777321, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
+                bottom: { "id": 16777320, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" }
             });
         }, Swiper);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
@@ -64,13 +55,8 @@ export default class SwiperComponent extends ViewPU {
                     Image.create(item);
                     Image.debugLine("entry/src/main/ets/view/SwiperComponent.ets(35:9)", "entry");
                     Image.width(Const.FULL_WIDTH);
-<<<<<<< HEAD
-                    Image.height({ "id": 16777283, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
-                    Image.borderRadius({ "id": 16777286, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
-=======
-                    Image.height({ "id": 16777290, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
-                    Image.borderRadius({ "id": 16777293, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
->>>>>>> c370204f5125b100f0718948c2e7d4cf123029c8
+                    Image.height({ "id": 16777319, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
+                    Image.borderRadius({ "id": 16777322, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
                     Image.backgroundColor(Color.White);
                 }, Image);
             };
