@@ -56,7 +56,7 @@ export default class ProductItem implements IProductItem {
   promotion: string;
   bonus_points: string;
 
-  constructor(props: ProductItem) {
+  constructor(props: IProductItem) {
     this.image_url = props.image_url;
     this.name = props.name;
     this.discount = props.discount;

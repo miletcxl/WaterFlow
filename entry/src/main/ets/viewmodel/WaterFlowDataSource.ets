@@ -14,6 +14,7 @@
  */
 
 import ProductItem from './ProductItem';
+import { IProductItem } from './ProductItem';
 
 /**
  * Water flow data source.
@@ -25,10 +26,17 @@ export class WaterFlowDataSource implements IDataSource {
   /**
    * Set water flow data array.
    *
-   * @param {ProductItem[]} productDataArray Displaying water flow Data.
+   * @param {IProductItem[]} productDataArray Displaying water flow Data.
    */
-  public setDataArray(productDataArray: ProductItem[]): void {
-    this.dataArray = productDataArray;
+  public setDataArray(productDataArray: IProductItem[]): void {
+    // Convert IProductItem[] to ProductItem[]
+    this.dataArray = productDataArray.map((item: IProductItem) => {
+      return new ProductItem(item);
+    });
+    // Notify all listeners that data has changed
+    this.listeners.forEach((listener: DataChangeListener) => {
+      listener.onDataReloaded();
+    });
   }
 
   /**

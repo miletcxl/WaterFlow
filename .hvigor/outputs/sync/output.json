@@ -1,6 +1,7 @@
 {
   "ohos-module-entry": {
     "SELECT_TARGET": "default",
+<<<<<<< HEAD
     "MODULE_BUILD_DIR": "E:\\homework_lab\\WaterFlow\\entry\\build",
     "TARGETS": {
       "default": {
@@ -21,6 +22,28 @@
           "MANIFEST_JSON": "E:\\homework_lab\\WaterFlow\\entry\\build\\default\\intermediates\\manifest\\default",
           "OUTPUT_METADATA_JSON": "E:\\homework_lab\\WaterFlow\\entry\\build\\default\\intermediates\\hap_metadata\\default\\output_metadata.json",
           "SOURCE_MAP_DIR": "E:\\homework_lab\\WaterFlow\\entry\\build\\default\\intermediates\\source_map\\default"
+=======
+    "MODULE_BUILD_DIR": "C:\\Users\\21462\\Desktop\\WaterFlow\\entry\\build",
+    "TARGETS": {
+      "default": {
+        "SOURCE_ROOT": "C:\\Users\\21462\\Desktop\\WaterFlow\\entry\\src\\main",
+        "RESOURCES_PATH": [
+          "C:\\Users\\21462\\Desktop\\WaterFlow\\entry\\src\\main\\resources"
+        ],
+        "BUILD_PATH": {
+          "OUTPUT_PATH": "C:\\Users\\21462\\Desktop\\WaterFlow\\entry\\build\\default\\outputs\\default",
+          "INTERMEDIA_PATH": "C:\\Users\\21462\\Desktop\\WaterFlow\\entry\\build\\default\\intermediates",
+          "JS_ASSETS_PATH": "C:\\Users\\21462\\Desktop\\WaterFlow\\entry\\build\\default\\intermediates\\loader_out\\default",
+          "JS_LITE_ASSETS_PATH": "C:\\Users\\21462\\Desktop\\WaterFlow\\entry\\build\\default\\intermediates\\loader_out_lite\\default",
+          "RES_PATH": "C:\\Users\\21462\\Desktop\\WaterFlow\\entry\\build\\default\\intermediates\\res\\default",
+          "RES_PROFILE_PATH": "C:\\Users\\21462\\Desktop\\WaterFlow\\entry\\build\\default\\intermediates\\res\\default\\resources\\base\\profile",
+          "ETS_SUPER_VISUAL_PATH": "C:\\Users\\21462\\Desktop\\WaterFlow\\entry\\build\\default\\cache\\default\\default@CompileArkTS\\esmodule",
+          "JS_SUPER_VISUAL_PATH": "C:\\Users\\21462\\Desktop\\WaterFlow\\entry\\build\\default\\cache\\default\\default@CompileJS\\jsbundle",
+          "WORKER_LOADER": "C:\\Users\\21462\\Desktop\\WaterFlow\\entry\\build\\default\\intermediates\\loader\\default\\loader.json",
+          "MANIFEST_JSON": "C:\\Users\\21462\\Desktop\\WaterFlow\\entry\\build\\default\\intermediates\\manifest\\default",
+          "OUTPUT_METADATA_JSON": "C:\\Users\\21462\\Desktop\\WaterFlow\\entry\\build\\default\\intermediates\\hap_metadata\\default\\output_metadata.json",
+          "SOURCE_MAP_DIR": "C:\\Users\\21462\\Desktop\\WaterFlow\\entry\\build\\default\\intermediates\\source_map\\default"
+>>>>>>> c370204f5125b100f0718948c2e7d4cf123029c8
         },
         "BUILD_OPTION": {
           "debuggable": true
@@ -47,15 +70,26 @@
   },
   "ohos-project": {
     "SELECT_PRODUCT_NAME": "default",
+<<<<<<< HEAD
     "MODULE_BUILD_DIR": "E:\\homework_lab\\WaterFlow\\build",
     "BUNDLE_NAME": "com.huawei.waterflow",
     "BUILD_PATH": {
       "OUTPUT_PATH": "E:\\homework_lab\\WaterFlow\\build\\outputs\\default"
+=======
+    "MODULE_BUILD_DIR": "C:\\Users\\21462\\Desktop\\WaterFlow\\build",
+    "BUNDLE_NAME": "com.huawei.waterflow",
+    "BUILD_PATH": {
+      "OUTPUT_PATH": "C:\\Users\\21462\\Desktop\\WaterFlow\\build\\outputs\\default"
+>>>>>>> c370204f5125b100f0718948c2e7d4cf123029c8
     },
     "MODULES": [
       {
         "name": "entry",
+<<<<<<< HEAD
         "srcPath": "E:\\homework_lab\\WaterFlow\\entry",
+=======
+        "srcPath": "C:\\Users\\21462\\Desktop\\WaterFlow\\entry",
+>>>>>>> c370204f5125b100f0718948c2e7d4cf123029c8
         "targets": [
           {
             "name": "default",
@@ -64,7 +98,11 @@
             ]
           }
         ],
+<<<<<<< HEAD
         "belongProjectPath": "E:\\homework_lab\\WaterFlow"
+=======
+        "belongProjectPath": "C:\\Users\\21462\\Desktop\\WaterFlow"
+>>>>>>> c370204f5125b100f0718948c2e7d4cf123029c8
       }
     ],
     "PROFILE_OPT": {
@@ -101,7 +139,11 @@
       "hvigor.keepDependency": true
     },
     "OVERALL_PROJECT_PATHS": [
+<<<<<<< HEAD
       "E:\\homework_lab\\WaterFlow"
+=======
+      "C:\\Users\\21462\\Desktop\\WaterFlow"
+>>>>>>> c370204f5125b100f0718948c2e7d4cf123029c8
     ],
     "BUILD_CACHE_DIR": ""
   },

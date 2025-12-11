@@ -18,6 +18,7 @@ import { WaterFlowDataSource } from '../viewmodel/WaterFlowDataSource';
 import { CommonConstants as Const } from '../common/constants/CommonConstants';
 import { waterFlowData } from '../viewmodel/HomeViewModel';
 import FlowItemComponent from '../view/FlowItemComponent';
+import { IProductItem } from '../viewmodel/ProductItem';
 
 /**
  * Water flow component.
@@ -27,41 +28,60 @@ import FlowItemComponent from '../view/FlowItemComponent';
 @Component
 export default struct WaterFlowComponent {
   @StorageLink('bottomRectHeight') bottomRectHeight: number = 0;
+  @Prop productData: IProductItem[] = waterFlowData;
   private datasource: WaterFlowDataSource = new WaterFlowDataSource();
 
   aboutToAppear() {
-    this.datasource.setDataArray(waterFlowData);
+    this.datasource.setDataArray(this.productData);
+  }
+
+  aboutToUpdate() {
+    this.datasource.setDataArray(this.productData);
   }
 
   build() {
-    WaterFlow({ footer: (): void => this.itemFoot() }) {
-      LazyForEach(this.datasource, (item: ProductItem) => {
-        FlowItem() {
-          FlowItemComponent({ item: item })
+    if (this.productData.length > 0) {
+      WaterFlow({ footer: (): void => this.itemFoot() }) {
+        LazyForEach(this.datasource, (item: ProductItem) => {
+          FlowItem() {
+            FlowItemComponent({ item: item })
 
-        }
-      }, (item: ProductItem) => JSON.stringify(item))
+          }
+        }, (item: ProductItem) => JSON.stringify(item))
+      }
+      .layoutWeight(Const.WATER_FLOW_LAYOUT_WEIGHT)
+      .layoutDirection(FlexDirection.Column)
+      .columnsTemplate(Const.WATER_FLOW_COLUMNS_TEMPLATE)
+      .columnsGap($r('app.float.water_flow_columns_gap'))
+      .rowsGap($r('app.float.water_flow_row_gap'))
+    } else {
+      Column() {
+        Text($r('app.string.no_search_result'))
+          .fontColor(Color.Gray)
+          .fontSize($r('app.float.footer_text_size'))
+          .textAlign(TextAlign.Center)
+          .margin({ top: $r('app.float.water_flow_row_gap') })
+      }
+      .width(Const.FULL_WIDTH)
+      .layoutWeight(Const.WATER_FLOW_LAYOUT_WEIGHT)
     }
-    .layoutWeight(Const.WATER_FLOW_LAYOUT_WEIGHT)
-    .layoutDirection(FlexDirection.Column)
-    .columnsTemplate(Const.WATER_FLOW_COLUMNS_TEMPLATE)
-    .columnsGap($r('app.float.water_flow_columns_gap'))
-    .rowsGap($r('app.float.water_flow_row_gap'))
   }
 
   @Builder
   itemFoot() {
-    Column() {
-      Text($r('app.string.footer_text'))
-        .fontColor(Color.Gray)
-        .fontSize($r('app.float.footer_text_size'))
-        .width(Const.FULL_WIDTH)
-        .height($r('app.float.footer_text_height'))
-        .textAlign(TextAlign.Center)
+    if (this.productData.length > 0) {
+      Column() {
+        Text($r('app.string.footer_text'))
+          .fontColor(Color.Gray)
+          .fontSize($r('app.float.footer_text_size'))
+          .width(Const.FULL_WIDTH)
+          .height($r('app.float.footer_text_height'))
+          .textAlign(TextAlign.Center)
+      }
+      .margin({
+        top: $r('app.float.water_flow_row_gap'),
+        bottom: this.getUIContext().px2vp(this.bottomRectHeight)
+      })
     }
-    .margin({
-      top: $r('app.float.water_flow_row_gap'),
-      bottom: this.getUIContext().px2vp(this.bottomRectHeight)
-    })
   }
 }

@@ -1,10 +1,18 @@
 {
   "modulePathMap": {
+<<<<<<< HEAD
     "entry": "E:\\homework_lab\\WaterFlow\\entry"
   },
   "compileMode": "esmodule",
   "projectRootPath": "E:\\homework_lab\\WaterFlow",
   "nodeModulesPath": "E:\\homework_lab\\WaterFlow\\entry\\.preview\\default\\intermediates\\loader_out\\default\\node_modules",
+=======
+    "entry": "C:\\Users\\21462\\Desktop\\WaterFlow\\entry"
+  },
+  "compileMode": "esmodule",
+  "projectRootPath": "C:\\Users\\21462\\Desktop\\WaterFlow",
+  "nodeModulesPath": "C:\\Users\\21462\\Desktop\\WaterFlow\\entry\\.preview\\default\\intermediates\\loader_out\\default\\node_modules",
+>>>>>>> c370204f5125b100f0718948c2e7d4cf123029c8
   "byteCodeHarInfo": {},
   "declarationEntry": [],
   "moduleName": "entry",
@@ -17,7 +25,11 @@
   "routerMap": [],
   "hspResourcesMap": {},
   "updateVersionInfo": {},
+<<<<<<< HEAD
   "anBuildOutPut": "E:\\homework_lab\\WaterFlow\\entry\\.preview\\default\\intermediates\\loader_out\\default\\an\\arm64-v8a",
+=======
+  "anBuildOutPut": "C:\\Users\\21462\\Desktop\\WaterFlow\\entry\\.preview\\default\\intermediates\\loader_out\\default\\an\\arm64-v8a",
+>>>>>>> c370204f5125b100f0718948c2e7d4cf123029c8
   "anBuildMode": "type",
   "buildConfigPath": ".preview\\config\\buildConfig.json"
 }
