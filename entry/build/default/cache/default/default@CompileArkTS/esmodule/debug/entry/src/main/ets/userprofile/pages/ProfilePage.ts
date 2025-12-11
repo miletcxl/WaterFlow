@@ -197,7 +197,9 @@ class ProfilePage extends ViewPU {
                             componentCall.paramsGenerator_ = paramsLambda;
                         }
                         else {
-                            this.updateStateVarsOfChildByElmtId(elmtId, {});
+                            this.updateStateVarsOfChildByElmtId(elmtId, {
+                                userInfo: this.viewModel.userInfo
+                            });
                         }
                     }, { name: "ProfileHeaderComponent" });
                 }

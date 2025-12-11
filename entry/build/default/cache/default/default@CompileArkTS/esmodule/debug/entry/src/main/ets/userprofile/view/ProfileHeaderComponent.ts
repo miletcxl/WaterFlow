@@ -2,162 +2,164 @@ if (!("finalizeConstruction" in ViewPU.prototype)) {
     Reflect.set(ViewPU.prototype, "finalizeConstruction", () => { });
 }
 interface ProfileHeaderComponent_Params {
-    /**
-     * User information.
-     */
     userInfo?: UserInfo;
 }
-import { CommonConstants as Const } from "@bundle:com.huawei.waterflow/entry/ets/common/constants/CommonConstants";
-import { UserInfo } from "@bundle:com.huawei.waterflow/entry/ets/userprofile/model/UserInfo";
+import type { UserInfo } from '../model/UserInfo';
 export default class ProfileHeaderComponent extends ViewPU {
     constructor(parent, params, __localStorage, elmtId = -1, paramsLambda = undefined, extraInfo) {
         super(parent, __localStorage, elmtId, extraInfo);
         if (typeof paramsLambda === "function") {
             this.paramsGenerator_ = paramsLambda;
         }
-        this.userInfo = new UserInfo();
+        this.__userInfo = new SynchedPropertyNesedObjectPU(params.userInfo, this, "userInfo");
         this.setInitiallyProvidedValue(params);
         this.finalizeConstruction();
     }
     setInitiallyProvidedValue(params: ProfileHeaderComponent_Params) {
-        if (params.userInfo !== undefined) {
-            this.userInfo = params.userInfo;
-        }
+        this.__userInfo.set(params.userInfo);
     }
     updateStateVars(params: ProfileHeaderComponent_Params) {
+        this.__userInfo.set(params.userInfo);
     }
     purgeVariableDependenciesOnElmtId(rmElmtId) {
+        this.__userInfo.purgeDependencyOnElmtId(rmElmtId);
     }
     aboutToBeDeleted() {
+        this.__userInfo.aboutToBeDeleted();
         SubscriberManager.Get().delete(this.id__());
         this.aboutToBeDeletedInternal();
     }
-    /**
-     * User information.
-     */
-    private userInfo: UserInfo;
+    // 接收父组件传来的用户信息
+    private __userInfo: SynchedPropertyNesedObjectPU<UserInfo>;
+    get userInfo() {
+        return this.__userInfo.get();
+    }
     initialRender() {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Column.create();
-            Column.width(Const.FULL_WIDTH);
-            Column.padding({
-                left: { "id": 16777368, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
-                right: { "id": 16777368, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
-                bottom: { "id": 16777354, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" }
-            });
-            Column.alignItems(HorizontalAlign.Center);
-        }, Column);
+            Row.create();
+            Row.width('100%');
+            Row.alignItems(VerticalAlign.Center);
+        }, Row);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
-            // Avatar with border and shadow
-            Stack.create({ alignContent: Alignment.Center });
-            // Avatar with border and shadow
-            Stack.margin({ top: { "id": 16777353, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" } });
+            // --- 头像区域 ---
+            Stack.create({ alignContent: Alignment.BottomEnd });
+            // --- 头像区域 ---
+            Stack.margin({ right: 16 });
         }, Stack);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
-            If.create();
-            if (this.userInfo.avatar) {
-                this.ifElseBranchUpdateFunction(0, () => {
-                    this.observeComponentCreation2((elmtId, isInitialRender) => {
-                        Image.create(this.userInfo.avatar);
-                        Image.width({ "id": 16777344, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
-                        Image.height({ "id": 16777344, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
-                        Image.borderRadius({ "id": 16777342, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
-                        Image.objectFit(ImageFit.Cover);
-                        Image.border({
-                            width: { "id": 16777341, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
-                            color: Color.White
-                        });
-                        Image.shadow({
-                            radius: { "id": 16777343, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
-                            color: { "id": 16777329, "type": 10001, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
-                            offsetX: 0,
-                            offsetY: 4
-                        });
-                    }, Image);
-                });
-            }
-            else {
-                this.ifElseBranchUpdateFunction(1, () => {
-                    this.observeComponentCreation2((elmtId, isInitialRender) => {
-                        // Default avatar placeholder with gradient
-                        Column.create();
-                        // Default avatar placeholder with gradient
-                        Column.width({ "id": 16777344, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
-                        // Default avatar placeholder with gradient
-                        Column.height({ "id": 16777344, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
-                        // Default avatar placeholder with gradient
-                        Column.borderRadius({ "id": 16777342, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
-                        // Default avatar placeholder with gradient
-                        Column.linearGradient({
-                            angle: 135,
-                            colors: [[{ "id": 16777328, "type": 10001, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" }, 0.0], [{ "id": 16777327, "type": 10001, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" }, 1.0]]
-                        });
-                        // Default avatar placeholder with gradient
-                        Column.border({
-                            width: { "id": 16777341, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
-                            color: Color.White
-                        });
-                        // Default avatar placeholder with gradient
-                        Column.shadow({
-                            radius: { "id": 16777343, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
-                            color: { "id": 16777329, "type": 10001, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
-                            offsetX: 0,
-                            offsetY: 4
-                        });
-                    }, Column);
-                    this.observeComponentCreation2((elmtId, isInitialRender) => {
-                        Text.create(this.userInfo.userName.length > 0 ? this.userInfo.userName.charAt(0) : 'U');
-                        Text.fontSize({ "id": 16777345, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
-                        Text.fontColor(Color.White);
-                        Text.fontWeight(FontWeight.Bold);
-                    }, Text);
-                    Text.pop();
-                    // Default avatar placeholder with gradient
-                    Column.pop();
-                });
-            }
-        }, If);
-        If.pop();
-        // Avatar with border and shadow
+            // 1. 头像图片
+            // 如果报错 "Unknown resource name"，请确保 resources/base/media 下有 ic_avatar.png
+            // 或者暂时改回 $r('app.media.app_icon')
+            Image.create({ "id": 16777385, "type": 20000, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
+            // 1. 头像图片
+            // 如果报错 "Unknown resource name"，请确保 resources/base/media 下有 ic_avatar.png
+            // 或者暂时改回 $r('app.media.app_icon')
+            Image.width(64);
+            // 1. 头像图片
+            // 如果报错 "Unknown resource name"，请确保 resources/base/media 下有 ic_avatar.png
+            // 或者暂时改回 $r('app.media.app_icon')
+            Image.height(64);
+            // 1. 头像图片
+            // 如果报错 "Unknown resource name"，请确保 resources/base/media 下有 ic_avatar.png
+            // 或者暂时改回 $r('app.media.app_icon')
+            Image.borderRadius(32);
+            // 1. 头像图片
+            // 如果报错 "Unknown resource name"，请确保 resources/base/media 下有 ic_avatar.png
+            // 或者暂时改回 $r('app.media.app_icon')
+            Image.objectFit(ImageFit.Cover);
+            // 1. 头像图片
+            // 如果报错 "Unknown resource name"，请确保 resources/base/media 下有 ic_avatar.png
+            // 或者暂时改回 $r('app.media.app_icon')
+            Image.border({ width: 2, color: Color.White });
+            // 1. 头像图片
+            // 如果报错 "Unknown resource name"，请确保 resources/base/media 下有 ic_avatar.png
+            // 或者暂时改回 $r('app.media.app_icon')
+            Image.backgroundColor('#CCCCCC');
+        }, Image);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            // 2. 右下角编辑小图标
+            Text.create('✏️');
+            // 2. 右下角编辑小图标
+            Text.fontSize(12);
+            // 2. 右下角编辑小图标
+            Text.textAlign(TextAlign.Center);
+            // 2. 右下角编辑小图标
+            Text.width(20);
+            // 2. 右下角编辑小图标
+            Text.height(20);
+            // 2. 右下角编辑小图标
+            Text.backgroundColor('#333333');
+            // 2. 右下角编辑小图标
+            Text.fontColor(Color.White);
+            // 2. 右下角编辑小图标
+            Text.borderRadius(10);
+            // 2. 右下角编辑小图标
+            Text.border({ width: 1, color: Color.White });
+            // 2. 右下角编辑小图标
+            Text.margin({ bottom: 0, right: 0 });
+        }, Text);
+        // 2. 右下角编辑小图标
+        Text.pop();
+        // --- 头像区域 ---
         Stack.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
-            // User name
-            Text.create(this.userInfo.userName || { "id": 16777307, "type": 10003, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
-            // User name
-            Text.fontSize({ "id": 16777366, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
-            // User name
+            // --- 文字信息区域 ---
+            Column.create();
+            // --- 文字信息区域 ---
+            Column.alignItems(HorizontalAlign.Start);
+            // --- 文字信息区域 ---
+            Column.layoutWeight(1);
+        }, Column);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            // 昵称
+            Text.create(this.userInfo.userName || '张三');
+            // 昵称
+            Text.fontSize(20);
+            // 昵称
             Text.fontColor(Color.White);
-            // User name
+            // 昵称
             Text.fontWeight(FontWeight.Bold);
-            // User name
-            Text.margin({ top: { "id": 16777367, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" } });
+            // 昵称
+            Text.margin({ bottom: 6 });
         }, Text);
-        // User name
+        // 昵称
         Text.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
-            If.create();
-            // Signature
-            if (this.userInfo.signature) {
-                this.ifElseBranchUpdateFunction(0, () => {
-                    this.observeComponentCreation2((elmtId, isInitialRender) => {
-                        Text.create(this.userInfo.signature);
-                        Text.fontSize({ "id": 16777370, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
-                        Text.fontColor(Color.White);
-                        Text.opacity(0.9);
-                        Text.margin({ top: { "id": 16777371, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" } });
-                        Text.maxLines(2);
-                        Text.textOverflow({ overflow: TextOverflow.Ellipsis });
-                    }, Text);
-                    Text.pop();
-                });
-            }
-            else {
-                this.ifElseBranchUpdateFunction(1, () => {
-                });
-            }
-        }, If);
-        If.pop();
+            // 个人简介或ID
+            Row.create();
+        }, Row);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            // 【修复点】去掉 this.userInfo.userId，直接显示固定 ID
+            // 因为你的 UserInfo 类里没有定义 userId 字段
+            Text.create('ID: 888888');
+            // 【修复点】去掉 this.userInfo.userId，直接显示固定 ID
+            // 因为你的 UserInfo 类里没有定义 userId 字段
+            Text.fontSize(12);
+            // 【修复点】去掉 this.userInfo.userId，直接显示固定 ID
+            // 因为你的 UserInfo 类里没有定义 userId 字段
+            Text.fontColor('rgba(255,255,255,0.8)');
+            // 【修复点】去掉 this.userInfo.userId，直接显示固定 ID
+            // 因为你的 UserInfo 类里没有定义 userId 字段
+            Text.margin({ right: 8 });
+        }, Text);
+        // 【修复点】去掉 this.userInfo.userId，直接显示固定 ID
+        // 因为你的 UserInfo 类里没有定义 userId 字段
+        Text.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            // 复制图标
+            Text.create('❐');
+            // 复制图标
+            Text.fontSize(12);
+            // 复制图标
+            Text.fontColor('rgba(255,255,255,0.8)');
+        }, Text);
+        // 复制图标
+        Text.pop();
+        // 个人简介或ID
+        Row.pop();
+        // --- 文字信息区域 ---
         Column.pop();
+        Row.pop();
     }
     rerender() {
         this.updateDirtyElements();

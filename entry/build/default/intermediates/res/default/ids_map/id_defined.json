@@ -675,5 +675,9 @@
 			"type":	"string",
 			"name":	"ai_service_send",
 			"id":	"0x010000A8"
+		}, {
+			"type":	"media",
+			"name":	"ic_avatar",
+			"id":	"0x010000A9"
 		}]
 }
