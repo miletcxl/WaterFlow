@@ -22,6 +22,25 @@ import { CommonConstants as Const } from '../common/constants/CommonConstants';
  */
 @Component
 export default struct SearchComponent {
+  @Prop searchKeyword: string = '';
+  onSearchChange?: (keyword: string) => void;
+  onSearch?: () => void;
+  @State private inputValue: string = '';
+  private textInputKey: number = 0;
+
+  aboutToAppear() {
+    this.inputValue = this.searchKeyword;
+  }
+
+  aboutToUpdate() {
+    // 只在外部值被清空时才同步，避免打断用户输入
+    if (this.searchKeyword === '' && this.inputValue !== '') {
+      this.inputValue = '';
+      // 通过改变key来强制重新创建TextInput，实现清空
+      this.textInputKey++;
+    }
+  }
+
   build() {
     Row() {
       Image($r('app.media.ic_search'))
@@ -31,16 +50,47 @@ export default struct SearchComponent {
           left: $r('app.float.search_margin_left'),
           right: $r('app.float.search_margin_right')
         })
-      Text($r('app.string.search_text'))
+      TextInput({ placeholder: $r('app.string.search_placeholder') })
+        .key(this.textInputKey.toString())
+        .layoutWeight(1)
+        .type(InputType.Normal)
         .fontSize($r('app.float.small_font_size'))
         .fontColor(Color.Black)
-        .opacity(Const.SIXTY_OPACITY)
-        .fontWeight(FontWeight.Normal)
+        .placeholderColor(Color.Gray)
+        .placeholderFont({ size: $r('app.float.small_font_size'), weight: FontWeight.Normal })
+        .onChange((value: string) => {
+          // 不绑定text属性，让TextInput自己管理状态，避免打断输入法
+          this.inputValue = value;
+          if (this.onSearchChange) {
+            this.onSearchChange(value);
+          }
+        })
+        .onSubmit(() => {
+          if (this.onSearch) {
+            this.onSearch();
+          }
+        })
+        .maxLength(50)
+      if (this.inputValue.length > 0) {
+        Image($r('app.media.ic_more'))
+          .width($r('app.float.search_width'))
+          .height($r('app.float.search_height'))
+          .margin({ right: $r('app.float.search_margin_right') })
+          .onClick(() => {
+            this.inputValue = '';
+            // 通过改变key来强制重新创建TextInput，实现清空
+            this.textInputKey++;
+            if (this.onSearchChange) {
+              this.onSearchChange('');
+            }
+          })
+      }
     }
     .width(Const.FULL_WIDTH)
     .height($r('app.float.search_swiper_height'))
     .borderRadius($r('app.float.search_radius'))
     .backgroundColor(Color.White)
     .margin({ top: $r('app.float.search_margin_top') })
+    .padding({ left: $r('app.float.search_margin_left'), right: $r('app.float.search_margin_right') })
   }
 }

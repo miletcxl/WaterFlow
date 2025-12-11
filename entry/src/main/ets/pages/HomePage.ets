@@ -18,6 +18,8 @@ import ClassifyComponent from '../view/ClassifyComponent';
 import SearchComponent from '../view/SearchComponent';
 import SwiperComponent from '../view/SwiperComponent';
 import WaterFlowComponent from '../view/WaterFlowComponent';
+import { waterFlowData } from '../viewmodel/HomeViewModel';
+import { IProductItem } from '../viewmodel/ProductItem';
 
 /**
  * The home page consists of four components: search component,
@@ -28,6 +30,44 @@ import WaterFlowComponent from '../view/WaterFlowComponent';
 @Component
 struct HomePage {
   @StorageLink('topRectHeight') topRectHeight: number = 0;
+  @State searchKeyword: string = '';
+  @State filteredData: IProductItem[] = waterFlowData;
+
+  aboutToAppear() {
+    this.filteredData = waterFlowData;
+  }
+
+  /**
+   * Filter products based on search keyword.
+   */
+  private filterProducts(keyword: string): void {
+    if (!keyword || keyword.trim().length === 0) {
+      this.filteredData = waterFlowData;
+      return;
+    }
+    const lowerKeyword = keyword.toLowerCase().trim();
+    this.filteredData = waterFlowData.filter((item: IProductItem) => {
+      return item.name.toLowerCase().includes(lowerKeyword) ||
+        item.price.toLowerCase().includes(lowerKeyword) ||
+        (item.discount && item.discount.toLowerCase().includes(lowerKeyword)) ||
+        (item.promotion && item.promotion.toLowerCase().includes(lowerKeyword));
+    });
+  }
+
+  /**
+   * Handle search keyword change.
+   */
+  private onSearchChange(keyword: string): void {
+    this.searchKeyword = keyword;
+    this.filterProducts(keyword);
+  }
+
+  /**
+   * Handle search submit.
+   */
+  private onSearch(): void {
+    this.filterProducts(this.searchKeyword);
+  }
 
   build() {
     Stack({ alignContent: Alignment.Top }) {
@@ -36,10 +76,18 @@ struct HomePage {
         .height($r('app.float.image_background_height'))
         .objectFit(ImageFit.Cover)
       Column() {
-        SearchComponent()
+        SearchComponent({
+          searchKeyword: this.searchKeyword,
+          onSearchChange: (keyword: string) => {
+            this.onSearchChange(keyword);
+          },
+          onSearch: () => {
+            this.onSearch();
+          }
+        })
         ClassifyComponent()
         SwiperComponent()
-        WaterFlowComponent()
+        WaterFlowComponent({ productData: this.filteredData })
       }
       .padding({
         left: $r('app.float.home_margin_left'),

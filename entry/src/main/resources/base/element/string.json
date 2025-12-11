@@ -49,6 +49,14 @@
       "value": "Children's dining chair"
     },
     {
+      "name": "search_placeholder",
+      "value": "Search products..."
+    },
+    {
+      "name": "no_search_result",
+      "value": "No search results"
+    },
+    {
       "name": "footer_text",
       "value": "It's been to the end."
     }

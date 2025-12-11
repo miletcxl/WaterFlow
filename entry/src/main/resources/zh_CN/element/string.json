@@ -49,6 +49,14 @@
       "value": "儿童餐椅"
     },
     {
+      "name": "search_placeholder",
+      "value": "搜索商品..."
+    },
+    {
+      "name": "no_search_result",
+      "value": "暂无搜索结果"
+    },
+    {
       "name": "footer_text",
       "value": "已经到底了"
     }
