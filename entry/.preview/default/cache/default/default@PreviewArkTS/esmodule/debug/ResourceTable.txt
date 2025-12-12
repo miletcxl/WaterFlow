@@ -1,8 +1,10 @@
 string EntryAbility_desc 0x0100006f
 string EntryAbility_label 0x01000070
+string ai_service_back 0x010000a7
 string ai_service_empty 0x01000071
 string ai_service_mock_reply 0x01000072
 string ai_service_placeholder 0x01000073
+string ai_service_send 0x010000a8
 string ai_service_title 0x01000074
 string app_name 0x01000000
 string footer_text 0x01000075
@@ -150,6 +152,7 @@ float water_flow_image_top 0x0100006d
 float water_flow_row_gap 0x0100006e
 media app_icon 0x01000001
 media ic_app_background 0x01000097
+media ic_avatar 0x010000a9
 media ic_coupons 0x01000098
 media ic_holder_50e 0x01000099
 media ic_holder_60pro 0x0100009a

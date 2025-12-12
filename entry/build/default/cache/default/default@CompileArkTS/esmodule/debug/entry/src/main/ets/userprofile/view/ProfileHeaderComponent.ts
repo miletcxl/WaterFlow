@@ -4,6 +4,7 @@ if (!("finalizeConstruction" in ViewPU.prototype)) {
 interface ProfileHeaderComponent_Params {
     userInfo?: UserInfo;
 }
+import router from "@ohos:router";
 import type { UserInfo } from '../model/UserInfo';
 export default class ProfileHeaderComponent extends ViewPU {
     constructor(parent, params, __localStorage, elmtId = -1, paramsLambda = undefined, extraInfo) {
@@ -97,6 +98,14 @@ export default class ProfileHeaderComponent extends ViewPU {
             Text.border({ width: 1, color: Color.White });
             // 2. 右下角编辑小图标
             Text.margin({ bottom: 0, right: 0 });
+            // 2. 右下角编辑小图标
+            Text.onClick(() => {
+                router.pushUrl({
+                    url: 'userprofile/pages/EditProfilePage'
+                }).catch((err: Error) => {
+                    console.error(`跳转编辑页失败: ${err.message}`);
+                });
+            });
         }, Text);
         // 2. 右下角编辑小图标
         Text.pop();
@@ -129,21 +138,11 @@ export default class ProfileHeaderComponent extends ViewPU {
             Row.create();
         }, Row);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
-            // 【修复点】去掉 this.userInfo.userId，直接显示固定 ID
-            // 因为你的 UserInfo 类里没有定义 userId 字段
-            Text.create('ID: 888888');
-            // 【修复点】去掉 this.userInfo.userId，直接显示固定 ID
-            // 因为你的 UserInfo 类里没有定义 userId 字段
+            Text.create(`ID: ${this.userInfo.userId || '未设置'}`);
             Text.fontSize(12);
-            // 【修复点】去掉 this.userInfo.userId，直接显示固定 ID
-            // 因为你的 UserInfo 类里没有定义 userId 字段
             Text.fontColor('rgba(255,255,255,0.8)');
-            // 【修复点】去掉 this.userInfo.userId，直接显示固定 ID
-            // 因为你的 UserInfo 类里没有定义 userId 字段
             Text.margin({ right: 8 });
         }, Text);
-        // 【修复点】去掉 this.userInfo.userId，直接显示固定 ID
-        // 因为你的 UserInfo 类里没有定义 userId 字段
         Text.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             // 复制图标

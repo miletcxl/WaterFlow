@@ -1,323 +1,255 @@
-Ôr@Ÿªassertions¤code´customTransformCache¬dependencies¢id¤meta±moduleSideEffects¬originalCode±originalSourcemap«resolvedIds®sourcemapChainµsyntheticNamedExportsµtransformDependencies®transformFiles¨cacheAstÔrAÚ(mif (!("finalizeConstruction" in ViewPU.prototype)) {
+Ôr@Ÿªassertions¤code´customTransformCache¬dependencies¢id¤meta±moduleSideEffects¬originalCode±originalSourcemap«resolvedIds®sourcemapChainµsyntheticNamedExportsµtransformDependencies®transformFiles¨cacheAstÔrAÚ2if (!("finalizeConstruction" in ViewPU.prototype)) {
     Reflect.set(ViewPU.prototype, "finalizeConstruction", () => { });
 }
-/*
- * Copyright (c) 2023 Huawei Device Co., Ltd.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-import { CommonConstants as Const } from '../../common/constants/CommonConstants';
-import { UserInfo } from '../model/UserInfo';
 export default class ProfileHeaderComponent extends ViewPU {
     constructor(parent, params, __localStorage, elmtId = -1, paramsLambda = undefined, extraInfo) {
         super(parent, __localStorage, elmtId, extraInfo);
         if (typeof paramsLambda === "function") {
             this.paramsGenerator_ = paramsLambda;
         }
-        this.userInfo = new UserInfo();
+        this.__userInfo = new SynchedPropertyNesedObjectPU(params.userInfo, this, "userInfo");
         this.setInitiallyProvidedValue(params);
         this.finalizeConstruction();
     }
     setInitiallyProvidedValue(params) {
-        if (params.userInfo !== undefined) {
-            this.userInfo = params.userInfo;
-        }
+        this.__userInfo.set(params.userInfo);
     }
     updateStateVars(params) {
+        this.__userInfo.set(params.userInfo);
     }
     purgeVariableDependenciesOnElmtId(rmElmtId) {
+        this.__userInfo.purgeDependencyOnElmtId(rmElmtId);
     }
     aboutToBeDeleted() {
+        this.__userInfo.aboutToBeDeleted();
         SubscriberManager.Get().delete(this.id__());
         this.aboutToBeDeletedInternal();
     }
+    get userInfo() {
+        return this.__userInfo.get();
+    }
     initialRender() {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Column.create();
-            Column.debugLine("entry/src/main/ets/userprofile/view/ProfileHeaderComponent.ets(31:5)", "entry");
-            Column.width(Const.FULL_WIDTH);
-            Column.padding({
-                left: { "id": 16777286, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
-                right: { "id": 16777286, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
-                bottom: { "id": 16777272, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" }
-            });
-            Column.alignItems(HorizontalAlign.Center);
-        }, Column);
+            Row.create();
+            Row.debugLine("entry/src/main/ets/userprofile/view/ProfileHeaderComponent.ets(9:5)", "entry");
+            Row.width('100%');
+            Row.alignItems(VerticalAlign.Center);
+        }, Row);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
-            // Avatar with border and shadow
-            Stack.create({ alignContent: Alignment.Center });
-            Stack.debugLine("entry/src/main/ets/userprofile/view/ProfileHeaderComponent.ets(33:7)", "entry");
-            // Avatar with border and shadow
-            Stack.margin({ top: { "id": 16777271, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" } });
+            // --- å¤´åƒåŒºåŸŸ ---
+            Stack.create({ alignContent: Alignment.BottomEnd });
+            Stack.debugLine("entry/src/main/ets/userprofile/view/ProfileHeaderComponent.ets(11:7)", "entry");
+            // --- å¤´åƒåŒºåŸŸ ---
+            Stack.margin({ right: 16 });
         }, Stack);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
-            If.create();
-            if (this.userInfo.avatar) {
-                this.ifElseBranchUpdateFunction(0, () => {
-                    this.observeComponentCreation2((elmtId, isInitialRender) => {
-                        Image.create(this.userInfo.avatar);
-                        Image.debugLine("entry/src/main/ets/userprofile/view/ProfileHeaderComponent.ets(35:11)", "entry");
-                        Image.width({ "id": 16777262, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
-                        Image.height({ "id": 16777262, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
-                        Image.borderRadius({ "id": 16777260, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
-                        Image.objectFit(ImageFit.Cover);
-                        Image.border({
-                            width: { "id": 16777259, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
-                            color: Color.White
-                        });
-                        Image.shadow({
-                            radius: { "id": 16777261, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
-                            color: { "id": 16777224, "type": 10001, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
-                            offsetX: 0,
-                            offsetY: 4
-                        });
-                    }, Image);
-                });
-            }
-            else {
-                this.ifElseBranchUpdateFunction(1, () => {
-                    this.observeComponentCreation2((elmtId, isInitialRender) => {
-                        // Default avatar placeholder with gradient
-                        Column.create();
-                        Column.debugLine("entry/src/main/ets/userprofile/view/ProfileHeaderComponent.ets(52:11)", "entry");
-                        // Default avatar placeholder with gradient
-                        Column.width({ "id": 16777262, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
-                        // Default avatar placeholder with gradient
-                        Column.height({ "id": 16777262, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
-                        // Default avatar placeholder with gradient
-                        Column.borderRadius({ "id": 16777260, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
-                        // Default avatar placeholder with gradient
-                        Column.linearGradient({
-                            angle: 135,
-                            colors: [[{ "id": 16777223, "type": 10001, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" }, 0.0], [{ "id": 16777222, "type": 10001, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" }, 1.0]]
-                        });
-                        // Default avatar placeholder with gradient
-                        Column.border({
-                            width: { "id": 16777259, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
-                            color: Color.White
-                        });
-                        // Default avatar placeholder with gradient
-                        Column.shadow({
-                            radius: { "id": 16777261, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
-                            color: { "id": 16777224, "type": 10001, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
-                            offsetX: 0,
-                            offsetY: 4
-                        });
-                    }, Column);
-                    this.observeComponentCreation2((elmtId, isInitialRender) => {
-                        Text.create(this.userInfo.userName.length > 0 ? this.userInfo.userName.charAt(0) : 'U');
-                        Text.debugLine("entry/src/main/ets/userprofile/view/ProfileHeaderComponent.ets(53:13)", "entry");
-                        Text.fontSize({ "id": 16777263, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
-                        Text.fontColor(Color.White);
-                        Text.fontWeight(FontWeight.Bold);
-                    }, Text);
-                    Text.pop();
-                    // Default avatar placeholder with gradient
-                    Column.pop();
-                });
-            }
-        }, If);
-        If.pop();
-        // Avatar with border and shadow
+            // 1. å¤´åƒå›¾ç‰‡
+            // å¦‚æžœæŠ¥é”™ "Unknown resource name"ï¼Œè¯·ç¡®ä¿ resources/base/media ä¸‹æœ‰ ic_avatar.png
+            // æˆ–è€…æš‚æ—¶æ”¹å›ž $r('app.media.app_icon')
+            Image.create({ "id": 16777385, "type": 20000, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
+            Image.debugLine("entry/src/main/ets/userprofile/view/ProfileHeaderComponent.ets(15:9)", "entry");
+            // 1. å¤´åƒå›¾ç‰‡
+            // å¦‚æžœæŠ¥é”™ "Unknown resource name"ï¼Œè¯·ç¡®ä¿ resources/base/media ä¸‹æœ‰ ic_avatar.png
+            // æˆ–è€…æš‚æ—¶æ”¹å›ž $r('app.media.app_icon')
+            Image.width(64);
+            // 1. å¤´åƒå›¾ç‰‡
+            // å¦‚æžœæŠ¥é”™ "Unknown resource name"ï¼Œè¯·ç¡®ä¿ resources/base/media ä¸‹æœ‰ ic_avatar.png
+            // æˆ–è€…æš‚æ—¶æ”¹å›ž $r('app.media.app_icon')
+            Image.height(64);
+            // 1. å¤´åƒå›¾ç‰‡
+            // å¦‚æžœæŠ¥é”™ "Unknown resource name"ï¼Œè¯·ç¡®ä¿ resources/base/media ä¸‹æœ‰ ic_avatar.png
+            // æˆ–è€…æš‚æ—¶æ”¹å›ž $r('app.media.app_icon')
+            Image.borderRadius(32);
+            // 1. å¤´åƒå›¾ç‰‡
+            // å¦‚æžœæŠ¥é”™ "Unknown resource name"ï¼Œè¯·ç¡®ä¿ resources/base/media ä¸‹æœ‰ ic_avatar.png
+            // æˆ–è€…æš‚æ—¶æ”¹å›ž $r('app.media.app_icon')
+            Image.objectFit(ImageFit.Cover);
+            // 1. å¤´åƒå›¾ç‰‡
+            // å¦‚æžœæŠ¥é”™ "Unknown resource name"ï¼Œè¯·ç¡®ä¿ resources/base/media ä¸‹æœ‰ ic_avatar.png
+            // æˆ–è€…æš‚æ—¶æ”¹å›ž $r('app.media.app_icon')
+            Image.border({ width: 2, color: Color.White });
+            // 1. å¤´åƒå›¾ç‰‡
+            // å¦‚æžœæŠ¥é”™ "Unknown resource name"ï¼Œè¯·ç¡®ä¿ resources/base/media ä¸‹æœ‰ ic_avatar.png
+            // æˆ–è€…æš‚æ—¶æ”¹å›ž $r('app.media.app_icon')
+            Image.backgroundColor('#CCCCCC');
+        }, Image);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            // 2. å³ä¸‹è§’ç¼–è¾‘å°å›¾æ ‡
+            Text.create('âœï¸');
+            Text.debugLine("entry/src/main/ets/userprofile/view/ProfileHeaderComponent.ets(24:9)", "entry");
+            // 2. å³ä¸‹è§’ç¼–è¾‘å°å›¾æ ‡
+            Text.fontSize(12);
+            // 2. å³ä¸‹è§’ç¼–è¾‘å°å›¾æ ‡
+            Text.textAlign(TextAlign.Center);
+            // 2. å³ä¸‹è§’ç¼–è¾‘å°å›¾æ ‡
+            Text.width(20);
+            // 2. å³ä¸‹è§’ç¼–è¾‘å°å›¾æ ‡
+            Text.height(20);
+            // 2. å³ä¸‹è§’ç¼–è¾‘å°å›¾æ ‡
+            Text.backgroundColor('#333333');
+            // 2. å³ä¸‹è§’ç¼–è¾‘å°å›¾æ ‡
+            Text.fontColor(Color.White);
+            // 2. å³ä¸‹è§’ç¼–è¾‘å°å›¾æ ‡
+            Text.borderRadius(10);
+            // 2. å³ä¸‹è§’ç¼–è¾‘å°å›¾æ ‡
+            Text.border({ width: 1, color: Color.White });
+            // 2. å³ä¸‹è§’ç¼–è¾‘å°å›¾æ ‡
+            Text.margin({ bottom: 0, right: 0 });
+        }, Text);
+        // 2. å³ä¸‹è§’ç¼–è¾‘å°å›¾æ ‡
+        Text.pop();
+        // --- å¤´åƒåŒºåŸŸ ---
         Stack.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
-            // User name
-            Text.create(this.userInfo.userName || { "id": 16777338, "type": 10003, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
-            Text.debugLine("entry/src/main/ets/userprofile/view/ProfileHeaderComponent.ets(80:7)", "entry");
-            // User name
-            Text.fontSize({ "id": 16777284, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
-            // User name
+            // --- æ–‡å­—ä¿¡æ¯åŒºåŸŸ ---
+            Column.create();
+            Column.debugLine("entry/src/main/ets/userprofile/view/ProfileHeaderComponent.ets(39:7)", "entry");
+            // --- æ–‡å­—ä¿¡æ¯åŒºåŸŸ ---
+            Column.alignItems(HorizontalAlign.Start);
+            // --- æ–‡å­—ä¿¡æ¯åŒºåŸŸ ---
+            Column.layoutWeight(1);
+        }, Column);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            // æ˜µç§°
+            Text.create(this.userInfo.userName || 'å¼ ä¸‰');
+            Text.debugLine("entry/src/main/ets/userprofile/view/ProfileHeaderComponent.ets(41:9)", "entry");
+            // æ˜µç§°
+            Text.fontSize(20);
+            // æ˜µç§°
             Text.fontColor(Color.White);
-            // User name
+            // æ˜µç§°
             Text.fontWeight(FontWeight.Bold);
-            // User name
-            Text.margin({ top: { "id": 16777285, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" } });
+            // æ˜µç§°
+            Text.margin({ bottom: 6 });
         }, Text);
-        // User name
+        // æ˜µç§°
         Text.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
-            If.create();
-            // Signature
-            if (this.userInfo.signature) {
-                this.ifElseBranchUpdateFunction(0, () => {
-                    this.observeComponentCreation2((elmtId, isInitialRender) => {
-                        Text.create(this.userInfo.signature);
-                        Text.debugLine("entry/src/main/ets/userprofile/view/ProfileHeaderComponent.ets(88:9)", "entry");
-                        Text.fontSize({ "id": 16777288, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
-                        Text.fontColor(Color.White);
-                        Text.opacity(0.9);
-                        Text.margin({ top: { "id": 16777289, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" } });
-                        Text.maxLines(2);
-                        Text.textOverflow({ overflow: TextOverflow.Ellipsis });
-                    }, Text);
-                    Text.pop();
-                });
-            }
-            else {
-                this.ifElseBranchUpdateFunction(1, () => {
-                });
-            }
-        }, If);
-        If.pop();
+            // ä¸ªäººç®€ä»‹æˆ–ID
+            Row.create();
+            Row.debugLine("entry/src/main/ets/userprofile/view/ProfileHeaderComponent.ets(48:9)", "entry");
+        }, Row);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Text.create(`ID: ${this.userInfo.userId || 'æœªè®¾ç½®'}`);
+            Text.debugLine("entry/src/main/ets/userprofile/view/ProfileHeaderComponent.ets(49:11)", "entry");
+            Text.fontSize(12);
+            Text.fontColor('rgba(255,255,255,0.8)');
+            Text.margin({ right: 8 });
+        }, Text);
+        Text.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            // å¤åˆ¶å›¾æ ‡
+            Text.create('â');
+            Text.debugLine("entry/src/main/ets/userprofile/view/ProfileHeaderComponent.ets(55:11)", "entry");
+            // å¤åˆ¶å›¾æ ‡
+            Text.fontSize(12);
+            // å¤åˆ¶å›¾æ ‡
+            Text.fontColor('rgba(255,255,255,0.8)');
+        }, Text);
+        // å¤åˆ¶å›¾æ ‡
+        Text.pop();
+        // ä¸ªäººç®€ä»‹æˆ–ID
+        Row.pop();
+        // --- æ–‡å­—ä¿¡æ¯åŒºåŸŸ ---
         Column.pop();
+        Row.pop();
     }
     rerender() {
         this.updateDirtyElements();
     }
 }
-//# sourceMappingURL=ProfileHeaderComponent.js.mapÂ’ÙQE:\homework_lab\WaterFlow\entry\src\main\ets\common\constants\CommonConstants.etsÙKE:\homework_lab\WaterFlow\entry\src\main\ets\userprofile\model\UserInfo.etsÙXE:\homework_lab\WaterFlow\entry\src\main\ets\userprofile\view\ProfileHeaderComponent.etsÔrBœªmoduleName±isLocalDependency¯isNodeEntryFile§pkgPath±belongProjectPath§pkgNameªpkgVersion±dependencyPkgInfo¯hostModulesInfo°belongModulePath§checker¬shouldEmitJs¥entryÃÂ¿E:\homework_lab\WaterFlow\entry¹E:\homework_lab\WaterFlow¥entry¥1.0.0Ô  ‘ÔrC’²hostDependencyName®hostModuleName¾../view/ProfileHeaderComponent¥entry¿E:\homework_lab\WaterFlow\entryÔrDÜ ®¬getNodeCount²getIdentifierCount®getSymbolCount¬getTypeCountµgetInstantiationCountµgetRelationCacheSizes±isUndefinedSymbol±isArgumentsSymbol¯isUnknownSymbol¯getMergedSymbol®getDiagnostics´getGlobalDiagnostics´getRecursionIdentity¶getUnmatchedProperties¹getTypeOfSymbolAtLocation¯getTypeOfSymbolÙ(getSymbolsOfParameterPropertyDeclaration·getDeclaredTypeOfSymbol³getPropertiesOfType±getPropertyOfTypeÙ"getPrivateIdentifierPropertyOfType·getTypeOfPropertyOfType²getIndexInfoOfType³getIndexInfosOfTypeºgetIndexInfosOfIndexSymbol³getSignaturesOfType²getIndexTypeOfType¬getIndexType¬getBaseTypes¸getBaseTypeOfLiteralType®getWidenedType³getTypeFromTypeNode°getParameterTypeÙ$getParameterIdentifierNameAtPosition¸getPromisedTypeOfPromise®getAwaitedType¸getReturnTypeOfSignature®isNullableType¯getNullableType²getNonNullableType²getNonOptionalType°getTypeArguments®typeToTypeNodeÙ$indexInfoToIndexSignatureDeclaration¿signatureToSignatureDeclaration²symbolToEntityName²symbolToExpression¬symbolToNodeÙ!symbolToTypeParameterDeclarations¼symbolToParameterDeclarationºtypeParameterToDeclaration±getSymbolsInScope³getSymbolAtLocation·getIndexInfosAtLocationÙ!getShorthandAssignmentValueSymbolÙ#getExportSpecifierLocalTargetSymbol·getExportSymbolOfSymbol±getTypeAtLocationºgetTypeAtLocationForLinterÙ tryGetTypeAtLocationWithoutCheckºgetTypeOfAssignmentPatternÙ*getPropertySymbolOfDestructuringAssignment±signatureToString¬typeToString®symbolToStringµtypePredicateToString®writeSignature©writeType«writeSymbol²writeTypePredicate¼getAugmentedPropertiesOfType®getRootSymbols²getSymbolOfExpando±getContextualTypeÙ(getContextualTypeForObjectLiteralElementÙ#getContextualTypeForArgumentAtIndexÙ getContextualTypeForJsxAttribute²isContextSensitiveÙ!getTypeOfPropertyOfContextualTypeµgetFullyQualifiedNameÙ#tryGetResolvedSignatureWithoutCheck´getResolvedSignatureÙ/getResolvedSignatureForStringLiteralCompletionsÙ$getResolvedSignatureForSignatureHelpµgetExpandedParameters¹hasEffectiveRestParameterºcontainsArgumentsReference°getConstantValueµisValidPropertyAccessÙ#isValidPropertyAccessForCompletions»getSignatureFromDeclarationºisImplementationOfOverload¹getImmediateAliasedSymbol°getAliasedSymbol¯getEmitResolver²getExportsOfModule¿getExportsAndPropertiesOfModuleÙ forEachExportAndPropertyOfModule¯getSymbolWalker±getAmbientModules¹getJsxIntrinsicTagNamesAt³isOptionalParameter»tryGetMemberInModuleExportsÙ(tryGetMemberInModuleExportsAndProperties´tryFindAmbientModuleÙ(tryFindAmbientModuleWithoutAugmentations¯getApparentType¬getUnionType²isTypeAssignableTo³createAnonymousType¯createSignature¬createSymbol¯createIndexInfoªgetAnyType­getStringType­getNumberType±createPromiseType¯createArrayType¹getElementTypeOfArrayType®getBooleanType¬getFalseType«getTrueType«getVoidType°getUndefinedType«getNullType¯getESSymbolType¬getNeverType¯getOptionalType®getPromiseType²getPromiseLikeType´getAsyncIterableType²isSymbolAccessible«isArrayType«isTupleType¯isArrayLikeTypeÙ#isTypeInvalidDueToUnionDiscriminantºgetExactOptionalProperties¿getAllPossiblePropertiesOfTypesÙ(getSuggestedSymbolForNonexistentPropertyÙ#getSuggestionForNonexistentPropertyÙ,getSuggestedSymbolForNonexistentJSXAttributeÙ&getSuggestedSymbolForNonexistentSymbolÙ!getSuggestionForNonexistentSymbolÙ&getSuggestedSymbolForNonexistentModuleÙ!getSuggestionForNonexistentExportÙ+getSuggestedSymbolForNonexistentClassMember·getBaseConstraintOfType»getDefaultFromTypeParameter«resolveName¯getJsxNamespaceµgetJsxFragmentFactory¸getAccessibleSymbolChain»getTypePredicateOfSignature¹resolveExternalModuleName»resolveExternalModuleSymbol°tryGetThisTypeAt¹getTypeArgumentConstraint¸getSuggestionDiagnostics¸runWithCancellationTokenÙ3getLocalTypeParametersOfClassOrInterfaceOrTypeAlias´isDeclarationVisible´isPropertyAccessible»getTypeOnlyAliasDeclaration¿getMemberOverrideModifierStatusÙ!isTypeParameterPossiblyReferenced²getConstEnumRelate´clearConstEnumRelateµdeleteConstEnumRelateÙ$getTypeArgumentsForResolvedSignatureµgetCheckedSourceFilesÙ"collectHaveTsNoCheckFilesForLinter·clearQualifiedNameCache®isStaticRecord²isStaticSourceFileÔ  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  ÃÃÚA/*
- * Copyright (c) 2023 Huawei Device Co., Ltd.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+//# sourceMappingURL=ProfileHeaderComponent.js.mapÂÙXE:\homework_lab\WaterFlow\entry\src\main\ets\userprofile\view\ProfileHeaderComponent.etsÔrBœªmoduleName±isLocalDependency¯isNodeEntryFile§pkgPath±belongProjectPath§pkgNameªpkgVersion±dependencyPkgInfo¯hostModulesInfo°belongModulePath§checker¬shouldEmitJs¥entryÃÂ¿E:\homework_lab\WaterFlow\entry¹E:\homework_lab\WaterFlow¥entry¥1.0.0Ô  ‘ÔrC’²hostDependencyName®hostModuleName¾../view/ProfileHeaderComponent¥entry¿E:\homework_lab\WaterFlow\entryÔrDÜ ®¬getNodeCount²getIdentifierCount®getSymbolCount¬getTypeCountµgetInstantiationCountµgetRelationCacheSizes±isUndefinedSymbol±isArgumentsSymbol¯isUnknownSymbol¯getMergedSymbol®getDiagnostics´getGlobalDiagnostics´getRecursionIdentity¶getUnmatchedProperties¹getTypeOfSymbolAtLocation¯getTypeOfSymbolÙ(getSymbolsOfParameterPropertyDeclaration·getDeclaredTypeOfSymbol³getPropertiesOfType±getPropertyOfTypeÙ"getPrivateIdentifierPropertyOfType·getTypeOfPropertyOfType²getIndexInfoOfType³getIndexInfosOfTypeºgetIndexInfosOfIndexSymbol³getSignaturesOfType²getIndexTypeOfType¬getIndexType¬getBaseTypes¸getBaseTypeOfLiteralType®getWidenedType³getTypeFromTypeNode°getParameterTypeÙ$getParameterIdentifierNameAtPosition¸getPromisedTypeOfPromise®getAwaitedType¸getReturnTypeOfSignature®isNullableType¯getNullableType²getNonNullableType²getNonOptionalType°getTypeArguments®typeToTypeNodeÙ$indexInfoToIndexSignatureDeclaration¿signatureToSignatureDeclaration²symbolToEntityName²symbolToExpression¬symbolToNodeÙ!symbolToTypeParameterDeclarations¼symbolToParameterDeclarationºtypeParameterToDeclaration±getSymbolsInScope³getSymbolAtLocation·getIndexInfosAtLocationÙ!getShorthandAssignmentValueSymbolÙ#getExportSpecifierLocalTargetSymbol·getExportSymbolOfSymbol±getTypeAtLocationºgetTypeAtLocationForLinterÙ tryGetTypeAtLocationWithoutCheckºgetTypeOfAssignmentPatternÙ*getPropertySymbolOfDestructuringAssignment±signatureToString¬typeToString®symbolToStringµtypePredicateToString®writeSignature©writeType«writeSymbol²writeTypePredicate¼getAugmentedPropertiesOfType®getRootSymbols²getSymbolOfExpando±getContextualTypeÙ(getContextualTypeForObjectLiteralElementÙ#getContextualTypeForArgumentAtIndexÙ getContextualTypeForJsxAttribute²isContextSensitiveÙ!getTypeOfPropertyOfContextualTypeµgetFullyQualifiedNameÙ#tryGetResolvedSignatureWithoutCheck´getResolvedSignatureÙ/getResolvedSignatureForStringLiteralCompletionsÙ$getResolvedSignatureForSignatureHelpµgetExpandedParameters¹hasEffectiveRestParameterºcontainsArgumentsReference°getConstantValueµisValidPropertyAccessÙ#isValidPropertyAccessForCompletions»getSignatureFromDeclarationºisImplementationOfOverload¹getImmediateAliasedSymbol°getAliasedSymbol¯getEmitResolver²getExportsOfModule¿getExportsAndPropertiesOfModuleÙ forEachExportAndPropertyOfModule¯getSymbolWalker±getAmbientModules¹getJsxIntrinsicTagNamesAt³isOptionalParameter»tryGetMemberInModuleExportsÙ(tryGetMemberInModuleExportsAndProperties´tryFindAmbientModuleÙ(tryFindAmbientModuleWithoutAugmentations¯getApparentType¬getUnionType²isTypeAssignableTo³createAnonymousType¯createSignature¬createSymbol¯createIndexInfoªgetAnyType­getStringType­getNumberType±createPromiseType¯createArrayType¹getElementTypeOfArrayType®getBooleanType¬getFalseType«getTrueType«getVoidType°getUndefinedType«getNullType¯getESSymbolType¬getNeverType¯getOptionalType®getPromiseType²getPromiseLikeType´getAsyncIterableType²isSymbolAccessible«isArrayType«isTupleType¯isArrayLikeTypeÙ#isTypeInvalidDueToUnionDiscriminantºgetExactOptionalProperties¿getAllPossiblePropertiesOfTypesÙ(getSuggestedSymbolForNonexistentPropertyÙ#getSuggestionForNonexistentPropertyÙ,getSuggestedSymbolForNonexistentJSXAttributeÙ&getSuggestedSymbolForNonexistentSymbolÙ!getSuggestionForNonexistentSymbolÙ&getSuggestedSymbolForNonexistentModuleÙ!getSuggestionForNonexistentExportÙ+getSuggestedSymbolForNonexistentClassMember·getBaseConstraintOfType»getDefaultFromTypeParameter«resolveName¯getJsxNamespaceµgetJsxFragmentFactory¸getAccessibleSymbolChain»getTypePredicateOfSignature¹resolveExternalModuleName»resolveExternalModuleSymbol°tryGetThisTypeAt¹getTypeArgumentConstraint¸getSuggestionDiagnostics¸runWithCancellationTokenÙ3getLocalTypeParametersOfClassOrInterfaceOrTypeAlias´isDeclarationVisible´isPropertyAccessible»getTypeOnlyAliasDeclaration¿getMemberOverrideModifierStatusÙ!isTypeParameterPossiblyReferenced²getConstEnumRelate´clearConstEnumRelateµdeleteConstEnumRelateÙ$getTypeArgumentsForResolvedSignatureµgetCheckedSourceFilesÙ"collectHaveTsNoCheckFilesForLinter·clearQualifiedNameCache®isStaticRecord²isStaticSourceFileÔ  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  ÃÃÚ.import { UserInfo } from '../model/UserInfo';
 
-import { CommonConstants as Const } from '../../common/constants/CommonConstants';
-import { UserInfo } from '../model/UserInfo';
-
-/**
- * Profile header component.
- * Displays user avatar, name, and signature.
- */
 @Component
 export default struct ProfileHeaderComponent {
-  /**
-   * User information.
-   */
-  userInfo: UserInfo = new UserInfo();
+  // æŽ¥æ”¶çˆ¶ç»„ä»¶ä¼ æ¥çš„ç”¨æˆ·ä¿¡æ¯
+  @ObjectLink userInfo: UserInfo;
 
   build() {
-    Column() {
-      // Avatar with border and shadow
-      Stack({ alignContent: Alignment.Center }) {
-        if (this.userInfo.avatar) {
-          Image(this.userInfo.avatar)
-            .width($r('app.float.profile_avatar_size'))
-            .height($r('app.float.profile_avatar_size'))
-            .borderRadius($r('app.float.profile_avatar_radius'))
-            .objectFit(ImageFit.Cover)
-            .border({
-              width: $r('app.float.profile_avatar_border_width'),
-              color: Color.White
-            })
-            .shadow({
-              radius: $r('app.float.profile_avatar_shadow_radius'),
-              color: $r('app.color.profile_avatar_shadow_color'),
-              offsetX: 0,
-              offsetY: 4
-            })
-        } else {
-          // Default avatar placeholder with gradient
-          Column() {
-            Text(this.userInfo.userName.length > 0 ? this.userInfo.userName.charAt(0) : 'U')
-              .fontSize($r('app.float.profile_avatar_text_size'))
-              .fontColor(Color.White)
-              .fontWeight(FontWeight.Bold)
-          }
-          .width($r('app.float.profile_avatar_size'))
-          .height($r('app.float.profile_avatar_size'))
-          .borderRadius($r('app.float.profile_avatar_radius'))
-          .linearGradient({
-            angle: 135,
-            colors: [[$r('app.color.profile_avatar_gradient_start'), 0.0], [$r('app.color.profile_avatar_gradient_end'), 1.0]]
-          })
-          .border({
-            width: $r('app.float.profile_avatar_border_width'),
-            color: Color.White
-          })
-          .shadow({
-            radius: $r('app.float.profile_avatar_shadow_radius'),
-            color: $r('app.color.profile_avatar_shadow_color'),
-            offsetX: 0,
-            offsetY: 4
-          })
+    Row() {
+      // --- å¤´åƒåŒºåŸŸ ---
+      Stack({ alignContent: Alignment.BottomEnd }) {
+        // 1. å¤´åƒå›¾ç‰‡
+        // å¦‚æžœæŠ¥é”™ "Unknown resource name"ï¼Œè¯·ç¡®ä¿ resources/base/media ä¸‹æœ‰ ic_avatar.png
+        // æˆ–è€…æš‚æ—¶æ”¹å›ž $r('app.media.app_icon')
+        Image($r('app.media.ic_avatar'))
+          .width(64)
+          .height(64)
+          .borderRadius(32) // åœ†å½¢
+          .objectFit(ImageFit.Cover) // ä¿æŒæ¯”ä¾‹å¡«å……
+          .border({ width: 2, color: Color.White }) // ç™½è‰²è¾¹æ¡†
+          .backgroundColor('#CCCCCC') // åŠ è½½å¤±è´¥æ—¶çš„åº•è‰²
+
+        // 2. å³ä¸‹è§’ç¼–è¾‘å°å›¾æ ‡
+        Text('âœï¸')
+          .fontSize(12)
+          .textAlign(TextAlign.Center)
+          .width(20)
+          .height(20)
+          .backgroundColor('#333333')
+          .fontColor(Color.White)
+          .borderRadius(10)
+          .border({ width: 1, color: Color.White })
+          .margin({ bottom: 0, right: 0 })
+        // .visibility(Visibility.Hidden) // å¦‚æžœæƒ³æ˜¾ç¤ºå°±æ³¨é‡ŠæŽ‰è¿™è¡Œ
+      }
+      .margin({ right: 16 })
+
+      // --- æ–‡å­—ä¿¡æ¯åŒºåŸŸ ---
+      Column() {
+        // æ˜µç§°
+        Text(this.userInfo.userName || 'å¼ ä¸‰')
+          .fontSize(20)
+          .fontColor(Color.White)
+          .fontWeight(FontWeight.Bold)
+          .margin({ bottom: 6 })
+
+        // ä¸ªäººç®€ä»‹æˆ–ID
+        Row() {
+          Text(`ID: ${this.userInfo.userId || 'æœªè®¾ç½®'}`)
+            .fontSize(12)
+            .fontColor('rgba(255,255,255,0.8)')
+            .margin({ right: 8 })
+
+          // å¤åˆ¶å›¾æ ‡
+          Text('â')
+            .fontSize(12)
+            .fontColor('rgba(255,255,255,0.8)')
         }
       }
-      .margin({ top: $r('app.float.profile_header_margin_top') })
-
-      // User name
-      Text(this.userInfo.userName || $r('app.string.profile_default_name'))
-        .fontSize($r('app.float.profile_name_font_size'))
-        .fontColor(Color.White)
-        .fontWeight(FontWeight.Bold)
-        .margin({ top: $r('app.float.profile_name_margin_top') })
-
-      // Signature
-      if (this.userInfo.signature) {
-        Text(this.userInfo.signature)
-          .fontSize($r('app.float.profile_signature_font_size'))
-          .fontColor(Color.White)
-          .opacity(0.9)
-          .margin({ top: $r('app.float.profile_signature_margin_top') })
-          .maxLines(2)
-          .textOverflow({ overflow: TextOverflow.Ellipsis })
-      }
+      .alignItems(HorizontalAlign.Start)
+      .layoutWeight(1) // å æ»¡å‰©ä½™ç©ºé—´
     }
-    .width(Const.FULL_WIDTH)
-    .padding({
-      left: $r('app.float.profile_padding_horizontal'),
-      right: $r('app.float.profile_padding_horizontal'),
-      bottom: $r('app.float.profile_header_padding_bottom')
-    })
-    .alignItems(HorizontalAlign.Center)
+    .width('100%')
+    .alignItems(VerticalAlign.Center)
   }
-}
-
-ÀÔrE’Ù&../../common/constants/CommonConstants±../model/UserInfoÔrF—ªassertions¨external¢id¤meta±moduleSideEffectsªresolvedByµsyntheticNamedExportsAÂÙQE:\homework_lab\WaterFlow\entry\src\main\ets\common\constants\CommonConstants.etsAÃªoh-resolveÂFAÂÙKE:\homework_lab\WaterFlow\entry\src\main\ets\userprofile\model\UserInfo.etsAÃªoh-resolveÂ“ÔrG–§version¤fileªsourceRoot§sources¥names¨mappings¹ProfileHeaderComponent.js ‘ºProfileHeaderComponent.etsÜ ¬‘”    ‘” š”   ” ”	 	” ” ”! !”# #”) )”ÌQ ÌQ”ÌR ÌR˜”   ” ”	 	” ” ” ”, ,”- -–”   ” ” ” ” ”+ ,‘”  ”” ” ”$ #”& %‘” -‘” ’” ” 
-˜” ” 
-” Ì`” Ì`
-” Ì`” Ì`” Ì`”) Ì`•” ” 
-” Ìa” Ìa” Ìa“” Ìb” Ìb
-”Ì€ Ìb6“” Ìc” Ìc”Ì Ìc7“” Ìd” Ìd”Ì‚ Ìd;‘” Ìe˜” ” 
-” Ìf” Ìf” Ìf”- Ìf”. Ìf ”4 Ìf&’” ”, &š”  ”  ”  ”  ”'  ”)  ”2  %”3  &”9  ,”;  .’” ”, &™”  ”  ” ÌL” ÌL” ÌL” ÌL” ÌL”ÌŠ ÌL>”ÌŒ ÌLÌ@˜” !” !” !” !” !” !”$ ! ”& !"˜” "
-” "”% "”) "”* "”2 "”3 "”9 "$”” "
-” "” #”# #”” "
-” "” $”$ $”” "
-” "” %”* %˜” "
-” "” &”' &”( &”0 &”1 & ”6 &%•” "
-” "” '”$ '”% '“” (”! (”Ì (Ì@–” )”! )”# )”( )”) )”. ) ‘” *•” "
-” "” +”$ +”% +“” ,”" ,”ÌŽ ,ÌB“” -”! -”Ì -Ì@”” .”# .”% .”& .”” /”# /”% /”& /‘” 0‘” 1	‘” 1’” 2
-”ÌC 25’” 3
-” 3’” 2
-”ÌC 25”” 3
-” 3” 9”$ 9’” 2
-”ÌC 25”” 3
-” 3” :”% :’” 2
-”ÌC 25”” 3
-” 3” ;”+ ;’” 2
-”ÌC 25•” 3
-” 3” <”- <”. <”” =”! =”# =”& =œ” >”" >”$ >”% >”Ì’ >ÌE”Ì• >ÌH”Ì– >ÌI”Ì˜ >ÌK”Í >Ìy”Í >Ì|”Í	 >Ì}”Í
- >Ì~‘” ?’” 2
-”ÌC 25•” 3
-” 3” Ì@”% Ì@”& Ì@“” ÌA”! ÌA”Ì ÌA>–” ÌB”! ÌB”# ÌB”( ÌB”) ÌB”. ÌB‘” ÌC’” 2
-”ÌC 25•” 3
-” 3” ÌD”% ÌD”& ÌD“” ÌE”" ÌE”ÌŽ ÌEÌ@“” ÌF”! ÌF”Ì ÌF>”” ÌG”# ÌG”% ÌG”& ÌG”” ÌH”# ÌH”% ÌH”& ÌH‘” ÌIÜ ” 4” 4”$ 4”( 4”) 4”1 4”2 4”: 4'”; 4(”ÌA 4.”ÌD 41”ÌE 42”ÌF 43”ÌG 44”ÌH 45”ÌL 49”ÌM 4:”ÌU 4ÌB”ÌV 4ÌC”Ì^ 4ÌK”Ì_ 4ÌL”Ìe 4ÌR”Ìf 4ÌS”Ìg 4ÌT”Ìh 4ÌU”Ìi 4ÌV”Ìj 4ÌW”Ìk 4ÌX”Ìn 4Ì[”” 4” 4” 5”% 5˜” 4” 4” 6”& 6”' 6”, 6”- 6”2 6$˜” 4” 4” 7”' 7”( 7”2 7$”3 7%”7 7)’” 4” 4’” 2
-”? 25’” 3
-” 3‘” ÌJ	’” ”( &’”  ”  ’” ÌN” ÌN™” ÌO” ÌO
-” ÌO” ÌO” ÌO”% ÌO”& ÌO”. ÌO!”Ìœ ÌOÌJ’” ÌN” ÌN”” ÌO” ÌO
-” ÌP	” ÌP’” ÌN” ÌN˜” ÌO” ÌO
-” ÌQ	” ÌQ” ÌQ”  ÌQ”! ÌQ”& ÌQ’” ÌN” ÌN˜” ÌO” ÌO
-” ÌR	” ÌR” ÌR”& ÌR”' ÌR”+ ÌR#’” ÌN” ÌN™” ÌO” ÌO
-” ÌS	” ÌS” ÌS” ÌS” ÌS”Ì‰ ÌS>”Ì‹ ÌSÌ@’” ÌN” ÌN’” ÌO” ÌO
-’” ÌU” ÌU˜” ÌV” ÌV
-” ÌV” ÌV” ÌV” ÌV”' ÌV!”) ÌV#˜” ÌW” ÌW”$ ÌW”( ÌW”) ÌW”1 ÌW”2 ÌW”; ÌW$”” ÌW” ÌW” ÌX”% ÌX˜” ÌW” ÌW” ÌY”& ÌY”' ÌY”, ÌY”- ÌY”2 ÌY –” ÌW” ÌW” ÌZ”$ ÌZ”% ÌZ”( ÌZ™” ÌW” ÌW” Ì[”# Ì[”$ Ì[”& Ì[”) Ì[”Ì• Ì[ÌE”Ì— Ì[ÌG–” ÌW” ÌW” Ì\”% Ì\”& Ì\”' Ì\œ” ÌW” ÌW” Ì]”) Ì]”* Ì]”, Ì]”4 Ì]"”6 Ì]$”ÌB Ì]0”ÌC Ì]1”ÌK Ì]9”ÌM Ì];’” ÌW” ÌW‘” Ì^‘” Ì^’” ” 
-‘” ÌgÔrH–§version¤file§sources®sourcesContent¥names¨mappingsÀ‘À‘ÀÜ ±‘”    ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”  	 ‘”  
- ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”    ‘”  ! ‘”  " ‘”  # ‘”  $ ‘”  % ‘”  & ‘”  ' ‘”  ( ‘”  ) ‘”  * ‘”  + ‘”  , ‘”  - ‘”  . ‘”  / ‘”  0 ‘”  1 ‘”  2 ‘”  3 ‘”  4 ‘”  5 ‘”  6 ‘”  7 ‘”  8 ‘”  9 ‘”  : ‘”  ; ‘”  < ‘”  = ‘”  > ‘”  ? ‘”  Ì@ ‘”  ÌA ‘”  ÌB ‘”  ÌC ‘”  ÌD ‘”  ÌE ‘”  ÌF ‘”  ÌG ‘”  ÌH ‘”  ÌI ‘”  ÌJ ‘”  ÌK ‘”  ÌL ‘”  ÌM ‘”  ÌN ‘”  ÌO ‘”  ÌP ‘”  ÌQ ‘”  ÌR ‘”  ÌS ‘”  ÌT ‘”  ÌU ‘”  ÌV ‘”  ÌW ‘”  ÌX ‘”  ÌY ‘”  ÌZ ‘”  Ì[ ‘”  Ì\ ‘”  Ì] ‘”  Ì^ ‘”  Ì_ ‘”  Ì` ‘”  Ìa ‘”  Ìb ‘”  Ìc ‘”  Ìd ‘”  Ìe ‘”  Ìf ‘”  Ìg ‘”  Ìh ‘”  Ìi ‘”  Ìj ‘”  Ìk ‘”  Ìl ‘”  Ìm ‘”  Ìn ‘”  Ìo ‘”  Ìp ‘”  Ìq ‘”  Ìr ‘”  Ìs ‘”  Ìt ‘”  Ìu ‘”  Ìv ‘”  Ìw ‘”  Ìx ‘”  Ìy ‘”  Ìz ‘”  Ì{ ‘”  Ì| ‘”  Ì} ‘”  Ì~ ‘”  Ì ‘”  Ì€ ‘”  Ì ‘”  Ì‚ ‘”  Ìƒ ‘”  Ì„ ‘”  Ì… ‘”  Ì† ‘”  Ì‡ ‘”  Ìˆ ‘”  Ì‰ ‘”  ÌŠ ‘”  Ì‹ ‘”  ÌŒ ‘”  Ì ‘”  ÌŽ ‘”  Ì ‘”  Ì ‘”  Ì‘ ‘”  Ì’ ‘”  Ì“ ‘”  Ì” ‘”  Ì• ‘”  Ì– ‘”  Ì— ‘”  Ì˜ ‘”  Ì™ ‘”  Ìš ‘”  Ì› ‘”  Ìœ ‘”  Ì ‘”  Ìž ‘”  ÌŸ ‘”  Ì  ‘”  Ì¡ ‘”  Ì¢ ‘”  Ì£ ‘”  Ì¤ ‘”  Ì¥ ‘”  Ì¦ ‘”  Ì§ ‘”  Ì¨ ‘”  Ì© ‘”  Ìª ‘”  Ì« ‘”  Ì¬ ‘”  Ì­ ‘”  Ì® ‘”  Ì¯ ‘”  Ì° ÔrI’§missing¦pluginÃ¦genAbcÂÔ  ÔrJ”²dynamicImportCache¹exportAllDeclarationCache»exportNamedDeclarationCache«importCache’ÔrK•¤type¥start£endªspecifiers¦source±ImportDeclarationÍîÍ@‘ÔrL•¤type¥start£end¨imported¥local¯ImportSpecifierÍ÷ÍÔrM”¤type¥start£end¤nameªIdentifierÍ÷Í¯CommonConstantsMªIdentifierÍ
-Í¥ConstÔrN•¤type¥start£end¥value£raw§LiteralÍÍ?Ù&../../common/constants/CommonConstantsÙ('../../common/constants/CommonConstants'K±ImportDeclarationÍBÍo‘L¯ImportSpecifierÍKÍSMªIdentifierÍKÍS¨UserInfoMªIdentifierÍKÍS¨UserInfoN§LiteralÍ[Ín±../model/UserInfo³'../model/UserInfo'
+}ÀA“ÔrE–§version¤fileªsourceRoot§sources¥names¨mappings¹ProfileHeaderComponent.js ‘ºProfileHeaderComponent.etsÜ œ–”   ” ” ” ” ”+ ,‘”  ‘”  -’” ” ‘” ’” ” –” ” ” >” >
+” >” >˜” ” ” ?” ?” ?”( ?”) ?”/ ?$’” 	” 	š” 
+” 
+” 
+” 
+”' 
+”) 
+”2 
+%”3 
+&”< 
+/”> 
+1’” 	” 	š” 
+” 
+” #” #” #” #”  #”" #”$ #”& #’” ” ’” ”ÌU ÌQ’” ”. *’” ” ’” ” ’” ”ÌU ÌQ’” ”. *–” ” ” ” ” ” ’” ” ’” ”ÌU ÌQ’” ”. *–” ” ” ” ” ” ’” ” ’” ”ÌU ÌQ’” ”. *–” ” ” ” ” ”! ’” ” ’” ”ÌU ÌQ’” ”. *˜” ” ” ” ” ”$ ”% ”* #’” ” ’” ”ÌU ÌQ’” ”. *Ü ” ” ” ” ” ” ”  ”" ”# ”% ”* #”, %”1 *”2 +”7 0”9 2’” ” ’” ”ÌU ÌQ’” ”. *–” ” ” ”! ”" ”+ $’” ” ”” ” ” ” ’” ” –” ” ” ” ” ” ’” ” ˜” ” ” ” ” ”$ ”% ”+ %’” ” –” ” ” ” ” ” ’” ” –” ” ” ” ” ” ’” ” –” ” ” ”  ”! ”* $’” ” ˜” ” ” ” ” ”  ”! ”&  ’” ” –” ” ” ” ” ”  ’” ” Ü ” ” ” ” ” ” ” ”! ”" ”$ ”) #”+ %”0 *”1 +”6 0”8 2’” ” ž” ” ”  ”  ”  ”  ”   ”"  ”#  ”%  ”*  $”,  &”-  '”/  )’” ” ’” ” ’” 	” 	’” 
+” 
+’” %” %’” &” &’” %” %˜” &” &” ;” ;” ;”- ;!”. ;"”3 ;'’” %” %–” &” &” <” <”  <”! <’” '” 'š” (” (” (” (” (”% (”& (”. (#”2 ('”6 (+’” '” '–” (” (” )” )” )” )’” '” '˜” (” (” *” *” *”  *”! *”& * ’” '” '˜” (” (” +” +” +”& + ”' +!”+ +%’” '” 'š” (” (” ,” ,” ,” ,”  ,”" ,”# ,”% ,’” '” '’” (” (’” .” .’” /” /œ” 0
+” 0” 0” 0”# 0”$ 0”, 0#”- 0$”3 0*”7 0.”< 03”> 05–” 0
+” 0” 1” 1” 1” 1–” 0
+” 0” 2” 2” 2”2 2.š” 0
+” 0” 3” 3” 3” 3” 3”! 3”" 3”$ 3 ’” 0
+” 0’” 5
+” 5”” 6
+” 6” 6” 6’” 5
+” 5–” 6
+” 6” 7” 7” 7” 7’” 5
+” 5–” 6
+” 6” 8” 8” 8”2 8.’” 5
+” 5’” 6
+” 6’” .” .’” /” /’” %” %’” &” &’” ” ‘” Ì@ÔrF–§version¤file§sources®sourcesContent¥names¨mappingsÀ‘À‘ÀÜ ¡‘”    ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”  	 ‘”  
+ ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”    ‘”  ! ‘”  " ‘”  # ‘”  $ ‘”  % ‘”  & ‘”  ' ‘”  ( ‘”  ) ‘”  * ‘”  + ‘”  , ‘”  - ‘”  . ‘”  / ‘”  0 ‘”  1 ‘”  2 ‘”  3 ‘”  4 ‘”  5 ‘”  6 ‘”  7 ‘”  8 ‘”  9 ‘”  : ‘”  ; ‘”  < ‘”  = ‘”  > ‘”  ? ‘”  Ì@ ‘”  ÌA ‘”  ÌB ‘”  ÌC ‘”  ÌD ‘”  ÌE ‘”  ÌF ‘”  ÌG ‘”  ÌH ‘”  ÌI ‘”  ÌJ ‘”  ÌK ‘”  ÌL ‘”  ÌM ‘”  ÌN ‘”  ÌO ‘”  ÌP ‘”  ÌQ ‘”  ÌR ‘”  ÌS ‘”  ÌT ‘”  ÌU ‘”  ÌV ‘”  ÌW ‘”  ÌX ‘”  ÌY ‘”  ÌZ ‘”  Ì[ ‘”  Ì\ ‘”  Ì] ‘”  Ì^ ‘”  Ì_ ‘”  Ì` ‘”  Ìa ‘”  Ìb ‘”  Ìc ‘”  Ìd ‘”  Ìe ‘”  Ìf ‘”  Ìg ‘”  Ìh ‘”  Ìi ‘”  Ìj ‘”  Ìk ‘”  Ìl ‘”  Ìm ‘”  Ìn ‘”  Ìo ‘”  Ìp ‘”  Ìq ‘”  Ìr ‘”  Ìs ‘”  Ìt ‘”  Ìu ‘”  Ìv ‘”  Ìw ‘”  Ìx ‘”  Ìy ‘”  Ìz ‘”  Ì{ ‘”  Ì| ‘”  Ì} ‘”  Ì~ ‘”  Ì ‘”  Ì€ ‘”  Ì ‘”  Ì‚ ‘”  Ìƒ ‘”  Ì„ ‘”  Ì… ‘”  Ì† ‘”  Ì‡ ‘”  Ìˆ ‘”  Ì‰ ‘”  ÌŠ ‘”  Ì‹ ‘”  ÌŒ ‘”  Ì ‘”  ÌŽ ‘”  Ì ‘”  Ì ‘”  Ì‘ ‘”  Ì’ ‘”  Ì“ ‘”  Ì” ‘”  Ì• ‘”  Ì– ‘”  Ì— ‘”  Ì˜ ‘”  Ì™ ‘”  Ìš ‘”  Ì› ‘”  Ìœ ‘”  Ì ‘”  Ìž ‘”  ÌŸ ‘”  Ì  ÔrG’§missing¦pluginÃ¦genAbcÂÔ  ÔrH”²dynamicImportCache¹exportAllDeclarationCache»exportNamedDeclarationCache«importCache

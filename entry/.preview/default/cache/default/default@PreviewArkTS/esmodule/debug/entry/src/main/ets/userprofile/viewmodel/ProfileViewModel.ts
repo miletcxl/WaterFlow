@@ -1,6 +1,10 @@
 import { UserInfo } from "@bundle:com.huawei.waterflow/entry/ets/userprofile/model/UserInfo";
 import type { ProfileMenuItem } from "@bundle:com.huawei.waterflow/entry/ets/userprofile/model/UserInfo";
+import { DatabaseManager } from "@bundle:com.huawei.waterflow/entry/ets/userprofile/database/DatabaseManager";
+import router from "@ohos:router";
 import promptAction from "@ohos:promptAction";
+import Logger from "@bundle:com.huawei.waterflow/entry/ets/common/utils/Logger";
+const TAG = 'ProfileViewModel';
 export class QuickEntryModel {
     title: ResourceStr = '';
     actionType: string = '';
@@ -32,17 +36,73 @@ export class ProfileViewModel {
      */
     recentOrders: RecentOrderModel[] = [];
     /**
-     * Initialize user information.
+     * Database manager instance.
      */
-    initUserInfo(): void {
-        this.userInfo.userName = '张三';
-        this.userInfo.avatar = '';
-        this.userInfo.phone = '138****8888';
-        this.userInfo.email = 'zhangsan@example.com';
-        this.userInfo.address = '北京市朝阳区';
-        this.userInfo.gender = '男';
-        this.userInfo.birthday = '1990-01-01';
-        this.userInfo.signature = '这个人很懒，什么都没有留下';
+    private dbManager: DatabaseManager = DatabaseManager.getInstance();
+    /**
+     * Initialize user information from database.
+     */
+    async initUserInfo(): Promise<void> {
+        try {
+            const currentUser = await this.dbManager.getCurrentUser();
+            if (currentUser) {
+                const userInfo = await this.dbManager.getUserInfo(currentUser.userId);
+                if (userInfo) {
+                    this.userInfo = userInfo;
+                    this.userInfo.userId = currentUser.userId;
+                }
+                else {
+                    // 如果没有用户信息，使用默认值
+                    this.userInfo.userId = currentUser.userId;
+                    this.userInfo.userName = currentUser.username;
+                    this.userInfo.avatar = '';
+                    this.userInfo.phone = '';
+                    this.userInfo.email = '';
+                    this.userInfo.address = '';
+                    this.userInfo.gender = '';
+                    this.userInfo.birthday = '';
+                    this.userInfo.signature = '这个人很懒，什么都没有留下';
+                    // 保存默认信息到数据库
+                    await this.dbManager.saveUserInfo(currentUser.userId, this.userInfo);
+                }
+            }
+            else {
+                // 未登录，使用默认值
+                this.userInfo.userName = '未登录';
+                this.userInfo.avatar = '';
+                this.userInfo.phone = '';
+                this.userInfo.email = '';
+                this.userInfo.address = '';
+                this.userInfo.gender = '';
+                this.userInfo.birthday = '';
+                this.userInfo.signature = '';
+            }
+        }
+        catch (err) {
+            const error = err as Error;
+            Logger.error(TAG, `初始化用户信息失败: ${error.message}`);
+            // 使用默认值
+            this.userInfo.userName = '未登录';
+        }
+    }
+    /**
+     * Save user information to database.
+     */
+    async saveUserInfo(): Promise<void> {
+        try {
+            if (this.userInfo.userId > 0) {
+                await this.dbManager.saveUserInfo(this.userInfo.userId, this.userInfo);
+                promptAction.showToast({ message: '保存成功', duration: 2000 });
+            }
+            else {
+                Logger.warn(TAG, '用户未登录，无法保存信息');
+            }
+        }
+        catch (err) {
+            const error = err as Error;
+            Logger.error(TAG, `保存用户信息失败: ${error.message}`);
+            promptAction.showToast({ message: `保存失败: ${error.message}`, duration: 2000 });
+        }
     }
     /**
      * Initialize menu items.
@@ -121,8 +181,8 @@ export class ProfileViewModel {
                 message = '打开通知设置页面（占位）';
                 break;
             case 'logout':
-                message = '已退出登录（占位）';
-                break;
+                this.handleLogout();
+                return;
             case 'coupon':
                 message = '打开优惠券页面（占位）';
                 break;
@@ -148,5 +208,27 @@ export class ProfileViewModel {
         order.status = status;
         order.date = date;
         return order;
+    }
+    /**
+     * Handle logout.
+     */
+    private async handleLogout(): Promise<void> {
+        try {
+            await this.dbManager.logoutUser();
+            promptAction.showToast({ message: '已退出登录', duration: 2000 });
+            // 跳转到登录页
+            setTimeout(() => {
+                router.replaceUrl({
+                    url: 'userprofile/pages/LoginPage'
+                }).catch((err: Error) => {
+                    Logger.error(TAG, `跳转登录页失败: ${err.message}`);
+                });
+            }, 500);
+        }
+        catch (err) {
+            const error = err as Error;
+            Logger.error(TAG, `退出登录失败: ${error.message}`);
+            promptAction.showToast({ message: `退出登录失败: ${error.message}`, duration: 2000 });
+        }
     }
 }

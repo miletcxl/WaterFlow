@@ -2082,7 +2082,8 @@
         "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\build-tools\\ets-loader\\declarations\\navigation.d.ts",
         "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.ArkUI.d.ts",
         "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.arkui.advanced.FoldSplitContainer.d.ets",
-        "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.arkui.uiExtension.d.ts"
+        "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.arkui.uiExtension.d.ts",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\pages\\AiServicePage.ets"
       ],
       "error": false
     },
@@ -2142,7 +2143,11 @@
         "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.arkui.advanced.MultiNavigation.d.ets",
         "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.atomicservice.HalfScreenLaunchComponent.d.ets",
         "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\pages\\ProfilePage.ets",
-        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\pages\\AiServicePage.ets"
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\pages\\AiServicePage.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\database\\DatabaseManager.ets",
+        "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.data.relationalStore.d.ts",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\pages\\LoginPage.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\pages\\RegisterPage.ets"
       ],
       "error": false
     },
@@ -2152,7 +2157,14 @@
         "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.hilog.d.ts"
       ],
       "parent": [
-        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\entryability\\EntryAbility.ets"
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\entryability\\EntryAbility.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\pages\\HomePage.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\database\\DatabaseManager.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\pages\\ProfilePage.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\viewmodel\\ProfileViewModel.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\pages\\LoginPage.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\pages\\RegisterPage.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\pages\\EditProfilePage.ets"
       ],
       "error": false
     },
@@ -2506,7 +2518,8 @@
         "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\app\\context.d.ts",
         "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.data.rdb.d.ts",
         "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.PiPWindow.d.ts",
-        "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.window.floatingBall.d.ts"
+        "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.window.floatingBall.d.ts",
+        "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.data.relationalStore.d.ts"
       ],
       "error": false
     },
@@ -2690,7 +2703,10 @@
         "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\build-tools\\ets-loader\\declarations\\alert_dialog.d.ts",
         "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\build-tools\\ets-loader\\declarations\\common.d.ts",
         "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\build-tools\\ets-loader\\declarations\\custom_dialog_controller.d.ts",
-        "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.ArkUI.d.ts"
+        "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.ArkUI.d.ts",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\pages\\LoginPage.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\pages\\RegisterPage.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\pages\\EditProfilePage.ets"
       ],
       "error": false
     },
@@ -2704,7 +2720,12 @@
         "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\pages\\HomePage.ets",
         "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\pages\\ProfilePage.ets",
         "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\pages\\AiServicePage.ets",
-        "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.ArkUI.d.ts"
+        "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.ArkUI.d.ts",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\viewmodel\\ProfileViewModel.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\pages\\LoginPage.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\pages\\RegisterPage.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\view\\ProfileHeaderComponent.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\pages\\EditProfilePage.ets"
       ],
       "error": false
     },
@@ -2798,7 +2819,14 @@
         "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\ability\\abilityResult.d.ts"
       ],
       "parent": [
-        "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.arkui.UIContext.d.ts"
+        "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.arkui.UIContext.d.ts",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\pages\\AiServicePage.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\pages\\HomePage.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\database\\DatabaseManager.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\pages\\ProfilePage.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\pages\\LoginPage.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\pages\\RegisterPage.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\pages\\EditProfilePage.ets"
       ],
       "error": false
     },
@@ -3638,15 +3666,18 @@
       "error": false
     },
     "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\pages\\HomePage.ets": {
-      "mtimeMs": 1765438084000,
+      "mtimeMs": 1765520766000,
       "children": [
         "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\common\\constants\\CommonConstants.ets",
         "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.router.d.ts",
+        "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.app.ability.common.d.ts",
         "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\view\\ClassifyComponent.ets",
         "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\view\\SearchComponent.ets",
         "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\view\\SwiperComponent.ets",
         "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\view\\WaterFlowComponent.ets",
-        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\view\\UserIconComponent.ets"
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\view\\UserIconComponent.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\database\\DatabaseManager.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\common\\utils\\Logger.ets"
       ],
       "parent": [],
       "error": true,
@@ -3702,40 +3733,51 @@
       "error": false
     },
     "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\viewmodel\\ProfileViewModel.ets": {
-      "mtimeMs": 1765436486000,
+      "mtimeMs": 1765522066000,
       "children": [
         "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\model\\UserInfo.ets",
-        "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.promptAction.d.ts"
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\database\\DatabaseManager.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\model\\MemberInfo.ets",
+        "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.router.d.ts",
+        "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.promptAction.d.ts",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\common\\utils\\Logger.ets"
+      ],
+      "parent": [
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\pages\\ProfilePage.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\pages\\EditProfilePage.ets"
+      ],
+      "error": true,
+      "errorCodes": [
+        28007,
+        28040
+      ]
+    },
+    "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\model\\UserInfo.ets": {
+      "mtimeMs": 1765520506000,
+      "children": [],
+      "parent": [
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\pages\\ProfilePage.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\viewmodel\\ProfileViewModel.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\view\\ProfileHeaderComponent.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\view\\ProfileItemComponent.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\database\\DatabaseManager.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\pages\\RegisterPage.ets"
+      ],
+      "error": false
+    },
+    "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\view\\ProfileHeaderComponent.ets": {
+      "mtimeMs": 1765522382000,
+      "children": [
+        "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.router.d.ts",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\model\\UserInfo.ets"
       ],
       "parent": [
         "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\pages\\ProfilePage.ets"
       ],
       "error": true,
       "errorCodes": [
-        28040,
         28007
       ]
-    },
-    "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\model\\UserInfo.ets": {
-      "mtimeMs": 1765431870000,
-      "children": [],
-      "parent": [
-        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\pages\\ProfilePage.ets",
-        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\viewmodel\\ProfileViewModel.ets",
-        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\view\\ProfileHeaderComponent.ets",
-        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\view\\ProfileItemComponent.ets"
-      ],
-      "error": false
-    },
-    "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\view\\ProfileHeaderComponent.ets": {
-      "mtimeMs": 1765445558000,
-      "children": [
-        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\model\\UserInfo.ets"
-      ],
-      "parent": [
-        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\pages\\ProfilePage.ets"
-      ],
-      "error": false
     },
     "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\view\\ProfileItemComponent.ets": {
       "mtimeMs": 1765432580000,
@@ -3749,15 +3791,17 @@
       "error": false
     },
     "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\pages\\ProfilePage.ets": {
-      "mtimeMs": 1765444198000,
+      "mtimeMs": 1765522382000,
       "children": [
         "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\common\\constants\\CommonConstants.ets",
         "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.router.d.ts",
-        "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.base.d.ts",
+        "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.app.ability.common.d.ts",
         "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\viewmodel\\ProfileViewModel.ets",
         "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\model\\UserInfo.ets",
         "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\view\\ProfileHeaderComponent.ets",
-        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\view\\ProfileItemComponent.ets"
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\view\\ProfileItemComponent.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\database\\DatabaseManager.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\common\\utils\\Logger.ets"
       ],
       "parent": [],
       "error": true,
@@ -3766,17 +3810,17 @@
       ]
     },
     "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\pages\\AiServicePage.ets": {
-      "mtimeMs": 1765443542000,
+      "mtimeMs": 1765462980000,
       "children": [
-        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\common\\constants\\CommonConstants.ets",
-        "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.promptAction.d.ts",
         "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.router.d.ts",
-        "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.base.d.ts"
+        "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.window.d.ts",
+        "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.app.ability.common.d.ts"
       ],
       "parent": [],
       "error": true,
       "errorCodes": [
-        28007
+        28007,
+        28040
       ]
     },
     "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\build-tools\\ets-loader\\declarations\\action_sheet.d.ts": {
@@ -5564,6 +5608,165 @@
         "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.display.d.ts"
       ],
       "error": false
+    },
+    "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\database\\DatabaseManager.ets": {
+      "mtimeMs": 1765522066000,
+      "children": [
+        "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.data.relationalStore.d.ts",
+        "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.base.d.ts",
+        "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.app.ability.common.d.ts",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\model\\UserInfo.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\model\\UserAccount.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\model\\Order.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\model\\Favorite.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\model\\MemberInfo.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\common\\utils\\Logger.ets"
+      ],
+      "parent": [
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\pages\\HomePage.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\pages\\ProfilePage.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\viewmodel\\ProfileViewModel.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\pages\\LoginPage.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\pages\\RegisterPage.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\pages\\EditProfilePage.ets"
+      ],
+      "error": true,
+      "errorCodes": [
+        28040
+      ]
+    },
+    "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.data.relationalStore.d.ts": {
+      "mtimeMs": 1763803364000,
+      "children": [
+        "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.base.d.ts",
+        "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\application\\BaseContext.d.ts",
+        "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.data.sendableRelationalStore.d.ets"
+      ],
+      "parent": [
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\database\\DatabaseManager.ets",
+        "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.data.sendableRelationalStore.d.ets"
+      ],
+      "error": false
+    },
+    "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\model\\UserAccount.ets": {
+      "mtimeMs": 1765520506000,
+      "children": [],
+      "parent": [
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\database\\DatabaseManager.ets"
+      ],
+      "error": false
+    },
+    "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.data.sendableRelationalStore.d.ets": {
+      "mtimeMs": 1763803364000,
+      "children": [
+        "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\arkts\\@arkts.collections.d.ets",
+        "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\arkts\\@arkts.lang.d.ets",
+        "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.data.relationalStore.d.ts"
+      ],
+      "parent": [
+        "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.data.relationalStore.d.ts"
+      ],
+      "error": false
+    },
+    "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\arkts\\@arkts.collections.d.ets": {
+      "mtimeMs": 1763803364000,
+      "children": [
+        "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\arkts\\@arkts.lang.d.ets"
+      ],
+      "parent": [
+        "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.data.sendableRelationalStore.d.ets"
+      ],
+      "error": false
+    },
+    "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\arkts\\@arkts.lang.d.ets": {
+      "mtimeMs": 1763803364000,
+      "children": [],
+      "parent": [
+        "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.data.sendableRelationalStore.d.ets",
+        "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\arkts\\@arkts.collections.d.ets"
+      ],
+      "error": false
+    },
+    "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\pages\\LoginPage.ets": {
+      "mtimeMs": 1765520766000,
+      "children": [
+        "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.router.d.ts",
+        "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.app.ability.common.d.ts",
+        "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.base.d.ts",
+        "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.promptAction.d.ts",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\database\\DatabaseManager.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\common\\utils\\Logger.ets"
+      ],
+      "parent": [],
+      "error": true,
+      "errorCodes": [
+        28007,
+        28040
+      ]
+    },
+    "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\pages\\RegisterPage.ets": {
+      "mtimeMs": 1765522066000,
+      "children": [
+        "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.router.d.ts",
+        "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.app.ability.common.d.ts",
+        "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.base.d.ts",
+        "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.promptAction.d.ts",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\database\\DatabaseManager.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\model\\UserInfo.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\model\\MemberInfo.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\model\\Order.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\common\\utils\\Logger.ets"
+      ],
+      "parent": [],
+      "error": true,
+      "errorCodes": [
+        28007,
+        28040
+      ]
+    },
+    "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\model\\Order.ets": {
+      "mtimeMs": 1765522066000,
+      "children": [],
+      "parent": [
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\database\\DatabaseManager.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\pages\\RegisterPage.ets"
+      ],
+      "error": false
+    },
+    "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\model\\Favorite.ets": {
+      "mtimeMs": 1765522066000,
+      "children": [],
+      "parent": [
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\database\\DatabaseManager.ets"
+      ],
+      "error": false
+    },
+    "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\model\\MemberInfo.ets": {
+      "mtimeMs": 1765522066000,
+      "children": [],
+      "parent": [
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\database\\DatabaseManager.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\viewmodel\\ProfileViewModel.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\pages\\RegisterPage.ets"
+      ],
+      "error": false
+    },
+    "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\pages\\EditProfilePage.ets": {
+      "mtimeMs": 1765522382000,
+      "children": [
+        "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.router.d.ts",
+        "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.app.ability.common.d.ts",
+        "E:\\devecostudio-windows-6.0.1.251\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.promptAction.d.ts",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\database\\DatabaseManager.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\userprofile\\viewmodel\\ProfileViewModel.ets",
+        "E:\\homework_lab\\WaterFlow\\entry\\src\\main\\ets\\common\\utils\\Logger.ets"
+      ],
+      "parent": [],
+      "error": true,
+      "errorCodes": [
+        28007,
+        28040
+      ]
     }
   }
 }

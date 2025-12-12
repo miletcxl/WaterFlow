@@ -1,0 +1,722 @@
+Ôr@Ÿªassertions¤code´customTransformCache¬dependencies¢id¤meta±moduleSideEffects¬originalCode±originalSourcemap«resolvedIds®sourcemapChainµsyntheticNamedExportsµtransformDependencies®transformFiles¨cacheAstÔrAÚHYif (!("finalizeConstruction" in ViewPU.prototype)) {
+    Reflect.set(ViewPU.prototype, "finalizeConstruction", () => { });
+}
+/*
+ * Copyright (c) 2023 Huawei Device Co., Ltd.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ */
+import router from "@ohos.router";
+import promptAction from '@ohos.promptAction';
+import { DatabaseManager } from '../database/DatabaseManager';
+import { UserInfo } from '../model/UserInfo';
+import Logger from '../../common/utils/Logger';
+const TAG = 'RegisterPage';
+class RegisterPage extends ViewPU {
+    constructor(parent, params, __localStorage, elmtId = -1, paramsLambda = undefined, extraInfo) {
+        super(parent, __localStorage, elmtId, extraInfo);
+        if (typeof paramsLambda === "function") {
+            this.paramsGenerator_ = paramsLambda;
+        }
+        this.__username = new ObservedPropertySimplePU('', this, "username");
+        this.__password = new ObservedPropertySimplePU('', this, "password");
+        this.__confirmPassword = new ObservedPropertySimplePU('', this, "confirmPassword");
+        this.__isLoading = new ObservedPropertySimplePU(false, this, "isLoading");
+        this.context = getContext(this);
+        this.dbManager = DatabaseManager.getInstance();
+        this.setInitiallyProvidedValue(params);
+        this.finalizeConstruction();
+    }
+    setInitiallyProvidedValue(params) {
+        if (params.username !== undefined) {
+            this.username = params.username;
+        }
+        if (params.password !== undefined) {
+            this.password = params.password;
+        }
+        if (params.confirmPassword !== undefined) {
+            this.confirmPassword = params.confirmPassword;
+        }
+        if (params.isLoading !== undefined) {
+            this.isLoading = params.isLoading;
+        }
+        if (params.context !== undefined) {
+            this.context = params.context;
+        }
+        if (params.dbManager !== undefined) {
+            this.dbManager = params.dbManager;
+        }
+    }
+    updateStateVars(params) {
+    }
+    purgeVariableDependenciesOnElmtId(rmElmtId) {
+        this.__username.purgeDependencyOnElmtId(rmElmtId);
+        this.__password.purgeDependencyOnElmtId(rmElmtId);
+        this.__confirmPassword.purgeDependencyOnElmtId(rmElmtId);
+        this.__isLoading.purgeDependencyOnElmtId(rmElmtId);
+    }
+    aboutToBeDeleted() {
+        this.__username.aboutToBeDeleted();
+        this.__password.aboutToBeDeleted();
+        this.__confirmPassword.aboutToBeDeleted();
+        this.__isLoading.aboutToBeDeleted();
+        SubscriberManager.Get().delete(this.id__());
+        this.aboutToBeDeletedInternal();
+    }
+    get username() {
+        return this.__username.get();
+    }
+    set username(newValue) {
+        this.__username.set(newValue);
+    }
+    get password() {
+        return this.__password.get();
+    }
+    set password(newValue) {
+        this.__password.set(newValue);
+    }
+    get confirmPassword() {
+        return this.__confirmPassword.get();
+    }
+    set confirmPassword(newValue) {
+        this.__confirmPassword.set(newValue);
+    }
+    get isLoading() {
+        return this.__isLoading.get();
+    }
+    set isLoading(newValue) {
+        this.__isLoading.set(newValue);
+    }
+    aboutToAppear() {
+        // åˆå§‹åŒ–æ•°æ®åº“
+        this.dbManager.initDatabase(this.context).catch((err) => {
+            const error = err;
+            Logger.error(TAG, `æ•°æ®åº“åˆå§‹åŒ–å¤±è´¥: ${error.message}`);
+        });
+    }
+    initialRender() {
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Column.create();
+            Column.debugLine("entry/src/main/ets/userprofile/pages/RegisterPage.ets(39:5)", "entry");
+            Column.width('100%');
+            Column.height('100%');
+            Column.backgroundColor('#FFFFFF');
+        }, Column);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            // é¡¶éƒ¨è£…é¥°åŒºåŸŸ
+            Column.create();
+            Column.debugLine("entry/src/main/ets/userprofile/pages/RegisterPage.ets(41:7)", "entry");
+            // é¡¶éƒ¨è£…é¥°åŒºåŸŸ
+            Column.width('100%');
+            // é¡¶éƒ¨è£…é¥°åŒºåŸŸ
+            Column.height(200);
+            // é¡¶éƒ¨è£…é¥°åŒºåŸŸ
+            Column.justifyContent(FlexAlign.Center);
+            // é¡¶éƒ¨è£…é¥°åŒºåŸŸ
+            Column.linearGradient({
+                angle: 180,
+                colors: [['#FF8A3C', 0.0], ['#FFB36B', 1.0]]
+            });
+            // é¡¶éƒ¨è£…é¥°åŒºåŸŸ
+            Column.borderRadius({ bottomLeft: 30, bottomRight: 30 });
+        }, Column);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Text.create('åˆ›å»ºè´¦æˆ·');
+            Text.debugLine("entry/src/main/ets/userprofile/pages/RegisterPage.ets(42:9)", "entry");
+            Text.fontSize(32);
+            Text.fontWeight(FontWeight.Bold);
+            Text.fontColor(Color.White);
+            Text.margin({ bottom: 8 });
+        }, Text);
+        Text.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Text.create('æ³¨å†Œæ–°è´¦æˆ·ï¼Œå¼€å¯ç²¾å½©ä¹‹æ—…');
+            Text.debugLine("entry/src/main/ets/userprofile/pages/RegisterPage.ets(47:9)", "entry");
+            Text.fontSize(16);
+            Text.fontColor('rgba(255,255,255,0.9)');
+        }, Text);
+        Text.pop();
+        // é¡¶éƒ¨è£…é¥°åŒºåŸŸ
+        Column.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            // æ³¨å†Œè¡¨å•åŒºåŸŸ
+            Column.create();
+            Column.debugLine("entry/src/main/ets/userprofile/pages/RegisterPage.ets(61:7)", "entry");
+            // æ³¨å†Œè¡¨å•åŒºåŸŸ
+            Column.width('100%');
+            // æ³¨å†Œè¡¨å•åŒºåŸŸ
+            Column.padding({ left: 24, right: 24 });
+            // æ³¨å†Œè¡¨å•åŒºåŸŸ
+            Column.layoutWeight(1);
+        }, Column);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            // ç”¨æˆ·åè¾“å…¥æ¡†
+            Column.create();
+            Column.debugLine("entry/src/main/ets/userprofile/pages/RegisterPage.ets(63:9)", "entry");
+            // ç”¨æˆ·åè¾“å…¥æ¡†
+            Column.width('100%');
+            // ç”¨æˆ·åè¾“å…¥æ¡†
+            Column.height(56);
+            // ç”¨æˆ·åè¾“å…¥æ¡†
+            Column.backgroundColor('#F5F5F5');
+            // ç”¨æˆ·åè¾“å…¥æ¡†
+            Column.borderRadius(12);
+            // ç”¨æˆ·åè¾“å…¥æ¡†
+            Column.margin({ top: 40, bottom: 16 });
+        }, Column);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Row.create();
+            Row.debugLine("entry/src/main/ets/userprofile/pages/RegisterPage.ets(64:11)", "entry");
+            Row.width('100%');
+            Row.height(50);
+            Row.padding({ left: 16, right: 16 });
+            Row.alignItems(VerticalAlign.Center);
+        }, Row);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Text.create('ðŸ‘¤');
+            Text.debugLine("entry/src/main/ets/userprofile/pages/RegisterPage.ets(65:13)", "entry");
+            Text.fontSize(20);
+            Text.margin({ right: 12 });
+        }, Text);
+        Text.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            TextInput.create({ placeholder: 'è¯·è¾“å…¥ç”¨æˆ·å', text: this.username });
+            TextInput.debugLine("entry/src/main/ets/userprofile/pages/RegisterPage.ets(68:13)", "entry");
+            TextInput.layoutWeight(1);
+            TextInput.fontSize(16);
+            TextInput.backgroundColor(Color.Transparent);
+            TextInput.onChange((value) => {
+                this.username = value;
+            });
+        }, TextInput);
+        Row.pop();
+        // ç”¨æˆ·åè¾“å…¥æ¡†
+        Column.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            // å¯†ç è¾“å…¥æ¡†
+            Column.create();
+            Column.debugLine("entry/src/main/ets/userprofile/pages/RegisterPage.ets(88:9)", "entry");
+            // å¯†ç è¾“å…¥æ¡†
+            Column.width('100%');
+            // å¯†ç è¾“å…¥æ¡†
+            Column.height(56);
+            // å¯†ç è¾“å…¥æ¡†
+            Column.backgroundColor('#F5F5F5');
+            // å¯†ç è¾“å…¥æ¡†
+            Column.borderRadius(12);
+            // å¯†ç è¾“å…¥æ¡†
+            Column.margin({ bottom: 16 });
+        }, Column);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Row.create();
+            Row.debugLine("entry/src/main/ets/userprofile/pages/RegisterPage.ets(89:11)", "entry");
+            Row.width('100%');
+            Row.height(50);
+            Row.padding({ left: 16, right: 16 });
+            Row.alignItems(VerticalAlign.Center);
+        }, Row);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Text.create('ðŸ”’');
+            Text.debugLine("entry/src/main/ets/userprofile/pages/RegisterPage.ets(90:13)", "entry");
+            Text.fontSize(20);
+            Text.margin({ right: 12 });
+        }, Text);
+        Text.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            TextInput.create({ placeholder: 'è¯·è¾“å…¥å¯†ç ', text: this.password });
+            TextInput.debugLine("entry/src/main/ets/userprofile/pages/RegisterPage.ets(93:13)", "entry");
+            TextInput.layoutWeight(1);
+            TextInput.type(InputType.Password);
+            TextInput.fontSize(16);
+            TextInput.backgroundColor(Color.Transparent);
+            TextInput.onChange((value) => {
+                this.password = value;
+            });
+        }, TextInput);
+        Row.pop();
+        // å¯†ç è¾“å…¥æ¡†
+        Column.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            // ç¡®è®¤å¯†ç è¾“å…¥æ¡†
+            Column.create();
+            Column.debugLine("entry/src/main/ets/userprofile/pages/RegisterPage.ets(114:9)", "entry");
+            // ç¡®è®¤å¯†ç è¾“å…¥æ¡†
+            Column.width('100%');
+            // ç¡®è®¤å¯†ç è¾“å…¥æ¡†
+            Column.height(56);
+            // ç¡®è®¤å¯†ç è¾“å…¥æ¡†
+            Column.backgroundColor('#F5F5F5');
+            // ç¡®è®¤å¯†ç è¾“å…¥æ¡†
+            Column.borderRadius(12);
+            // ç¡®è®¤å¯†ç è¾“å…¥æ¡†
+            Column.margin({ bottom: 24 });
+        }, Column);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Row.create();
+            Row.debugLine("entry/src/main/ets/userprofile/pages/RegisterPage.ets(115:11)", "entry");
+            Row.width('100%');
+            Row.height(50);
+            Row.padding({ left: 16, right: 16 });
+            Row.alignItems(VerticalAlign.Center);
+        }, Row);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Text.create('ðŸ”’');
+            Text.debugLine("entry/src/main/ets/userprofile/pages/RegisterPage.ets(116:13)", "entry");
+            Text.fontSize(20);
+            Text.margin({ right: 12 });
+        }, Text);
+        Text.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            TextInput.create({ placeholder: 'è¯·å†æ¬¡è¾“å…¥å¯†ç ', text: this.confirmPassword });
+            TextInput.debugLine("entry/src/main/ets/userprofile/pages/RegisterPage.ets(119:13)", "entry");
+            TextInput.layoutWeight(1);
+            TextInput.type(InputType.Password);
+            TextInput.fontSize(16);
+            TextInput.backgroundColor(Color.Transparent);
+            TextInput.onChange((value) => {
+                this.confirmPassword = value;
+            });
+        }, TextInput);
+        Row.pop();
+        // ç¡®è®¤å¯†ç è¾“å…¥æ¡†
+        Column.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            // æ³¨å†ŒæŒ‰é’®
+            Button.createWithChild();
+            Button.debugLine("entry/src/main/ets/userprofile/pages/RegisterPage.ets(140:9)", "entry");
+            // æ³¨å†ŒæŒ‰é’®
+            Button.width('100%');
+            // æ³¨å†ŒæŒ‰é’®
+            Button.height(50);
+            // æ³¨å†ŒæŒ‰é’®
+            Button.backgroundColor(this.canRegister() ? '#FF6B00' : '#FFD9B3');
+            // æ³¨å†ŒæŒ‰é’®
+            Button.borderRadius(25);
+            // æ³¨å†ŒæŒ‰é’®
+            Button.enabled(this.canRegister() && !this.isLoading);
+            // æ³¨å†ŒæŒ‰é’®
+            Button.onClick(() => {
+                this.handleRegister();
+            });
+            // æ³¨å†ŒæŒ‰é’®
+            Button.margin({ bottom: 16 });
+        }, Button);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            If.create();
+            if (this.isLoading) {
+                this.ifElseBranchUpdateFunction(0, () => {
+                    this.observeComponentCreation2((elmtId, isInitialRender) => {
+                        LoadingProgress.create();
+                        LoadingProgress.debugLine("entry/src/main/ets/userprofile/pages/RegisterPage.ets(142:13)", "entry");
+                        LoadingProgress.color(Color.White);
+                        LoadingProgress.width(20);
+                        LoadingProgress.height(20);
+                    }, LoadingProgress);
+                });
+            }
+            else {
+                this.ifElseBranchUpdateFunction(1, () => {
+                    this.observeComponentCreation2((elmtId, isInitialRender) => {
+                        Text.create('æ³¨å†Œ');
+                        Text.debugLine("entry/src/main/ets/userprofile/pages/RegisterPage.ets(147:13)", "entry");
+                        Text.fontSize(18);
+                        Text.fontWeight(FontWeight.Medium);
+                        Text.fontColor(Color.White);
+                    }, Text);
+                    Text.pop();
+                });
+            }
+        }, If);
+        If.pop();
+        // æ³¨å†ŒæŒ‰é’®
+        Button.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            // ç™»å½•é“¾æŽ¥
+            Row.create();
+            Row.debugLine("entry/src/main/ets/userprofile/pages/RegisterPage.ets(164:9)", "entry");
+            // ç™»å½•é“¾æŽ¥
+            Row.width('100%');
+            // ç™»å½•é“¾æŽ¥
+            Row.justifyContent(FlexAlign.Center);
+            // ç™»å½•é“¾æŽ¥
+            Row.margin({ top: 20 });
+        }, Row);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Text.create('å·²æœ‰è´¦æˆ·ï¼Ÿ');
+            Text.debugLine("entry/src/main/ets/userprofile/pages/RegisterPage.ets(165:11)", "entry");
+            Text.fontSize(14);
+            Text.fontColor('#999999');
+        }, Text);
+        Text.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Text.create('ç«‹å³ç™»å½•');
+            Text.debugLine("entry/src/main/ets/userprofile/pages/RegisterPage.ets(168:11)", "entry");
+            Text.fontSize(14);
+            Text.fontColor('#FF6B00');
+            Text.fontWeight(FontWeight.Medium);
+            Text.onClick(() => {
+                router.back();
+            });
+        }, Text);
+        Text.pop();
+        // ç™»å½•é“¾æŽ¥
+        Row.pop();
+        // æ³¨å†Œè¡¨å•åŒºåŸŸ
+        Column.pop();
+        Column.pop();
+    }
+    canRegister() {
+        return this.username.trim().length > 0 &&
+            this.password.trim().length >= 6 &&
+            this.password === this.confirmPassword;
+    }
+    async handleRegister() {
+        if (!this.canRegister()) {
+            if (this.password !== this.confirmPassword) {
+                promptAction.showToast({ message: 'ä¸¤æ¬¡è¾“å…¥çš„å¯†ç ä¸ä¸€è‡´', duration: 2000 });
+            }
+            else if (this.password.trim().length < 6) {
+                promptAction.showToast({ message: 'å¯†ç é•¿åº¦è‡³å°‘6ä½', duration: 2000 });
+            }
+            else {
+                promptAction.showToast({ message: 'è¯·å¡«å†™å®Œæ•´ä¿¡æ¯', duration: 2000 });
+            }
+            return;
+        }
+        this.isLoading = true;
+        try {
+            const userId = await this.dbManager.registerUser(this.username.trim(), this.password.trim());
+            // åˆ›å»ºé»˜è®¤ç”¨æˆ·ä¿¡æ¯
+            const defaultUserInfo = new UserInfo();
+            defaultUserInfo.userName = this.username.trim();
+            defaultUserInfo.phone = '';
+            defaultUserInfo.email = '';
+            defaultUserInfo.address = '';
+            defaultUserInfo.gender = '';
+            defaultUserInfo.birthday = '';
+            defaultUserInfo.signature = 'è¿™ä¸ªäººå¾ˆæ‡’ï¼Œä»€ä¹ˆéƒ½æ²¡æœ‰ç•™ä¸‹';
+            await this.dbManager.saveUserInfo(userId, defaultUserInfo);
+            promptAction.showToast({ message: 'æ³¨å†ŒæˆåŠŸ', duration: 2000 });
+            // è‡ªåŠ¨ç™»å½•
+            const userAccount = await this.dbManager.loginUser(this.username.trim(), this.password.trim());
+            if (userAccount) {
+                setTimeout(() => {
+                    router.replaceUrl({
+                        url: 'pages/HomePage'
+                    }).catch((err) => {
+                        Logger.error(TAG, `è·³è½¬é¦–é¡µå¤±è´¥: ${err.message}`);
+                    });
+                }, 500);
+            }
+        }
+        catch (err) {
+            const error = err;
+            promptAction.showToast({ message: `æ³¨å†Œå¤±è´¥: ${error.message}`, duration: 2000 });
+            Logger.error(TAG, `æ³¨å†Œå¤±è´¥: ${error.message}`);
+        }
+        finally {
+            this.isLoading = false;
+        }
+    }
+    rerender() {
+        this.updateDirtyElements();
+    }
+    static getEntryName() {
+        return "RegisterPage";
+    }
+}
+registerNamedRoute(() => new RegisterPage(undefined, {}), "", { bundleName: "com.huawei.waterflow", moduleName: "entry", pagePath: "userprofile/pages/RegisterPage", pageFullPath: "entry/src/main/ets/userprofile/pages/RegisterPage", integratedHsp: "false", moduleType: "followWithHap" });
+//# sourceMappingURL=RegisterPage.js.mapÂ•Ùp hvigor_ignore_E:_devecostudio-windows-6.0.1.251_DevEco Studio_sdk_default_openharmony_ets_api_@ohos.router.d.tsÙv hvigor_ignore_E:_devecostudio-windows-6.0.1.251_DevEco Studio_sdk_default_openharmony_ets_api_@ohos.promptAction.d.tsÙUE:\homework_lab\WaterFlow\entry\src\main\ets\userprofile\database\DatabaseManager.etsÙKE:\homework_lab\WaterFlow\entry\src\main\ets\userprofile\model\UserInfo.etsÙDE:\homework_lab\WaterFlow\entry\src\main\ets\common\utils\Logger.etsÙOE:\homework_lab\WaterFlow\entry\src\main\ets\userprofile\pages\RegisterPage.etsÔrB›ªmoduleName±isLocalDependency¯isNodeEntryFile§pkgPath±belongProjectPath§pkgNameªpkgVersion±dependencyPkgInfo°belongModulePath§checker¬shouldEmitJs¥entryÃÂ¿E:\homework_lab\WaterFlow\entry¹E:\homework_lab\WaterFlow¥entry¥1.0.0Ô  ¿E:\homework_lab\WaterFlow\entryÔrCÜ ®¬getNodeCount²getIdentifierCount®getSymbolCount¬getTypeCountµgetInstantiationCountµgetRelationCacheSizes±isUndefinedSymbol±isArgumentsSymbol¯isUnknownSymbol¯getMergedSymbol®getDiagnostics´getGlobalDiagnostics´getRecursionIdentity¶getUnmatchedProperties¹getTypeOfSymbolAtLocation¯getTypeOfSymbolÙ(getSymbolsOfParameterPropertyDeclaration·getDeclaredTypeOfSymbol³getPropertiesOfType±getPropertyOfTypeÙ"getPrivateIdentifierPropertyOfType·getTypeOfPropertyOfType²getIndexInfoOfType³getIndexInfosOfTypeºgetIndexInfosOfIndexSymbol³getSignaturesOfType²getIndexTypeOfType¬getIndexType¬getBaseTypes¸getBaseTypeOfLiteralType®getWidenedType³getTypeFromTypeNode°getParameterTypeÙ$getParameterIdentifierNameAtPosition¸getPromisedTypeOfPromise®getAwaitedType¸getReturnTypeOfSignature®isNullableType¯getNullableType²getNonNullableType²getNonOptionalType°getTypeArguments®typeToTypeNodeÙ$indexInfoToIndexSignatureDeclaration¿signatureToSignatureDeclaration²symbolToEntityName²symbolToExpression¬symbolToNodeÙ!symbolToTypeParameterDeclarations¼symbolToParameterDeclarationºtypeParameterToDeclaration±getSymbolsInScope³getSymbolAtLocation·getIndexInfosAtLocationÙ!getShorthandAssignmentValueSymbolÙ#getExportSpecifierLocalTargetSymbol·getExportSymbolOfSymbol±getTypeAtLocationºgetTypeAtLocationForLinterÙ tryGetTypeAtLocationWithoutCheckºgetTypeOfAssignmentPatternÙ*getPropertySymbolOfDestructuringAssignment±signatureToString¬typeToString®symbolToStringµtypePredicateToString®writeSignature©writeType«writeSymbol²writeTypePredicate¼getAugmentedPropertiesOfType®getRootSymbols²getSymbolOfExpando±getContextualTypeÙ(getContextualTypeForObjectLiteralElementÙ#getContextualTypeForArgumentAtIndexÙ getContextualTypeForJsxAttribute²isContextSensitiveÙ!getTypeOfPropertyOfContextualTypeµgetFullyQualifiedNameÙ#tryGetResolvedSignatureWithoutCheck´getResolvedSignatureÙ/getResolvedSignatureForStringLiteralCompletionsÙ$getResolvedSignatureForSignatureHelpµgetExpandedParameters¹hasEffectiveRestParameterºcontainsArgumentsReference°getConstantValueµisValidPropertyAccessÙ#isValidPropertyAccessForCompletions»getSignatureFromDeclarationºisImplementationOfOverload¹getImmediateAliasedSymbol°getAliasedSymbol¯getEmitResolver²getExportsOfModule¿getExportsAndPropertiesOfModuleÙ forEachExportAndPropertyOfModule¯getSymbolWalker±getAmbientModules¹getJsxIntrinsicTagNamesAt³isOptionalParameter»tryGetMemberInModuleExportsÙ(tryGetMemberInModuleExportsAndProperties´tryFindAmbientModuleÙ(tryFindAmbientModuleWithoutAugmentations¯getApparentType¬getUnionType²isTypeAssignableTo³createAnonymousType¯createSignature¬createSymbol¯createIndexInfoªgetAnyType­getStringType­getNumberType±createPromiseType¯createArrayType¹getElementTypeOfArrayType®getBooleanType¬getFalseType«getTrueType«getVoidType°getUndefinedType«getNullType¯getESSymbolType¬getNeverType¯getOptionalType®getPromiseType²getPromiseLikeType´getAsyncIterableType²isSymbolAccessible«isArrayType«isTupleType¯isArrayLikeTypeÙ#isTypeInvalidDueToUnionDiscriminantºgetExactOptionalProperties¿getAllPossiblePropertiesOfTypesÙ(getSuggestedSymbolForNonexistentPropertyÙ#getSuggestionForNonexistentPropertyÙ,getSuggestedSymbolForNonexistentJSXAttributeÙ&getSuggestedSymbolForNonexistentSymbolÙ!getSuggestionForNonexistentSymbolÙ&getSuggestedSymbolForNonexistentModuleÙ!getSuggestionForNonexistentExportÙ+getSuggestedSymbolForNonexistentClassMember·getBaseConstraintOfType»getDefaultFromTypeParameter«resolveName¯getJsxNamespaceµgetJsxFragmentFactory¸getAccessibleSymbolChain»getTypePredicateOfSignature¹resolveExternalModuleName»resolveExternalModuleSymbol°tryGetThisTypeAt¹getTypeArgumentConstraint¸getSuggestionDiagnostics¸runWithCancellationTokenÙ3getLocalTypeParametersOfClassOrInterfaceOrTypeAlias´isDeclarationVisible´isPropertyAccessible»getTypeOnlyAliasDeclaration¿getMemberOverrideModifierStatusÙ!isTypeParameterPossiblyReferenced²getConstEnumRelate´clearConstEnumRelateµdeleteConstEnumRelateÙ$getTypeArgumentsForResolvedSignatureµgetCheckedSourceFilesÙ"collectHaveTsNoCheckFilesForLinter·clearQualifiedNameCache®isStaticRecord²isStaticSourceFileÔ  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  ÃÃÚE/*
+ * Copyright (c) 2023 Huawei Device Co., Ltd.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ */
+
+import { router } from '@kit.ArkUI';
+import { common } from '@kit.AbilityKit';
+import { BusinessError } from '@kit.BasicServicesKit';
+import promptAction from '@ohos.promptAction';
+import { DatabaseManager } from '../database/DatabaseManager';
+import { UserInfo } from '../model/UserInfo';
+import Logger from '../../common/utils/Logger';
+
+const TAG = 'RegisterPage';
+
+@Entry
+@Component
+struct RegisterPage {
+  @State username: string = '';
+  @State password: string = '';
+  @State confirmPassword: string = '';
+  @State isLoading: boolean = false;
+  private context = getContext(this) as common.UIAbilityContext;
+  private dbManager: DatabaseManager = DatabaseManager.getInstance();
+
+  aboutToAppear(): void {
+    // åˆå§‹åŒ–æ•°æ®åº“
+    this.dbManager.initDatabase(this.context).catch((err: BusinessError | Error) => {
+      const error = err as Error;
+      Logger.error(TAG, `æ•°æ®åº“åˆå§‹åŒ–å¤±è´¥: ${error.message}`);
+    });
+  }
+
+  build() {
+    Column() {
+      // é¡¶éƒ¨è£…é¥°åŒºåŸŸ
+      Column() {
+        Text('åˆ›å»ºè´¦æˆ·')
+          .fontSize(32)
+          .fontWeight(FontWeight.Bold)
+          .fontColor(Color.White)
+          .margin({ bottom: 8 })
+        Text('æ³¨å†Œæ–°è´¦æˆ·ï¼Œå¼€å¯ç²¾å½©ä¹‹æ—…')
+          .fontSize(16)
+          .fontColor('rgba(255,255,255,0.9)')
+      }
+      .width('100%')
+      .height(200)
+      .justifyContent(FlexAlign.Center)
+      .linearGradient({
+        angle: 180,
+        colors: [['#FF8A3C', 0.0], ['#FFB36B', 1.0]]
+      })
+      .borderRadius({ bottomLeft: 30, bottomRight: 30 })
+
+      // æ³¨å†Œè¡¨å•åŒºåŸŸ
+      Column() {
+        // ç”¨æˆ·åè¾“å…¥æ¡†
+        Column() {
+          Row() {
+            Text('ðŸ‘¤')
+              .fontSize(20)
+              .margin({ right: 12 })
+            TextInput({ placeholder: 'è¯·è¾“å…¥ç”¨æˆ·å', text: this.username })
+              .layoutWeight(1)
+              .fontSize(16)
+              .backgroundColor(Color.Transparent)
+              .onChange((value: string) => {
+                this.username = value;
+              })
+          }
+          .width('100%')
+          .height(50)
+          .padding({ left: 16, right: 16 })
+          .alignItems(VerticalAlign.Center)
+        }
+        .width('100%')
+        .height(56)
+        .backgroundColor('#F5F5F5')
+        .borderRadius(12)
+        .margin({ top: 40, bottom: 16 })
+
+        // å¯†ç è¾“å…¥æ¡†
+        Column() {
+          Row() {
+            Text('ðŸ”’')
+              .fontSize(20)
+              .margin({ right: 12 })
+            TextInput({ placeholder: 'è¯·è¾“å…¥å¯†ç ', text: this.password })
+              .layoutWeight(1)
+              .type(InputType.Password)
+              .fontSize(16)
+              .backgroundColor(Color.Transparent)
+              .onChange((value: string) => {
+                this.password = value;
+              })
+          }
+          .width('100%')
+          .height(50)
+          .padding({ left: 16, right: 16 })
+          .alignItems(VerticalAlign.Center)
+        }
+        .width('100%')
+        .height(56)
+        .backgroundColor('#F5F5F5')
+        .borderRadius(12)
+        .margin({ bottom: 16 })
+
+        // ç¡®è®¤å¯†ç è¾“å…¥æ¡†
+        Column() {
+          Row() {
+            Text('ðŸ”’')
+              .fontSize(20)
+              .margin({ right: 12 })
+            TextInput({ placeholder: 'è¯·å†æ¬¡è¾“å…¥å¯†ç ', text: this.confirmPassword })
+              .layoutWeight(1)
+              .type(InputType.Password)
+              .fontSize(16)
+              .backgroundColor(Color.Transparent)
+              .onChange((value: string) => {
+                this.confirmPassword = value;
+              })
+          }
+          .width('100%')
+          .height(50)
+          .padding({ left: 16, right: 16 })
+          .alignItems(VerticalAlign.Center)
+        }
+        .width('100%')
+        .height(56)
+        .backgroundColor('#F5F5F5')
+        .borderRadius(12)
+        .margin({ bottom: 24 })
+
+        // æ³¨å†ŒæŒ‰é’®
+        Button() {
+          if (this.isLoading) {
+            LoadingProgress()
+              .color(Color.White)
+              .width(20)
+              .height(20)
+          } else {
+            Text('æ³¨å†Œ')
+              .fontSize(18)
+              .fontWeight(FontWeight.Medium)
+              .fontColor(Color.White)
+          }
+        }
+        .width('100%')
+        .height(50)
+        .backgroundColor(this.canRegister() ? '#FF6B00' : '#FFD9B3')
+        .borderRadius(25)
+        .enabled(this.canRegister() && !this.isLoading)
+        .onClick(() => {
+          this.handleRegister();
+        })
+        .margin({ bottom: 16 })
+
+        // ç™»å½•é“¾æŽ¥
+        Row() {
+          Text('å·²æœ‰è´¦æˆ·ï¼Ÿ')
+            .fontSize(14)
+            .fontColor('#999999')
+          Text('ç«‹å³ç™»å½•')
+            .fontSize(14)
+            .fontColor('#FF6B00')
+            .fontWeight(FontWeight.Medium)
+            .onClick(() => {
+              router.back();
+            })
+        }
+        .width('100%')
+        .justifyContent(FlexAlign.Center)
+        .margin({ top: 20 })
+      }
+      .width('100%')
+      .padding({ left: 24, right: 24 })
+      .layoutWeight(1)
+    }
+    .width('100%')
+    .height('100%')
+    .backgroundColor('#FFFFFF')
+  }
+
+  canRegister(): boolean {
+    return this.username.trim().length > 0 &&
+           this.password.trim().length >= 6 &&
+           this.password === this.confirmPassword;
+  }
+
+  async handleRegister(): Promise<void> {
+    if (!this.canRegister()) {
+      if (this.password !== this.confirmPassword) {
+        promptAction.showToast({ message: 'ä¸¤æ¬¡è¾“å…¥çš„å¯†ç ä¸ä¸€è‡´', duration: 2000 });
+      } else if (this.password.trim().length < 6) {
+        promptAction.showToast({ message: 'å¯†ç é•¿åº¦è‡³å°‘6ä½', duration: 2000 });
+      } else {
+        promptAction.showToast({ message: 'è¯·å¡«å†™å®Œæ•´ä¿¡æ¯', duration: 2000 });
+      }
+      return;
+    }
+
+    this.isLoading = true;
+    try {
+      const userId = await this.dbManager.registerUser(this.username.trim(), this.password.trim());
+      
+      // åˆ›å»ºé»˜è®¤ç”¨æˆ·ä¿¡æ¯
+      const defaultUserInfo = new UserInfo();
+      defaultUserInfo.userName = this.username.trim();
+      defaultUserInfo.phone = '';
+      defaultUserInfo.email = '';
+      defaultUserInfo.address = '';
+      defaultUserInfo.gender = '';
+      defaultUserInfo.birthday = '';
+      defaultUserInfo.signature = 'è¿™ä¸ªäººå¾ˆæ‡’ï¼Œä»€ä¹ˆéƒ½æ²¡æœ‰ç•™ä¸‹';
+      
+      await this.dbManager.saveUserInfo(userId, defaultUserInfo);
+      
+      promptAction.showToast({ message: 'æ³¨å†ŒæˆåŠŸ', duration: 2000 });
+      
+      // è‡ªåŠ¨ç™»å½•
+      const userAccount = await this.dbManager.loginUser(this.username.trim(), this.password.trim());
+      if (userAccount) {
+        setTimeout(() => {
+          router.replaceUrl({
+            url: 'pages/HomePage'
+          }).catch((err: Error) => {
+            Logger.error(TAG, `è·³è½¬é¦–é¡µå¤±è´¥: ${err.message}`);
+          });
+        }, 500);
+      }
+    } catch (err) {
+      const error = err as Error;
+      promptAction.showToast({ message: `æ³¨å†Œå¤±è´¥: ${error.message}`, duration: 2000 });
+      Logger.error(TAG, `æ³¨å†Œå¤±è´¥: ${error.message}`);
+    } finally {
+      this.isLoading = false;
+    }
+  }
+}
+
+ÀÔrD•¬@ohos.router²@ohos.promptAction»../database/DatabaseManager¹../../common/utils/Logger±../model/UserInfoÔrE—ªassertions¨external¢id¤meta±moduleSideEffectsªresolvedByµsyntheticNamedExportsAÃÙp hvigor_ignore_E:_devecostudio-windows-6.0.1.251_DevEco Studio_sdk_default_openharmony_ets_api_@ohos.router.d.tsAÃªoh-resolveÂEAÃÙv hvigor_ignore_E:_devecostudio-windows-6.0.1.251_DevEco Studio_sdk_default_openharmony_ets_api_@ohos.promptAction.d.tsAÃªoh-resolveÂEAÂÙUE:\homework_lab\WaterFlow\entry\src\main\ets\userprofile\database\DatabaseManager.etsAÃªoh-resolveÂEAÂÙDE:\homework_lab\WaterFlow\entry\src\main\ets\common\utils\Logger.etsAÃªoh-resolveÂEAÂÙKE:\homework_lab\WaterFlow\entry\src\main\ets\userprofile\model\UserInfo.etsAÃªoh-resolveÂ“ÔrF–§version¤fileªsourceRoot§sources¥names¨mappings¯RegisterPage.js ‘°RegisterPage.etsÜ§‘”    ‘” –”  	 ” 		” 	” 	”! 	#”" 	$–”   ” ” ” ”- -”. .˜”   ” ”	 	” ” ”   ”= =”> >˜”   ” ”	 	” ” ” ”, ,”- -–”   ” ” ” ”. .”/ /–”   ” ”	 	” ” ” ’” ” ‘”  ’”7 ”9 ’”7 ”9 ’”> #”Ì@ %’”8 ”= #•” ”! ”" ”& #”' ?•” '”( 6”) 7”4 ÌB”6 ÌD‘” ’” 	” ’” 	” ’” 	” ’” 	” ’” 	” ’” 	” ’” 	” ’” 	” ’” ” ’” ” Ü ” ” ” 	” ” ”# ”$  ”( $”) %”0 ,”1 -”2 .”7 3”8 4”9 5”< ÌO”> ÌQ”Ì@ ÌS–”  ”  ”  ”  ”   ”  !ž” !” !” !” !” !” !” !”+ !%”0 !*”1 !+”8 !2”: !4”; !5”< !6”” "”	 "”
+ "” "’” #” #‘” %’” &” &
+–” &” &
+” Ì·” Ì·
+” Ì·” Ì·–” &” &
+” Ì¸” Ì¸” Ì¸”  Ì¸–” &” &
+” Ì¹”" Ì¹”# Ì¹”, Ì¹’” '” '’” (” (’” '” '–” (” (” 2” 2” 2” 2’” '” '–” (” (” 3” 3” 3” 3’” '” '˜” (” (” 4”! 4”" 4”+ 4”, 4 ”2 4&’” '” '•” (” (” 5”! 5”" 5”” 6” 6” 6” 6Ü ” 7” 7” 7” 7” 7”# 7”% 7”( 7 ”) 7!”+ 7#”, 7$”5 7-”7 7/”: 72”; 73”< 74‘” 8’” '” 'ž” (” (” 9” 9”  9”" 9”, 9 ”. 9"”0 9$”2 9&”= 91”? 93”ÌA 95”ÌC 97”” )” )” )” )–” )” )” *” *” *” *˜” )” )” +” +” +”& + ”' +!”+ +%˜” )” )” ,” ,” ,”  ,”! ,”& , š” )” )” -” -” -” -”  -”" -”# -”% -’” )” )”” .” .” .”& .–” .” .” /” /” /” /–” .” .” 0” 0” 0”2 0,’” .” .’” '” '’” (” (’” ;” ;’” <” <’” ;” ;–” <” <” Ì³” Ì³” Ì³” Ì³’” ;” ;ž” <” <” Ì´” Ì´” Ì´” Ì´”! Ì´”# Ì´”% Ì´”' Ì´”, Ì´ ”. Ì´"”0 Ì´$”2 Ì´&’” ;” ;–” <” <” Ìµ” Ìµ”  Ìµ”! Ìµ’” =” =’” >” >’” =” =–” >” >” ÌP	” ÌP” ÌP” ÌP’” =” =–” >” >” ÌQ	” ÌQ” ÌQ” ÌQ’” =” =–” >” >” ÌR	”" ÌR”# ÌR”, ÌR"’” =” =–” >” >” ÌS	” ÌS”  ÌS”" ÌS’” =” =ž” >” >” ÌT	” ÌT” ÌT” ÌT” ÌT”! ÌT”# ÌT”% ÌT”+ ÌT!”- ÌT#”/ ÌT%”1 ÌT'’” ?
+” ?–” ?
+” ?” ÌK” ÌK” ÌK” ÌK–” ?
+” ?” ÌL” ÌL” ÌL” ÌLž” ?
+” ?” ÌM” ÌM” ÌM” ÌM” ÌM”  ÌM”" ÌM”$ ÌM”) ÌM$”+ ÌM&”- ÌM(”/ ÌM*˜” ?
+” ?” ÌN” ÌN” ÌN”( ÌN#”) ÌN$”/ ÌN*”” Ì@” Ì@” Ì@” Ì@–” Ì@” Ì@” ÌA” ÌA” ÌA” ÌAš” Ì@” Ì@” ÌB” ÌB” ÌB” ÌB” ÌB”! ÌB”# ÌB!”% ÌB#’” Ì@” Ì@ž” ÌC” ÌC” ÌC” ÌC”* ÌC#”, ÌC%”4 ÌC-”6 ÌC/”: ÌC3”< ÌC5”Ì@ ÌC9”ÌA ÌC:”ÌI ÌCÌB”ÌK ÌCÌD–” ÌC” ÌC” ÌD”" ÌD”# ÌD”$ ÌD–” ÌC” ÌC” ÌE” ÌE” ÌE”! ÌE˜” ÌC” ÌC” ÌF”% ÌF”& ÌF”+ ÌF$”, ÌF%”7 ÌF0™” ÌC” ÌC” ÌG” ÌG” ÌG”  ÌG”% ÌG&”' ÌG(”) ÌG*—” ÌH” ÌH” ÌH” ÌH”  ÌH ”% ÌH%”& ÌH&’” ÌI” ÌI’” ?
+” ?’” =” =’” >” >’” ÌV” ÌV’” ÌW” ÌW’” ÌV” ÌV–” ÌW” ÌW” Ìj	” Ìj” Ìj” Ìj’” ÌV” ÌV–” ÌW” ÌW” Ìk	” Ìk” Ìk” Ìk’” ÌV” ÌV–” ÌW” ÌW” Ìl	”" Ìl”# Ìl”, Ìl"’” ÌV” ÌV–” ÌW” ÌW” Ìm	” Ìm”  Ìm”" Ìm’” ÌV” ÌVš” ÌW” ÌW” Ìn	” Ìn” Ìn” Ìn”" Ìn”$ Ìn”& Ìn”( Ìn’” ÌX
+” ÌX–” ÌX
+” ÌX” Ìe” Ìe” Ìe” Ìe–” ÌX
+” ÌX” Ìf” Ìf” Ìf” Ìfž” ÌX
+” ÌX” Ìg” Ìg” Ìg” Ìg” Ìg”  Ìg”" Ìg”$ Ìg”) Ìg$”+ Ìg&”- Ìg(”/ Ìg*˜” ÌX
+” ÌX” Ìh” Ìh” Ìh”( Ìh#”) Ìh$”/ Ìh*”” ÌY” ÌY” ÌY” ÌY–” ÌY” ÌY” ÌZ” ÌZ” ÌZ” ÌZš” ÌY” ÌY” Ì[” Ì[” Ì[” Ì[” Ì[”! Ì[”# Ì[!”% Ì[#’” ÌY” ÌYž” Ì\” Ì\” Ì\” Ì\”* Ì\#”, Ì\%”3 Ì\,”5 Ì\.”9 Ì\2”; Ì\4”? Ì\8”Ì@ Ì\9”ÌH Ì\ÌA”ÌJ Ì\ÌC–” Ì\” Ì\” Ì]”" Ì]”# Ì]”$ Ì]˜” Ì\” Ì\” Ì^” Ì^” Ì^”$ Ì^”% Ì^”- Ì^&–” Ì\” Ì\” Ì_” Ì_” Ì_”! Ì_˜” Ì\” Ì\” Ì`”% Ì`”& Ì`”+ Ì`$”, Ì`%”7 Ì`0™” Ì\” Ì\” Ìa” Ìa” Ìa”  Ìa”% Ìa&”' Ìa(”) Ìa*—” Ìb” Ìb” Ìb” Ìb”  Ìb ”% Ìb%”& Ìb&’” Ìc” Ìc’” ÌX
+” ÌX’” ÌV” ÌV’” ÌW” ÌW’” Ìp” Ìp’” Ìq” Ìq’” Ìp” Ìp–” Ìq” Ìq” Ì„	” Ì„” Ì„” Ì„’” Ìp” Ìp–” Ìq” Ìq” Ì…	” Ì…” Ì…” Ì…’” Ìp” Ìp–” Ìq” Ìq” Ì†	”" Ì†”# Ì†”, Ì†"’” Ìp” Ìp–” Ìq” Ìq” Ì‡	” Ì‡”  Ì‡”" Ì‡’” Ìp” Ìpš” Ìq” Ìq” Ìˆ	” Ìˆ” Ìˆ” Ìˆ”" Ìˆ”$ Ìˆ”& Ìˆ”( Ìˆ’” Ìr
+” Ìr–” Ìr
+” Ìr” Ì” Ì” Ì” Ì–” Ìr
+” Ìr” Ì€” Ì€” Ì€” Ì€ž” Ìr
+” Ìr” Ì” Ì” Ì” Ì” Ì”  Ì”" Ì”$ Ì”) Ì$”+ Ì&”- Ì(”/ Ì*˜” Ìr
+” Ìr” Ì‚” Ì‚” Ì‚”( Ì‚#”) Ì‚$”/ Ì‚*”” Ìs” Ìs” Ìs” Ìs–” Ìs” Ìs” Ìt” Ìt” Ìt” Ìtš” Ìs” Ìs” Ìu” Ìu” Ìu” Ìu” Ìu”! Ìu”# Ìu!”% Ìu#’” Ìs” Ìsž” Ìv” Ìv” Ìv” Ìv”* Ìv#”, Ìv%”5 Ìv.”7 Ìv0”; Ìv4”= Ìv6”ÌA Ìv:”ÌB Ìv;”ÌQ ÌvÌJ”ÌS ÌvÌL–” Ìv” Ìv” Ìw”" Ìw”# Ìw”$ Ìw˜” Ìv” Ìv” Ìx” Ìx” Ìx”$ Ìx”% Ìx”- Ìx&–” Ìv” Ìv” Ìy” Ìy” Ìy”! Ìy˜” Ìv” Ìv” Ìz”% Ìz”& Ìz”+ Ìz$”, Ìz%”7 Ìz0™” Ìv” Ìv” Ì{” Ì{” Ì{”  Ì{”% Ì{&”' Ì{(”) Ì{*—” Ì|” Ì|” Ì|”$ Ì|$”' Ì|'”, Ì|,”- Ì|-’” Ì}” Ì}’” Ìr
+” Ìr’” Ìp” Ìp’” Ìq” Ìq’” ÌŠ” ÌŠ’” Ì‹” Ì‹’” ÌŠ” ÌŠ–” Ì‹” Ì‹” Ì˜	” Ì˜” Ì˜” Ì˜’” ÌŠ” ÌŠ–” Ì‹” Ì‹” Ì™	” Ì™” Ì™” Ì™’” ÌŠ” ÌŠÜ ” Ì‹” Ì‹” Ìš	”" Ìš”# Ìš”' Ìš”( Ìš”3 Ìš)”5 Ìš+”6 Ìš,”7 Ìš-”8 Ìš.”ÌA Ìš7”ÌB Ìš8”ÌC Ìš9”ÌD Ìš:”ÌM ÌšÌC’” ÌŠ” ÌŠ–” Ì‹” Ì‹” Ì›	” Ì›”  Ì›”" Ì›’” ÌŠ” ÌŠž” Ì‹” Ì‹” Ìœ	” Ìœ” Ìœ” Ìœ”  Ìœ”+ Ìœ!”- Ìœ#”1 Ìœ'”2 Ìœ(”6 Ìœ,”7 Ìœ-”Ì@ Ìœ6’” ÌŠ” ÌŠ—” Ì‹” Ì‹” Ì	” Ì” Ì” Ì”  Ì–” Ìž
+” Ìž” Ìž”# Ìž”% Ìž”& Ìž ’” ÌŸ” ÌŸ	’” ÌŠ” ÌŠš” Ì‹” Ì‹” Ì 	” Ì ” Ì ” Ì ”" Ì ”$ Ì ”& Ì ”( Ì –” ÌŒ
+” ÌŒ” ÌŒ” ÌŒ” ÌŒ”  ÌŒ’” Ì”' Ì˜” Ì”' Ì”( ÌŽ”- ÌŽ”. ÌŽ”3 ÌŽ”4 ÌŽ”9 ÌŽ –” Ì”' Ì”( Ì”- Ì”. Ì”0 Ì–” Ì”' Ì”( Ì”. Ì”/ Ì”1 Ì‘” Ì‘‘” Ì‘”” Ì’” Ì’”$ Ì’”( Ì’–” Ì’” Ì’” Ì“”% Ì“”& Ì“”( Ì“˜” Ì’” Ì’” Ì””' Ì””( Ì””2 Ì”$”3 Ì”%”9 Ì”+˜” Ì’” Ì’” Ì•”& Ì•”' Ì•”, Ì•”- Ì•”2 Ì•$’” Ì’” Ì’‘” Ì–’” ÌŠ” ÌŠ’” Ì‹” Ì‹’” Ì¢” Ì¢’” Ì£” Ì£’” Ì¢” Ì¢–” Ì£” Ì£” Ì¯	” Ì¯” Ì¯” Ì¯’” Ì¢” Ì¢˜” Ì£” Ì£” Ì°	” Ì°” Ì°”( Ì°!”) Ì°"”/ Ì°(’” Ì¢” Ì¢š” Ì£” Ì£” Ì±	” Ì±” Ì±” Ì±” Ì±” Ì±”  Ì±”" Ì±”” Ì¤
+” Ì¤” Ì¤” Ì¤–” Ì¤
+” Ì¤” Ì¥” Ì¥” Ì¥” Ì¥–” Ì¤
+” Ì¤” Ì¦” Ì¦” Ì¦”$ Ì¦ ’” Ì¤
+” Ì¤”” Ì§
+” Ì§” Ì§” Ì§–” Ì§
+” Ì§” Ì¨” Ì¨” Ì¨” Ì¨–” Ì§
+” Ì§” Ì©” Ì©” Ì©”$ Ì© ˜” Ì§
+” Ì§” Ìª” Ìª” Ìª”& Ìª"”' Ìª#”- Ìª)—” Ì§
+” Ì§” Ì«” Ì«” Ì«” Ì«” Ì«–” Ì¬” Ì¬” Ì¬” Ì¬” Ì¬” Ì¬’” Ì­” Ì­’” Ì§
+” Ì§’” Ì¢” Ì¢’” Ì£” Ì£’” ;” ;’” <” <’” &” &
+‘” Ìº’” Ì¼” Ì¼œ” Ì½” Ì½” Ì½” Ì½” Ì½” Ì½”! Ì½”# Ì½”$ Ì½ ”* Ì½&”- Ì½)”. Ì½*›” Ì¾” Ì¾” Ì¾” Ì¾” Ì¾” Ì¾”  Ì¾”! Ì¾ ”' Ì¾&”+ Ì¾*”, Ì¾+™” Ì¿” Ì¿” Ì¿” Ì¿” Ì¿”" Ì¿!”# Ì¿"”2 Ì¿1”3 Ì¿2’” ÌÀ” ÌÀ”” ÌÂ”	 ÌÂ”
+ ÌÂ” ÌÂ˜” ÌÃ” ÌÃ” ÌÃ	” ÌÃ” ÌÃ” ÌÃ” ÌÃ”! ÌÃš” ÌÄ” ÌÄ
+” ÌÄ” ÌÄ” ÌÄ”" ÌÄ”& ÌÄ ”' ÌÄ!”6 ÌÄ0”8 ÌÄ2Ü ” ÌÅ” ÌÅ” ÌÅ”& ÌÅ”' ÌÅ”) ÌÅ!”0 ÌÅ(”2 ÌÅ*”> ÌÅ6”Ì@ ÌÅ8”ÌH ÌÅÌ@”ÌJ ÌÅÌB”ÌN ÌÅÌF”ÌP ÌÅÌH”ÌQ ÌÅÌI”ÌR ÌÅÌJ‘” ÌÆ” ÌÆ” ÌÆ” ÌÆ” ÌÆ”" ÌÆ”# ÌÆ”' ÌÆ#”) ÌÆ%”* ÌÆ&”0 ÌÆ,”3 ÌÆ/”4 ÌÆ0”6 ÌÆ2Ü ” ÌÇ” ÌÇ” ÌÇ”& ÌÇ”' ÌÇ”) ÌÇ!”0 ÌÇ(”2 ÌÇ*”< ÌÇ4”> ÌÇ6”ÌF ÌÇ>”ÌH ÌÇÌ@”ÌL ÌÇÌD”ÌN ÌÇÌF”ÌO ÌÇÌG”ÌP ÌÇÌH‘” ÌÈ‘” ÌÈÜ ” ÌÉ” ÌÉ” ÌÉ”& ÌÉ”' ÌÉ”) ÌÉ!”0 ÌÉ(”2 ÌÉ*”; ÌÉ3”= ÌÉ5”ÌE ÌÉ=”ÌG ÌÉ?”ÌK ÌÉÌC”ÌM ÌÉÌE”ÌN ÌÉÌF”ÌO ÌÉÌG‘” ÌÊ’” ÌË” ÌË‘”	 ÌÌ—” ÌÎ” ÌÎ” ÌÎ	” ÌÎ” ÌÎ” ÌÎ” ÌÎ’” ÌÏ” ÌÏÜ ” ÌÐ” ÌÐ” ÌÐ” ÌÐ”! ÌÐ”% ÌÐ”& ÌÐ ”/ ÌÐ)”0 ÌÐ*”< ÌÐ6”= ÌÐ7”ÌA ÌÐ;”ÌB ÌÐ<”ÌJ ÌÐÌD”ÌK ÌÐÌE”ÌO ÌÐÌI”ÌQ ÌÐÌK”ÌS ÌÐÌM”ÌW ÌÐÌQ”ÌX ÌÐÌR”Ì` ÌÐÌZ”Ìa ÌÐÌ[”Ìe ÌÐÌ_”Ìg ÌÐÌa”Ìh ÌÐÌb”Ìi ÌÐÌc’” ÌÒ” ÌÒ˜” ÌÓ” ÌÓ”! ÌÓ”$ ÌÓ”( ÌÓ"”0 ÌÓ*”2 ÌÓ,”3 ÌÓ-œ” ÌÔ” ÌÔ” ÌÔ”$ ÌÔ”' ÌÔ!”+ ÌÔ%”, ÌÔ&”4 ÌÔ.”5 ÌÔ/”9 ÌÔ3”; ÌÔ5”< ÌÔ6—” ÌÕ” ÌÕ” ÌÕ”! ÌÕ”$ ÌÕ”& ÌÕ ”' ÌÕ!—” ÌÖ” ÌÖ” ÌÖ”! ÌÖ”$ ÌÖ”& ÌÖ ”' ÌÖ!—” Ì×” Ì×” Ì×”# Ì×”& Ì× ”( Ì×"”) Ì×#—” ÌØ” ÌØ” ÌØ”" ÌØ”% ÌØ”' ÌØ!”( ÌØ"—” ÌÙ” ÌÙ” ÌÙ”$ ÌÙ”' ÌÙ!”) ÌÙ#”* ÌÙ$—” ÌÚ” ÌÚ” ÌÚ”% ÌÚ”( ÌÚ"”7 ÌÚ1”8 ÌÚ2” ÌÜ” ÌÜ” ÌÜ” ÌÜ”  ÌÜ”! ÌÜ”- ÌÜ'”. ÌÜ(”4 ÌÜ.”6 ÌÜ0”ÌE ÌÜ?”ÌF ÌÜÌ@”ÌG ÌÜÌAÜ ” ÌÞ” ÌÞ” ÌÞ”" ÌÞ”# ÌÞ”% ÌÞ”, ÌÞ&”. ÌÞ(”4 ÌÞ.”6 ÌÞ0”> ÌÞ8”Ì@ ÌÞ:”ÌD ÌÞ>”ÌF ÌÞÌ@”ÌG ÌÞÌA”ÌH ÌÞÌB’” Ìà” ÌàÜ ” Ìá” Ìá” Ìá”  Ìá”& Ìá ”* Ìá$”+ Ìá%”4 Ìá.”5 Ìá/”> Ìá8”? Ìá9”ÌC Ìá=”ÌD Ìá>”ÌL ÌáÌF”ÌM ÌáÌG”ÌQ ÌáÌK”ÌS ÌáÌM”ÌU ÌáÌO”ÌY ÌáÌS”ÌZ ÌáÌT”Ìb ÌáÌ\”Ìc ÌáÌ]”Ìg ÌáÌa”Ìi ÌáÌc”Ìj ÌáÌd”Ìk ÌáÌe”” Ìâ” Ìâ
+” Ìâ” Ìâ•” Ìã” Ìã” Ìã” Ìã”  Ìã•” Ìä
+” Ìä” Ìä”% Ìä”& Ìä”” Ìå” Ìå” Ìå”- Ìå!™” Ìæ” Ìæ” Ìæ” Ìæ” Ìæ” Ìæ”! Ìæ”# Ìæ ”% Ìæ"ž” Ìç” Ìç” Ìç”$ Ìç”% Ìç”( Ìç”* Ìç”5 Ìç)”8 Ìç,”9 Ìç-”Ì@ Ìç4”ÌB Ìç6”ÌC Ìç7”ÌD Ìç8”” Ìè
+” Ìè” Ìè” Ìè–” Ìé” Ìé	” Ìé” Ìé” Ìé” Ìé‘” Ìê‘”	 Ìë”” Ìë” Ìë” Ìë” Ìë–” Ìì” Ìì” Ìì” Ìì” Ìì ” Ìì!Ü ” Ìí” Ìí” Ìí”" Ìí”# Ìí”% Ìí”, Ìí&”. Ìí(”7 Ìí1”< Ìí6”= Ìí7”ÌD Ìí>”ÌF ÌíÌ@”ÌH ÌíÌB”ÌP ÌíÌJ”ÌR ÌíÌL”ÌV ÌíÌP”ÌX ÌíÌR”ÌY ÌíÌS”ÌZ ÌíÌTž” Ìî” Ìî” Ìî” Ìî” Ìî” Ìî” Ìî”' Ìî!”, Ìî&”- Ìî'”4 Ìî.”6 Ìî0”7 Ìî1”8 Ìî2‘”	 Ìï‘” Ìï—” Ìð” Ìð
+” Ìð” Ìð” Ìð”" Ìð”# Ìð‘”	 Ìñ’” Ìò” ÌòÔrG–§version¤file§sources®sourcesContent¥names¨mappingsÀ‘À‘ÀÜ°‘”    ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”  	 ‘”  
+ ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”    ‘”  ! ‘”  " ‘”  # ‘”  $ ‘”  % ‘”  & ‘”  ' ‘”  ( ‘”  ) ‘”  * ‘”  + ‘”  , ‘”  - ‘”  . ‘”  / ‘”  0 ‘”  1 ‘”  2 ‘”  3 ‘”  4 ‘”  5 ‘”  6 ‘”  7 ‘”  8 ‘”  9 ‘”  : ‘”  ; ‘”  < ‘”  = ‘”  > ‘”  ? ‘”  Ì@ ‘”  ÌA ‘”  ÌB ‘”  ÌC ‘”  ÌD ‘”  ÌE ‘”  ÌF ‘”  ÌG ‘”  ÌH ‘”  ÌI ‘”  ÌJ ‘”  ÌK ‘”  ÌL ‘”  ÌM ‘”  ÌN ‘”  ÌO ‘”  ÌP ‘”  ÌQ ‘”  ÌR ‘”  ÌS ‘”  ÌT ‘”  ÌU ‘”  ÌV ‘”  ÌW ‘”  ÌX ‘”  ÌY ‘”  ÌZ ‘”  Ì[ ‘”  Ì\ ‘”  Ì] ‘”  Ì^ ‘”  Ì_ ‘”  Ì` ‘”  Ìa ‘”  Ìb ‘”  Ìc ‘”  Ìd ‘”  Ìe ‘”  Ìf ‘”  Ìg ‘”  Ìh ‘”  Ìi ‘”  Ìj ‘”  Ìk ‘”  Ìl ‘”  Ìm ‘”  Ìn ‘”  Ìo ‘”  Ìp ‘”  Ìq ‘”  Ìr ‘”  Ìs ‘”  Ìt ‘”  Ìu ‘”  Ìv ‘”  Ìw ‘”  Ìx ‘”  Ìy ‘”  Ìz ‘”  Ì{ ‘”  Ì| ‘”  Ì} ‘”  Ì~ ‘”  Ì ‘”  Ì€ ‘”  Ì ‘”  Ì‚ ‘”  Ìƒ ‘”  Ì„ ‘”  Ì… ‘”  Ì† ‘”  Ì‡ ‘”  Ìˆ ‘”  Ì‰ ‘”  ÌŠ ‘”  Ì‹ ‘”  ÌŒ ‘”  Ì ‘”  ÌŽ ‘”  Ì ‘”  Ì ‘”  Ì‘ ‘”  Ì’ ‘”  Ì“ ‘”  Ì” ‘”  Ì• ‘”  Ì– ‘”  Ì— ‘”  Ì˜ ‘”  Ì™ ‘”  Ìš ‘”  Ì› ‘”  Ìœ ‘”  Ì ‘”  Ìž ‘”  ÌŸ ‘”  Ì  ‘”  Ì¡ ‘”  Ì¢ ‘”  Ì£ ‘”  Ì¤ ‘”  Ì¥ ‘”  Ì¦ ‘”  Ì§ ‘”  Ì¨ ‘”  Ì© ‘”  Ìª ‘”  Ì« ‘”  Ì¬ ‘”  Ì­ ‘”  Ì® ‘”  Ì¯ ‘”  Ì° ‘”  Ì± ‘”  Ì² ‘”  Ì³ ‘”  Ì´ ‘”  Ìµ ‘”  Ì¶ ‘”  Ì· ‘”  Ì¸ ‘”  Ì¹ ‘”  Ìº ‘”  Ì» ‘”  Ì¼ ‘”  Ì½ ‘”  Ì¾ ‘”  Ì¿ ‘”  ÌÀ ‘”  ÌÁ ‘”  ÌÂ ‘”  ÌÃ ‘”  ÌÄ ‘”  ÌÅ ‘”  ÌÆ ‘”  ÌÇ ‘”  ÌÈ ‘”  ÌÉ ‘”  ÌÊ ‘”  ÌË ‘”  ÌÌ ‘”  ÌÍ ‘”  ÌÎ ‘”  ÌÏ ‘”  ÌÐ ‘”  ÌÑ ‘”  ÌÒ ‘”  ÌÓ ‘”  ÌÔ ‘”  ÌÕ ‘”  ÌÖ ‘”  Ì× ‘”  ÌØ ‘”  ÌÙ ‘”  ÌÚ ‘”  ÌÛ ‘”  ÌÜ ‘”  ÌÝ ‘”  ÌÞ ‘”  Ìß ‘”  Ìà ‘”  Ìá ‘”  Ìâ ‘”  Ìã ‘”  Ìä ‘”  Ìå ‘”  Ìæ ‘”  Ìç ‘”  Ìè ‘”  Ìé ‘”  Ìê ‘”  Ìë ‘”  Ìì ‘”  Ìí ‘”  Ìî ‘”  Ìï ‘”  Ìð ‘”  Ìñ ‘”  Ìò ‘”  Ìó ‘”  Ìô ‘”  Ìõ ‘”  Ìö ‘”  Ì÷ ‘”  Ìø ‘”  Ìù ‘”  Ìú ‘”  Ìû ‘”  Ìü ‘”  Ìý ‘”  Ìþ ‘”  Ìÿ ‘”  Í  ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í	 ‘”  Í
+ ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í  ‘”  Í! ‘”  Í" ‘”  Í# ‘”  Í$ ‘”  Í% ‘”  Í& ‘”  Í' ‘”  Í( ‘”  Í) ‘”  Í* ‘”  Í+ ‘”  Í, ‘”  Í- ‘”  Í. ‘”  Í/ ‘”  Í0 ‘”  Í1 ‘”  Í2 ‘”  Í3 ‘”  Í4 ‘”  Í5 ‘”  Í6 ‘”  Í7 ‘”  Í8 ‘”  Í9 ‘”  Í: ‘”  Í; ‘”  Í< ‘”  Í= ‘”  Í> ‘”  Í? ‘”  Í@ ‘”  ÍA ‘”  ÍB ‘”  ÍC ‘”  ÍD ‘”  ÍE ‘”  ÍF ‘”  ÍG ‘”  ÍH ‘”  ÍI ‘”  ÍJ ‘”  ÍK ‘”  ÍL ‘”  ÍM ‘”  ÍN ‘”  ÍO ‘”  ÍP ‘”  ÍQ ‘”  ÍR ‘”  ÍS ‘”  ÍT ‘”  ÍU ‘”  ÍV ‘”  ÍW ‘”  ÍX ‘”  ÍY ‘”  ÍZ ‘”  Í[ ‘”  Í\ ‘”  Í] ‘”  Í^ ‘”  Í_ ‘”  Í` ‘”  Ía ‘”  Íb ‘”  Íc ‘”  Íd ‘”  Íe ‘”  Íf ‘”  Íg ‘”  Íh ‘”  Íi ‘”  Íj ‘”  Ík ‘”  Íl ‘”  Ím ‘”  Ín ‘”  Ío ‘”  Íp ‘”  Íq ‘”  Ír ‘”  Ís ‘”  Ít ‘”  Íu ‘”  Ív ‘”  Íw ‘”  Íx ‘”  Íy ‘”  Íz ‘”  Í{ ‘”  Í| ‘”  Í} ‘”  Í~ ‘”  Í ‘”  Í€ ‘”  Í ‘”  Í‚ ‘”  Íƒ ‘”  Í„ ‘”  Í… ‘”  Í† ‘”  Í‡ ‘”  Íˆ ‘”  Í‰ ‘”  ÍŠ ‘”  Í‹ ‘”  ÍŒ ‘”  Í ‘”  ÍŽ ‘”  Í ‘”  Í ‘”  Í‘ ‘”  Í’ ‘”  Í“ ‘”  Í” ‘”  Í• ‘”  Í– ‘”  Í— ‘”  Í˜ ‘”  Í™ ‘”  Íš ‘”  Í› ‘”  Íœ ‘”  Í ‘”  Íž ‘”  ÍŸ ‘”  Í  ‘”  Í¡ ‘”  Í¢ ‘”  Í£ ‘”  Í¤ ‘”  Í¥ ‘”  Í¦ ‘”  Í§ ‘”  Í¨ ‘”  Í© ‘”  Íª ‘”  Í« ‘”  Í¬ ‘”  Í­ ‘”  Í® ‘”  Í¯ ÔrH’§missing¦pluginÃ¦genAbcÂÔ  ÔrI”²dynamicImportCache¹exportAllDeclarationCache»exportNamedDeclarationCache«importCache•ÔrJ•¤type¥start£endªspecifiers¦source±ImportDeclarationÍ¤ÍÆ‘ÔrK”¤type¥start£end¥local¶ImportDefaultSpecifierÍ«Í±ÔrL”¤type¥start£end¤nameªIdentifierÍ«Í±¦routerÔrM•¤type¥start£end¥value£raw§LiteralÍ·ÍÅ¬@ohos.router®"@ohos.router"J±ImportDeclarationÍÈÍö‘K¶ImportDefaultSpecifierÍÏÍÛLªIdentifierÍÏÍÛ¬promptActionM§LiteralÍáÍõ²@ohos.promptAction´'@ohos.promptAction'J±ImportDeclarationÍøÍ6‘ÔrN•¤type¥start£end¨imported¥local¯ImportSpecifierÍÍLªIdentifierÍÍ¯DatabaseManagerLªIdentifierÍÍ¯DatabaseManagerM§LiteralÍÍ5»../database/DatabaseManager½'../database/DatabaseManager'J±ImportDeclarationÍ8Íe‘N¯ImportSpecifierÍAÍILªIdentifierÍAÍI¨UserInfoLªIdentifierÍAÍI¨UserInfoM§LiteralÍQÍd±../model/UserInfo³'../model/UserInfo'J±ImportDeclarationÍgÍ–‘K¶ImportDefaultSpecifierÍnÍtLªIdentifierÍnÍt¦LoggerM§LiteralÍzÍ•¹../../common/utils/Logger»'../../common/utils/Logger'

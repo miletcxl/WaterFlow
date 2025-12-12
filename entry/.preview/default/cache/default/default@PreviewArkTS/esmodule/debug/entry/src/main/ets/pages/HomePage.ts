@@ -3,14 +3,20 @@ if (!("finalizeConstruction" in ViewPU.prototype)) {
 }
 interface HomePage_Params {
     topRectHeight?: number;
+    context?;
+    dbManager?: DatabaseManager;
 }
 import { CommonConstants as Const } from "@bundle:com.huawei.waterflow/entry/ets/common/constants/CommonConstants";
 import router from "@ohos:router";
+import type common from "@ohos:app.ability.common";
 import ClassifyComponent from "@bundle:com.huawei.waterflow/entry/ets/view/ClassifyComponent";
 import SearchComponent from "@bundle:com.huawei.waterflow/entry/ets/view/SearchComponent";
 import SwiperComponent from "@bundle:com.huawei.waterflow/entry/ets/view/SwiperComponent";
 import WaterFlowComponent from "@bundle:com.huawei.waterflow/entry/ets/view/WaterFlowComponent";
 import UserIconComponent from "@bundle:com.huawei.waterflow/entry/ets/userprofile/view/UserIconComponent";
+import { DatabaseManager } from "@bundle:com.huawei.waterflow/entry/ets/userprofile/database/DatabaseManager";
+import Logger from "@bundle:com.huawei.waterflow/entry/ets/common/utils/Logger";
+const TAG = 'HomePage';
 class HomePage extends ViewPU {
     constructor(parent, params, __localStorage, elmtId = -1, paramsLambda = undefined, extraInfo) {
         super(parent, __localStorage, elmtId, extraInfo);
@@ -18,10 +24,18 @@ class HomePage extends ViewPU {
             this.paramsGenerator_ = paramsLambda;
         }
         this.__topRectHeight = this.createStorageLink('topRectHeight', 0, "topRectHeight");
+        this.context = getContext(this) as common.UIAbilityContext;
+        this.dbManager = DatabaseManager.getInstance();
         this.setInitiallyProvidedValue(params);
         this.finalizeConstruction();
     }
     setInitiallyProvidedValue(params: HomePage_Params) {
+        if (params.context !== undefined) {
+            this.context = params.context;
+        }
+        if (params.dbManager !== undefined) {
+            this.dbManager = params.dbManager;
+        }
     }
     updateStateVars(params: HomePage_Params) {
     }
@@ -40,22 +54,34 @@ class HomePage extends ViewPU {
     set topRectHeight(newValue: number) {
         this.__topRectHeight.set(newValue);
     }
+    private context;
+    private dbManager: DatabaseManager;
+    async aboutToAppear(): Promise<void> {
+        // 初始化数据库
+        try {
+            await this.dbManager.initDatabase(this.context);
+        }
+        catch (err) {
+            const error = err as Error;
+            Logger.error(TAG, `数据库初始化失败: ${error.message}`);
+        }
+    }
     initialRender() {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Stack.create({ alignContent: Alignment.Top });
-            Stack.debugLine("entry/src/main/ets/pages/HomePage.ets(35:5)", "entry");
+            Stack.debugLine("entry/src/main/ets/pages/HomePage.ets(52:5)", "entry");
             Stack.backgroundColor({ "id": 16777219, "type": 10001, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
         }, Stack);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Image.create({ "id": 16777367, "type": 20000, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
-            Image.debugLine("entry/src/main/ets/pages/HomePage.ets(36:7)", "entry");
+            Image.debugLine("entry/src/main/ets/pages/HomePage.ets(53:7)", "entry");
             Image.width(Const.FULL_WIDTH);
             Image.height({ "id": 16777247, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
             Image.objectFit(ImageFit.Cover);
         }, Image);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Column.create();
-            Column.debugLine("entry/src/main/ets/pages/HomePage.ets(40:7)", "entry");
+            Column.debugLine("entry/src/main/ets/pages/HomePage.ets(57:7)", "entry");
             Column.padding({
                 left: { "id": 16777245, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
                 right: { "id": 16777246, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
@@ -65,7 +91,7 @@ class HomePage extends ViewPU {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             // 顶部导航栏：搜索框和个人信息入口
             Row.create();
-            Row.debugLine("entry/src/main/ets/pages/HomePage.ets(42:9)", "entry");
+            Row.debugLine("entry/src/main/ets/pages/HomePage.ets(59:9)", "entry");
             // 顶部导航栏：搜索框和个人信息入口
             Row.width(Const.FULL_WIDTH);
             // 顶部导航栏：搜索框和个人信息入口
@@ -78,7 +104,7 @@ class HomePage extends ViewPU {
         {
             this.observeComponentCreation2((elmtId, isInitialRender) => {
                 if (isInitialRender) {
-                    let componentCall = new SearchComponent(this, {}, undefined, elmtId, () => { }, { page: "entry/src/main/ets/pages/HomePage.ets", line: 43, col: 11 });
+                    let componentCall = new SearchComponent(this, {}, undefined, elmtId, () => { }, { page: "entry/src/main/ets/pages/HomePage.ets", line: 60, col: 11 });
                     ViewPU.create(componentCall);
                     let paramsLambda = () => {
                         return {};
@@ -100,12 +126,37 @@ class HomePage extends ViewPU {
                 offsetY: 2
             });
             __Common__.margin({ left: { "id": 16777274, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" } });
-            __Common__.onClick(() => {
-                router.pushUrl({
-                    url: 'userprofile/pages/ProfilePage'
-                }).catch((err: Error) => {
-                    console.error(`Failed to navigate to profile page. Code: ${err.message}`);
-                });
+            __Common__.onClick(async () => {
+                try {
+                    // 检查登录状态
+                    const currentUser = await this.dbManager.getCurrentUser();
+                    if (currentUser) {
+                        // 已登录，跳转到个人信息页
+                        router.pushUrl({
+                            url: 'userprofile/pages/ProfilePage'
+                        }).catch((err: Error) => {
+                            Logger.error(TAG, `跳转个人信息页失败: ${err.message}`);
+                        });
+                    }
+                    else {
+                        // 未登录，跳转到登录页
+                        router.pushUrl({
+                            url: 'userprofile/pages/LoginPage'
+                        }).catch((err: Error) => {
+                            Logger.error(TAG, `跳转登录页失败: ${err.message}`);
+                        });
+                    }
+                }
+                catch (err) {
+                    const error = err as Error;
+                    Logger.error(TAG, `检查登录状态失败: ${error.message}`);
+                    // 出错时也跳转到登录页
+                    router.pushUrl({
+                        url: 'userprofile/pages/LoginPage'
+                    }).catch((err: Error) => {
+                        Logger.error(TAG, `跳转登录页失败: ${err.message}`);
+                    });
+                }
             });
         }, __Common__);
         {
@@ -117,7 +168,7 @@ class HomePage extends ViewPU {
                         iconColor: { "id": 16777229, "type": 10001, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
                         iconSize: 40,
                         text: '我'
-                    }, undefined, elmtId, () => { }, { page: "entry/src/main/ets/pages/HomePage.ets", line: 46, col: 11 });
+                    }, undefined, elmtId, () => { }, { page: "entry/src/main/ets/pages/HomePage.ets", line: 63, col: 11 });
                     ViewPU.create(componentCall);
                     let paramsLambda = () => {
                         return {
@@ -139,7 +190,7 @@ class HomePage extends ViewPU {
         {
             this.observeComponentCreation2((elmtId, isInitialRender) => {
                 if (isInitialRender) {
-                    let componentCall = new ClassifyComponent(this, {}, undefined, elmtId, () => { }, { page: "entry/src/main/ets/pages/HomePage.ets", line: 68, col: 9 });
+                    let componentCall = new ClassifyComponent(this, {}, undefined, elmtId, () => { }, { page: "entry/src/main/ets/pages/HomePage.ets", line: 108, col: 9 });
                     ViewPU.create(componentCall);
                     let paramsLambda = () => {
                         return {};
@@ -154,7 +205,7 @@ class HomePage extends ViewPU {
         {
             this.observeComponentCreation2((elmtId, isInitialRender) => {
                 if (isInitialRender) {
-                    let componentCall = new SwiperComponent(this, {}, undefined, elmtId, () => { }, { page: "entry/src/main/ets/pages/HomePage.ets", line: 69, col: 9 });
+                    let componentCall = new SwiperComponent(this, {}, undefined, elmtId, () => { }, { page: "entry/src/main/ets/pages/HomePage.ets", line: 109, col: 9 });
                     ViewPU.create(componentCall);
                     let paramsLambda = () => {
                         return {};
@@ -169,7 +220,7 @@ class HomePage extends ViewPU {
         {
             this.observeComponentCreation2((elmtId, isInitialRender) => {
                 if (isInitialRender) {
-                    let componentCall = new WaterFlowComponent(this, {}, undefined, elmtId, () => { }, { page: "entry/src/main/ets/pages/HomePage.ets", line: 70, col: 9 });
+                    let componentCall = new WaterFlowComponent(this, {}, undefined, elmtId, () => { }, { page: "entry/src/main/ets/pages/HomePage.ets", line: 110, col: 9 });
                     ViewPU.create(componentCall);
                     let paramsLambda = () => {
                         return {};

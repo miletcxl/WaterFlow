@@ -1,3 +1,4 @@
+import { router } from '@kit.ArkUI';
 import { UserInfo } from '../model/UserInfo';
 
 @Component
@@ -31,7 +32,13 @@ export default struct ProfileHeaderComponent {
           .borderRadius(10)
           .border({ width: 1, color: Color.White })
           .margin({ bottom: 0, right: 0 })
-        // .visibility(Visibility.Hidden) // 如果想显示就注释掉这行
+          .onClick(() => {
+            router.pushUrl({
+              url: 'userprofile/pages/EditProfilePage'
+            }).catch((err: Error) => {
+              console.error(`跳转编辑页失败: ${err.message}`);
+            });
+          })
       }
       .margin({ right: 16 })
 
@@ -46,9 +53,7 @@ export default struct ProfileHeaderComponent {
 
         // 个人简介或ID
         Row() {
-          // 【修复点】去掉 this.userInfo.userId，直接显示固定 ID
-          // 因为你的 UserInfo 类里没有定义 userId 字段
-          Text('ID: 888888')
+          Text(`ID: ${this.userInfo.userId || '未设置'}`)
             .fontSize(12)
             .fontColor('rgba(255,255,255,0.8)')
             .margin({ right: 8 })

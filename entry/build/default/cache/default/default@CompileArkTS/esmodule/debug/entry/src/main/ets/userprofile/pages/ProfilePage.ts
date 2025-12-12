@@ -4,12 +4,20 @@ if (!("finalizeConstruction" in ViewPU.prototype)) {
 interface ProfilePage_Params {
     viewModel?: ProfileViewModel;
     topRectHeight?: number;
+    isLoggedIn?: boolean;
+    isLoading?: boolean;
     quickIcons?: string[];
+    context?;
+    dbManager?: DatabaseManager;
 }
 import router from "@ohos:router";
+import type common from "@ohos:app.ability.common";
 import { ProfileViewModel } from "@bundle:com.huawei.waterflow/entry/ets/userprofile/viewmodel/ProfileViewModel";
 import type { QuickEntryModel, RecentOrderModel } from "@bundle:com.huawei.waterflow/entry/ets/userprofile/viewmodel/ProfileViewModel";
 import ProfileHeaderComponent from "@bundle:com.huawei.waterflow/entry/ets/userprofile/view/ProfileHeaderComponent";
+import { DatabaseManager } from "@bundle:com.huawei.waterflow/entry/ets/userprofile/database/DatabaseManager";
+import Logger from "@bundle:com.huawei.waterflow/entry/ets/common/utils/Logger";
+const TAG = 'ProfilePage';
 class ProfilePage extends ViewPU {
     constructor(parent, params, __localStorage, elmtId = -1, paramsLambda = undefined, extraInfo) {
         super(parent, __localStorage, elmtId, extraInfo);
@@ -18,7 +26,11 @@ class ProfilePage extends ViewPU {
         }
         this.__viewModel = new ObservedPropertyObjectPU(new ProfileViewModel(), this, "viewModel");
         this.__topRectHeight = this.createStorageLink('topRectHeight', 0, "topRectHeight");
+        this.__isLoggedIn = new ObservedPropertySimplePU(false, this, "isLoggedIn");
+        this.__isLoading = new ObservedPropertySimplePU(true, this, "isLoading");
         this.quickIcons = ['👛', '🎫', '🎁', '🎧'];
+        this.context = getContext(this) as common.UIAbilityContext;
+        this.dbManager = DatabaseManager.getInstance();
         this.setInitiallyProvidedValue(params);
         this.finalizeConstruction();
     }
@@ -26,8 +38,20 @@ class ProfilePage extends ViewPU {
         if (params.viewModel !== undefined) {
             this.viewModel = params.viewModel;
         }
+        if (params.isLoggedIn !== undefined) {
+            this.isLoggedIn = params.isLoggedIn;
+        }
+        if (params.isLoading !== undefined) {
+            this.isLoading = params.isLoading;
+        }
         if (params.quickIcons !== undefined) {
             this.quickIcons = params.quickIcons;
+        }
+        if (params.context !== undefined) {
+            this.context = params.context;
+        }
+        if (params.dbManager !== undefined) {
+            this.dbManager = params.dbManager;
         }
     }
     updateStateVars(params: ProfilePage_Params) {
@@ -35,10 +59,14 @@ class ProfilePage extends ViewPU {
     purgeVariableDependenciesOnElmtId(rmElmtId) {
         this.__viewModel.purgeDependencyOnElmtId(rmElmtId);
         this.__topRectHeight.purgeDependencyOnElmtId(rmElmtId);
+        this.__isLoggedIn.purgeDependencyOnElmtId(rmElmtId);
+        this.__isLoading.purgeDependencyOnElmtId(rmElmtId);
     }
     aboutToBeDeleted() {
         this.__viewModel.aboutToBeDeleted();
         this.__topRectHeight.aboutToBeDeleted();
+        this.__isLoggedIn.aboutToBeDeleted();
+        this.__isLoading.aboutToBeDeleted();
         SubscriberManager.Get().delete(this.id__());
         this.aboutToBeDeletedInternal();
     }
@@ -56,15 +84,107 @@ class ProfilePage extends ViewPU {
     set topRectHeight(newValue: number) {
         this.__topRectHeight.set(newValue);
     }
+    private __isLoggedIn: ObservedPropertySimplePU<boolean>;
+    get isLoggedIn() {
+        return this.__isLoggedIn.get();
+    }
+    set isLoggedIn(newValue: boolean) {
+        this.__isLoggedIn.set(newValue);
+    }
+    private __isLoading: ObservedPropertySimplePU<boolean>;
+    get isLoading() {
+        return this.__isLoading.get();
+    }
+    set isLoading(newValue: boolean) {
+        this.__isLoading.set(newValue);
+    }
     // 快捷入口图标
     private quickIcons: string[];
-    aboutToAppear(): void {
-        this.viewModel.initUserInfo();
-        this.viewModel.initMenuItems();
-        this.viewModel.initQuickEntries();
-        this.viewModel.initRecentOrders();
+    private context;
+    private dbManager: DatabaseManager;
+    async aboutToAppear(): Promise<void> {
+        await this.loadData();
+    }
+    async onPageShow(): Promise<void> {
+        // 页面显示时重新加载数据（从编辑页面返回时）
+        await this.loadData();
+    }
+    private async loadData(): Promise<void> {
+        try {
+            this.isLoading = true;
+            // 初始化数据库
+            await this.dbManager.initDatabase(this.context);
+            // 检查登录状态
+            const currentUser = await this.dbManager.getCurrentUser();
+            this.isLoggedIn = currentUser !== null;
+            if (this.isLoggedIn) {
+                // 加载用户信息
+                await this.viewModel.initUserInfo();
+            }
+            else {
+                // 未登录，跳转到登录页
+                router.replaceUrl({
+                    url: 'userprofile/pages/LoginPage'
+                }).catch((err: Error) => {
+                    Logger.error(TAG, `跳转登录页失败: ${err.message}`);
+                });
+                return;
+            }
+            this.viewModel.initMenuItems();
+            this.viewModel.initQuickEntries();
+            await this.viewModel.initRecentOrders();
+        }
+        catch (err) {
+            const error = err as Error;
+            Logger.error(TAG, `页面初始化失败: ${error.message}`);
+        }
+        finally {
+            this.isLoading = false;
+        }
     }
     initialRender() {
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            If.create();
+            if (this.isLoading) {
+                this.ifElseBranchUpdateFunction(0, () => {
+                    this.observeComponentCreation2((elmtId, isInitialRender) => {
+                        // 加载中状态
+                        Column.create();
+                        // 加载中状态
+                        Column.width('100%');
+                        // 加载中状态
+                        Column.height('100%');
+                        // 加载中状态
+                        Column.justifyContent(FlexAlign.Center);
+                        // 加载中状态
+                        Column.backgroundColor('#F6F6F6');
+                    }, Column);
+                    this.observeComponentCreation2((elmtId, isInitialRender) => {
+                        LoadingProgress.create();
+                        LoadingProgress.width(50);
+                        LoadingProgress.height(50);
+                        LoadingProgress.color('#FF6B00');
+                    }, LoadingProgress);
+                    this.observeComponentCreation2((elmtId, isInitialRender) => {
+                        Text.create('加载中...');
+                        Text.fontSize(16);
+                        Text.fontColor('#999999');
+                        Text.margin({ top: 16 });
+                    }, Text);
+                    Text.pop();
+                    // 加载中状态
+                    Column.pop();
+                });
+            }
+            else {
+                this.ifElseBranchUpdateFunction(1, () => {
+                    this.buildContent.bind(this)();
+                });
+            }
+        }, If);
+        If.pop();
+    }
+    buildContent(parent = null) {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Stack.create({ alignContent: Alignment.Top });
             Stack.backgroundColor('#F6F6F6');
@@ -187,7 +307,7 @@ class ProfilePage extends ViewPU {
                         if (isInitialRender) {
                             let componentCall = new 
                             // 1. 用户基本信息组件
-                            ProfileHeaderComponent(this, { userInfo: this.viewModel.userInfo }, undefined, elmtId, () => { }, { page: "entry/src/main/ets/userprofile/pages/ProfilePage.ets", line: 92, col: 13 });
+                            ProfileHeaderComponent(this, { userInfo: this.viewModel.userInfo }, undefined, elmtId, () => { }, { page: "entry/src/main/ets/userprofile/pages/ProfilePage.ets", line: 159, col: 13 });
                             ViewPU.create(componentCall);
                             let paramsLambda = () => {
                                 return {
@@ -241,14 +361,14 @@ class ProfilePage extends ViewPU {
                     Column.alignItems(HorizontalAlign.Start);
                 }, Column);
                 this.observeComponentCreation2((elmtId, isInitialRender) => {
-                    Text.create('钻石会员 Lv.5');
+                    Text.create(`${this.viewModel.memberLevel} Lv.${this.viewModel.memberLevelNum}`);
                     Text.fontSize(14);
                     Text.fontColor('#FFE4B5');
                     Text.fontWeight(FontWeight.Bold);
                 }, Text);
                 Text.pop();
                 this.observeComponentCreation2((elmtId, isInitialRender) => {
-                    Text.create('本月已省 88 元');
+                    Text.create(`本月已省 ${this.viewModel.monthlySaved.toFixed(0)} 元`);
                     Text.fontSize(10);
                     Text.fontColor('rgba(255,228,181, 0.7)');
                     Text.margin({ top: 2 });
@@ -330,21 +450,21 @@ class ProfilePage extends ViewPU {
                     Row.justifyContent(FlexAlign.SpaceEvenly);
                     Row.height(90);
                 }, Row);
-                this.buildStatItem.bind(this)({ "id": 16777324, "type": 10003, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" }, '12', { "id": 16777337, "type": 10001, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
+                this.buildStatItem.bind(this)({ "id": 16777324, "type": 10003, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" }, this.viewModel.orderCount.toString(), { "id": 16777337, "type": 10001, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
                 this.observeComponentCreation2((elmtId, isInitialRender) => {
                     Divider.create();
                     Divider.vertical(true);
                     Divider.height(24);
                     Divider.color('#F1F3F5');
                 }, Divider);
-                this.buildStatItem.bind(this)({ "id": 16777323, "type": 10003, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" }, '85', { "id": 16777338, "type": 10001, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
+                this.buildStatItem.bind(this)({ "id": 16777323, "type": 10003, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" }, this.viewModel.favoriteCount.toString(), { "id": 16777338, "type": 10001, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
                 this.observeComponentCreation2((elmtId, isInitialRender) => {
                     Divider.create();
                     Divider.vertical(true);
                     Divider.height(24);
                     Divider.color('#F1F3F5');
                 }, Divider);
-                this.buildStatItem.bind(this)({ "id": 16777325, "type": 10003, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" }, '2041', { "id": 16777339, "type": 10001, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
+                this.buildStatItem.bind(this)({ "id": 16777325, "type": 10003, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" }, this.viewModel.points.toString(), { "id": 16777339, "type": 10001, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" });
                 Row.pop();
                 // --- 悬浮统计卡片 ---
                 ListItem.pop();
@@ -599,19 +719,55 @@ class ProfilePage extends ViewPU {
                     Column.padding(16);
                     Column.padding({ top: 0, bottom: 0, left: 16, right: 16 });
                 }, Column);
-                this.buildMenuItem.bind(this)({ "id": 16777312, "type": 10003, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" }, '138****0000', true);
+                this.observeComponentCreation2((elmtId, isInitialRender) => {
+                    Row.create();
+                    Row.width('100%');
+                    Row.onClick(() => {
+                        router.pushUrl({
+                            url: 'userprofile/pages/EditProfilePage'
+                        }).catch((err: Error) => {
+                            Logger.error(TAG, `跳转编辑页失败: ${err.message}`);
+                        });
+                    });
+                }, Row);
+                this.buildMenuItem.bind(this)({ "id": 16777312, "type": 10003, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" }, this.viewModel.userInfo.phone || '未设置', true);
+                Row.pop();
                 this.observeComponentCreation2((elmtId, isInitialRender) => {
                     Divider.create();
                     Divider.color('#F1F3F5');
                     Divider.margin({ left: 44 });
                 }, Divider);
-                this.buildMenuItem.bind(this)({ "id": 16777306, "type": 10003, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" }, '我的收货地址', true);
+                this.observeComponentCreation2((elmtId, isInitialRender) => {
+                    Row.create();
+                    Row.width('100%');
+                    Row.onClick(() => {
+                        router.pushUrl({
+                            url: 'userprofile/pages/EditProfilePage'
+                        }).catch((err: Error) => {
+                            Logger.error(TAG, `跳转编辑页失败: ${err.message}`);
+                        });
+                    });
+                }, Row);
+                this.buildMenuItem.bind(this)({ "id": 16777306, "type": 10003, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" }, this.viewModel.userInfo.address || '未设置', true);
+                Row.pop();
                 this.observeComponentCreation2((elmtId, isInitialRender) => {
                     Divider.create();
                     Divider.color('#F1F3F5');
                     Divider.margin({ left: 44 });
                 }, Divider);
-                this.buildMenuItem.bind(this)({ "id": 16777319, "type": 10003, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" }, '', true);
+                this.observeComponentCreation2((elmtId, isInitialRender) => {
+                    Row.create();
+                    Row.width('100%');
+                    Row.onClick(() => {
+                        router.pushUrl({
+                            url: 'userprofile/pages/EditProfilePage'
+                        }).catch((err: Error) => {
+                            Logger.error(TAG, `跳转编辑页失败: ${err.message}`);
+                        });
+                    });
+                }, Row);
+                this.buildMenuItem.bind(this)('编辑个人信息', '', true);
+                Row.pop();
                 this.observeComponentCreation2((elmtId, isInitialRender) => {
                     Divider.create();
                     Divider.color('#F1F3F5');
@@ -767,6 +923,8 @@ class ProfilePage extends ViewPU {
                         Text.fontSize(14);
                         Text.fontColor('#999');
                         Text.margin({ right: 4 });
+                        Text.maxLines(1);
+                        Text.textOverflow({ overflow: TextOverflow.Ellipsis });
                     }, Text);
                     Text.pop();
                 });

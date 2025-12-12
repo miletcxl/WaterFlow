@@ -1,4 +1,4 @@
-Ôr@Ÿªassertions¤code´customTransformCache¬dependencies¢id¤meta±moduleSideEffects¬originalCode±originalSourcemap«resolvedIds®sourcemapChainµsyntheticNamedExportsµtransformDependencies®transformFiles¨cacheAstÔrAÚ%if (!("finalizeConstruction" in ViewPU.prototype)) {
+Ôr@Ÿªassertions¤code´customTransformCache¬dependencies¢id¤meta±moduleSideEffects¬originalCode±originalSourcemap«resolvedIds®sourcemapChainµsyntheticNamedExportsµtransformDependencies®transformFiles¨cacheAstÔrAÚ-if (!("finalizeConstruction" in ViewPU.prototype)) {
     Reflect.set(ViewPU.prototype, "finalizeConstruction", () => { });
 }
 /*
@@ -22,6 +22,9 @@ import SearchComponent from '../view/SearchComponent';
 import SwiperComponent from '../view/SwiperComponent';
 import WaterFlowComponent from '../view/WaterFlowComponent';
 import UserIconComponent from '../userprofile/view/UserIconComponent';
+import { DatabaseManager } from '../userprofile/database/DatabaseManager';
+import Logger from '../common/utils/Logger';
+const TAG = 'HomePage';
 class HomePage extends ViewPU {
     constructor(parent, params, __localStorage, elmtId = -1, paramsLambda = undefined, extraInfo) {
         super(parent, __localStorage, elmtId, extraInfo);
@@ -29,10 +32,18 @@ class HomePage extends ViewPU {
             this.paramsGenerator_ = paramsLambda;
         }
         this.__topRectHeight = this.createStorageLink('topRectHeight', 0, "topRectHeight");
+        this.context = getContext(this);
+        this.dbManager = DatabaseManager.getInstance();
         this.setInitiallyProvidedValue(params);
         this.finalizeConstruction();
     }
     setInitiallyProvidedValue(params) {
+        if (params.context !== undefined) {
+            this.context = params.context;
+        }
+        if (params.dbManager !== undefined) {
+            this.dbManager = params.dbManager;
+        }
     }
     updateStateVars(params) {
     }
@@ -49,6 +60,16 @@ class HomePage extends ViewPU {
     }
     set topRectHeight(newValue) {
         this.__topRectHeight.set(newValue);
+    }
+    async aboutToAppear() {
+        // åˆå§‹åŒ–æ•°æ®åº“
+        try {
+            await this.dbManager.initDatabase(this.context);
+        }
+        catch (err) {
+            const error = err;
+            Logger.error(TAG, `æ•°æ®åº“åˆå§‹åŒ–å¤±è´¥: ${error.message}`);
+        }
     }
     initialRender() {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
@@ -84,7 +105,7 @@ class HomePage extends ViewPU {
         {
             this.observeComponentCreation2((elmtId, isInitialRender) => {
                 if (isInitialRender) {
-                    let componentCall = new SearchComponent(this, {}, undefined, elmtId, () => { }, { page: "entry/src/main/ets/pages/HomePage.ets", line: 43, col: 11 });
+                    let componentCall = new SearchComponent(this, {}, undefined, elmtId, () => { }, { page: "entry/src/main/ets/pages/HomePage.ets", line: 60, col: 11 });
                     ViewPU.create(componentCall);
                     let paramsLambda = () => {
                         return {};
@@ -106,12 +127,37 @@ class HomePage extends ViewPU {
                 offsetY: 2
             });
             __Common__.margin({ left: { "id": 16777356, "type": 10002, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" } });
-            __Common__.onClick(() => {
-                router.pushUrl({
-                    url: 'userprofile/pages/ProfilePage'
-                }).catch((err) => {
-                    console.error(`Failed to navigate to profile page. Code: ${err.message}`);
-                });
+            __Common__.onClick(async () => {
+                try {
+                    // æ£€æŸ¥ç™»å½•çŠ¶æ€
+                    const currentUser = await this.dbManager.getCurrentUser();
+                    if (currentUser) {
+                        // å·²ç™»å½•ï¼Œè·³è½¬åˆ°ä¸ªäººä¿¡æ¯é¡µ
+                        router.pushUrl({
+                            url: 'userprofile/pages/ProfilePage'
+                        }).catch((err) => {
+                            Logger.error(TAG, `è·³è½¬ä¸ªäººä¿¡æ¯é¡µå¤±è´¥: ${err.message}`);
+                        });
+                    }
+                    else {
+                        // æœªç™»å½•ï¼Œè·³è½¬åˆ°ç™»å½•é¡µ
+                        router.pushUrl({
+                            url: 'userprofile/pages/LoginPage'
+                        }).catch((err) => {
+                            Logger.error(TAG, `è·³è½¬ç™»å½•é¡µå¤±è´¥: ${err.message}`);
+                        });
+                    }
+                }
+                catch (err) {
+                    const error = err;
+                    Logger.error(TAG, `æ£€æŸ¥ç™»å½•çŠ¶æ€å¤±è´¥: ${error.message}`);
+                    // å‡ºé”™æ—¶ä¹Ÿè·³è½¬åˆ°ç™»å½•é¡µ
+                    router.pushUrl({
+                        url: 'userprofile/pages/LoginPage'
+                    }).catch((err) => {
+                        Logger.error(TAG, `è·³è½¬ç™»å½•é¡µå¤±è´¥: ${err.message}`);
+                    });
+                }
             });
         }, __Common__);
         {
@@ -123,7 +169,7 @@ class HomePage extends ViewPU {
                         iconColor: { "id": 16777334, "type": 10001, params: [], "bundleName": "com.huawei.waterflow", "moduleName": "entry" },
                         iconSize: 40,
                         text: 'æˆ‘'
-                    }, undefined, elmtId, () => { }, { page: "entry/src/main/ets/pages/HomePage.ets", line: 46, col: 11 });
+                    }, undefined, elmtId, () => { }, { page: "entry/src/main/ets/pages/HomePage.ets", line: 63, col: 11 });
                     ViewPU.create(componentCall);
                     let paramsLambda = () => {
                         return {
@@ -145,7 +191,7 @@ class HomePage extends ViewPU {
         {
             this.observeComponentCreation2((elmtId, isInitialRender) => {
                 if (isInitialRender) {
-                    let componentCall = new ClassifyComponent(this, {}, undefined, elmtId, () => { }, { page: "entry/src/main/ets/pages/HomePage.ets", line: 68, col: 9 });
+                    let componentCall = new ClassifyComponent(this, {}, undefined, elmtId, () => { }, { page: "entry/src/main/ets/pages/HomePage.ets", line: 108, col: 9 });
                     ViewPU.create(componentCall);
                     let paramsLambda = () => {
                         return {};
@@ -160,7 +206,7 @@ class HomePage extends ViewPU {
         {
             this.observeComponentCreation2((elmtId, isInitialRender) => {
                 if (isInitialRender) {
-                    let componentCall = new SwiperComponent(this, {}, undefined, elmtId, () => { }, { page: "entry/src/main/ets/pages/HomePage.ets", line: 69, col: 9 });
+                    let componentCall = new SwiperComponent(this, {}, undefined, elmtId, () => { }, { page: "entry/src/main/ets/pages/HomePage.ets", line: 109, col: 9 });
                     ViewPU.create(componentCall);
                     let paramsLambda = () => {
                         return {};
@@ -175,7 +221,7 @@ class HomePage extends ViewPU {
         {
             this.observeComponentCreation2((elmtId, isInitialRender) => {
                 if (isInitialRender) {
-                    let componentCall = new WaterFlowComponent(this, {}, undefined, elmtId, () => { }, { page: "entry/src/main/ets/pages/HomePage.ets", line: 70, col: 9 });
+                    let componentCall = new WaterFlowComponent(this, {}, undefined, elmtId, () => { }, { page: "entry/src/main/ets/pages/HomePage.ets", line: 110, col: 9 });
                     ViewPU.create(componentCall);
                     let paramsLambda = () => {
                         return {};
@@ -198,7 +244,7 @@ class HomePage extends ViewPU {
     }
 }
 registerNamedRoute(() => new HomePage(undefined, {}), "", { bundleName: "com.huawei.waterflow", moduleName: "entry", pagePath: "pages/HomePage", pageFullPath: "entry/src/main/ets/pages/HomePage", integratedHsp: "false", moduleType: "followWithHap" });
-//# sourceMappingURL=HomePage.js.mapÂ—ÙQE:\homework_lab\WaterFlow\entry\src\main\ets\common\constants\CommonConstants.etsÙp hvigor_ignore_E:_devecostudio-windows-6.0.1.251_DevEco Studio_sdk_default_openharmony_ets_api_@ohos.router.d.tsÙGE:\homework_lab\WaterFlow\entry\src\main\ets\view\ClassifyComponent.etsÙEE:\homework_lab\WaterFlow\entry\src\main\ets\view\SearchComponent.etsÙEE:\homework_lab\WaterFlow\entry\src\main\ets\view\SwiperComponent.etsÙHE:\homework_lab\WaterFlow\entry\src\main\ets\view\WaterFlowComponent.etsÙSE:\homework_lab\WaterFlow\entry\src\main\ets\userprofile\view\UserIconComponent.etsÙ?E:\homework_lab\WaterFlow\entry\src\main\ets\pages\HomePage.etsÔrB›ªmoduleName±isLocalDependency¯isNodeEntryFile§pkgPath±belongProjectPath§pkgNameªpkgVersion±dependencyPkgInfo°belongModulePath§checker¬shouldEmitJs¥entryÃÂ¿E:\homework_lab\WaterFlow\entry¹E:\homework_lab\WaterFlow¥entry¥1.0.0Ô  ¿E:\homework_lab\WaterFlow\entryÔrCÜ ®¬getNodeCount²getIdentifierCount®getSymbolCount¬getTypeCountµgetInstantiationCountµgetRelationCacheSizes±isUndefinedSymbol±isArgumentsSymbol¯isUnknownSymbol¯getMergedSymbol®getDiagnostics´getGlobalDiagnostics´getRecursionIdentity¶getUnmatchedProperties¹getTypeOfSymbolAtLocation¯getTypeOfSymbolÙ(getSymbolsOfParameterPropertyDeclaration·getDeclaredTypeOfSymbol³getPropertiesOfType±getPropertyOfTypeÙ"getPrivateIdentifierPropertyOfType·getTypeOfPropertyOfType²getIndexInfoOfType³getIndexInfosOfTypeºgetIndexInfosOfIndexSymbol³getSignaturesOfType²getIndexTypeOfType¬getIndexType¬getBaseTypes¸getBaseTypeOfLiteralType®getWidenedType³getTypeFromTypeNode°getParameterTypeÙ$getParameterIdentifierNameAtPosition¸getPromisedTypeOfPromise®getAwaitedType¸getReturnTypeOfSignature®isNullableType¯getNullableType²getNonNullableType²getNonOptionalType°getTypeArguments®typeToTypeNodeÙ$indexInfoToIndexSignatureDeclaration¿signatureToSignatureDeclaration²symbolToEntityName²symbolToExpression¬symbolToNodeÙ!symbolToTypeParameterDeclarations¼symbolToParameterDeclarationºtypeParameterToDeclaration±getSymbolsInScope³getSymbolAtLocation·getIndexInfosAtLocationÙ!getShorthandAssignmentValueSymbolÙ#getExportSpecifierLocalTargetSymbol·getExportSymbolOfSymbol±getTypeAtLocationºgetTypeAtLocationForLinterÙ tryGetTypeAtLocationWithoutCheckºgetTypeOfAssignmentPatternÙ*getPropertySymbolOfDestructuringAssignment±signatureToString¬typeToString®symbolToStringµtypePredicateToString®writeSignature©writeType«writeSymbol²writeTypePredicate¼getAugmentedPropertiesOfType®getRootSymbols²getSymbolOfExpando±getContextualTypeÙ(getContextualTypeForObjectLiteralElementÙ#getContextualTypeForArgumentAtIndexÙ getContextualTypeForJsxAttribute²isContextSensitiveÙ!getTypeOfPropertyOfContextualTypeµgetFullyQualifiedNameÙ#tryGetResolvedSignatureWithoutCheck´getResolvedSignatureÙ/getResolvedSignatureForStringLiteralCompletionsÙ$getResolvedSignatureForSignatureHelpµgetExpandedParameters¹hasEffectiveRestParameterºcontainsArgumentsReference°getConstantValueµisValidPropertyAccessÙ#isValidPropertyAccessForCompletions»getSignatureFromDeclarationºisImplementationOfOverload¹getImmediateAliasedSymbol°getAliasedSymbol¯getEmitResolver²getExportsOfModule¿getExportsAndPropertiesOfModuleÙ forEachExportAndPropertyOfModule¯getSymbolWalker±getAmbientModules¹getJsxIntrinsicTagNamesAt³isOptionalParameter»tryGetMemberInModuleExportsÙ(tryGetMemberInModuleExportsAndProperties´tryFindAmbientModuleÙ(tryFindAmbientModuleWithoutAugmentations¯getApparentType¬getUnionType²isTypeAssignableTo³createAnonymousType¯createSignature¬createSymbol¯createIndexInfoªgetAnyType­getStringType­getNumberType±createPromiseType¯createArrayType¹getElementTypeOfArrayType®getBooleanType¬getFalseType«getTrueType«getVoidType°getUndefinedType«getNullType¯getESSymbolType¬getNeverType¯getOptionalType®getPromiseType²getPromiseLikeType´getAsyncIterableType²isSymbolAccessible«isArrayType«isTupleType¯isArrayLikeTypeÙ#isTypeInvalidDueToUnionDiscriminantºgetExactOptionalProperties¿getAllPossiblePropertiesOfTypesÙ(getSuggestedSymbolForNonexistentPropertyÙ#getSuggestionForNonexistentPropertyÙ,getSuggestedSymbolForNonexistentJSXAttributeÙ&getSuggestedSymbolForNonexistentSymbolÙ!getSuggestionForNonexistentSymbolÙ&getSuggestedSymbolForNonexistentModuleÙ!getSuggestionForNonexistentExportÙ+getSuggestedSymbolForNonexistentClassMember·getBaseConstraintOfType»getDefaultFromTypeParameter«resolveName¯getJsxNamespaceµgetJsxFragmentFactory¸getAccessibleSymbolChain»getTypePredicateOfSignature¹resolveExternalModuleName»resolveExternalModuleSymbol°tryGetThisTypeAt¹getTypeArgumentConstraint¸getSuggestionDiagnostics¸runWithCancellationTokenÙ3getLocalTypeParametersOfClassOrInterfaceOrTypeAlias´isDeclarationVisible´isPropertyAccessible»getTypeOnlyAliasDeclaration¿getMemberOverrideModifierStatusÙ!isTypeParameterPossiblyReferenced²getConstEnumRelate´clearConstEnumRelateµdeleteConstEnumRelateÙ$getTypeArgumentsForResolvedSignatureµgetCheckedSourceFilesÙ"collectHaveTsNoCheckFilesForLinter·clearQualifiedNameCache®isStaticRecord²isStaticSourceFileÔ  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  ÃÃÚ/*
+//# sourceMappingURL=HomePage.js.mapÂ™ÙQE:\homework_lab\WaterFlow\entry\src\main\ets\common\constants\CommonConstants.etsÙp hvigor_ignore_E:_devecostudio-windows-6.0.1.251_DevEco Studio_sdk_default_openharmony_ets_api_@ohos.router.d.tsÙGE:\homework_lab\WaterFlow\entry\src\main\ets\view\ClassifyComponent.etsÙEE:\homework_lab\WaterFlow\entry\src\main\ets\view\SearchComponent.etsÙEE:\homework_lab\WaterFlow\entry\src\main\ets\view\SwiperComponent.etsÙHE:\homework_lab\WaterFlow\entry\src\main\ets\view\WaterFlowComponent.etsÙSE:\homework_lab\WaterFlow\entry\src\main\ets\userprofile\view\UserIconComponent.etsÙUE:\homework_lab\WaterFlow\entry\src\main\ets\userprofile\database\DatabaseManager.etsÙDE:\homework_lab\WaterFlow\entry\src\main\ets\common\utils\Logger.etsÙ?E:\homework_lab\WaterFlow\entry\src\main\ets\pages\HomePage.etsÔrB›ªmoduleName±isLocalDependency¯isNodeEntryFile§pkgPath±belongProjectPath§pkgNameªpkgVersion±dependencyPkgInfo°belongModulePath§checker¬shouldEmitJs¥entryÃÂ¿E:\homework_lab\WaterFlow\entry¹E:\homework_lab\WaterFlow¥entry¥1.0.0Ô  ¿E:\homework_lab\WaterFlow\entryÔrCÜ ®¬getNodeCount²getIdentifierCount®getSymbolCount¬getTypeCountµgetInstantiationCountµgetRelationCacheSizes±isUndefinedSymbol±isArgumentsSymbol¯isUnknownSymbol¯getMergedSymbol®getDiagnostics´getGlobalDiagnostics´getRecursionIdentity¶getUnmatchedProperties¹getTypeOfSymbolAtLocation¯getTypeOfSymbolÙ(getSymbolsOfParameterPropertyDeclaration·getDeclaredTypeOfSymbol³getPropertiesOfType±getPropertyOfTypeÙ"getPrivateIdentifierPropertyOfType·getTypeOfPropertyOfType²getIndexInfoOfType³getIndexInfosOfTypeºgetIndexInfosOfIndexSymbol³getSignaturesOfType²getIndexTypeOfType¬getIndexType¬getBaseTypes¸getBaseTypeOfLiteralType®getWidenedType³getTypeFromTypeNode°getParameterTypeÙ$getParameterIdentifierNameAtPosition¸getPromisedTypeOfPromise®getAwaitedType¸getReturnTypeOfSignature®isNullableType¯getNullableType²getNonNullableType²getNonOptionalType°getTypeArguments®typeToTypeNodeÙ$indexInfoToIndexSignatureDeclaration¿signatureToSignatureDeclaration²symbolToEntityName²symbolToExpression¬symbolToNodeÙ!symbolToTypeParameterDeclarations¼symbolToParameterDeclarationºtypeParameterToDeclaration±getSymbolsInScope³getSymbolAtLocation·getIndexInfosAtLocationÙ!getShorthandAssignmentValueSymbolÙ#getExportSpecifierLocalTargetSymbol·getExportSymbolOfSymbol±getTypeAtLocationºgetTypeAtLocationForLinterÙ tryGetTypeAtLocationWithoutCheckºgetTypeOfAssignmentPatternÙ*getPropertySymbolOfDestructuringAssignment±signatureToString¬typeToString®symbolToStringµtypePredicateToString®writeSignature©writeType«writeSymbol²writeTypePredicate¼getAugmentedPropertiesOfType®getRootSymbols²getSymbolOfExpando±getContextualTypeÙ(getContextualTypeForObjectLiteralElementÙ#getContextualTypeForArgumentAtIndexÙ getContextualTypeForJsxAttribute²isContextSensitiveÙ!getTypeOfPropertyOfContextualTypeµgetFullyQualifiedNameÙ#tryGetResolvedSignatureWithoutCheck´getResolvedSignatureÙ/getResolvedSignatureForStringLiteralCompletionsÙ$getResolvedSignatureForSignatureHelpµgetExpandedParameters¹hasEffectiveRestParameterºcontainsArgumentsReference°getConstantValueµisValidPropertyAccessÙ#isValidPropertyAccessForCompletions»getSignatureFromDeclarationºisImplementationOfOverload¹getImmediateAliasedSymbol°getAliasedSymbol¯getEmitResolver²getExportsOfModule¿getExportsAndPropertiesOfModuleÙ forEachExportAndPropertyOfModule¯getSymbolWalker±getAmbientModules¹getJsxIntrinsicTagNamesAt³isOptionalParameter»tryGetMemberInModuleExportsÙ(tryGetMemberInModuleExportsAndProperties´tryFindAmbientModuleÙ(tryFindAmbientModuleWithoutAugmentations¯getApparentType¬getUnionType²isTypeAssignableTo³createAnonymousType¯createSignature¬createSymbol¯createIndexInfoªgetAnyType­getStringType­getNumberType±createPromiseType¯createArrayType¹getElementTypeOfArrayType®getBooleanType¬getFalseType«getTrueType«getVoidType°getUndefinedType«getNullType¯getESSymbolType¬getNeverType¯getOptionalType®getPromiseType²getPromiseLikeType´getAsyncIterableType²isSymbolAccessible«isArrayType«isTupleType¯isArrayLikeTypeÙ#isTypeInvalidDueToUnionDiscriminantºgetExactOptionalProperties¿getAllPossiblePropertiesOfTypesÙ(getSuggestedSymbolForNonexistentPropertyÙ#getSuggestionForNonexistentPropertyÙ,getSuggestedSymbolForNonexistentJSXAttributeÙ&getSuggestedSymbolForNonexistentSymbolÙ!getSuggestionForNonexistentSymbolÙ&getSuggestedSymbolForNonexistentModuleÙ!getSuggestionForNonexistentExportÙ+getSuggestedSymbolForNonexistentClassMember·getBaseConstraintOfType»getDefaultFromTypeParameter«resolveName¯getJsxNamespaceµgetJsxFragmentFactory¸getAccessibleSymbolChain»getTypePredicateOfSignature¹resolveExternalModuleName»resolveExternalModuleSymbol°tryGetThisTypeAt¹getTypeArgumentConstraint¸getSuggestionDiagnostics¸runWithCancellationTokenÙ3getLocalTypeParametersOfClassOrInterfaceOrTypeAlias´isDeclarationVisible´isPropertyAccessible»getTypeOnlyAliasDeclaration¿getMemberOverrideModifierStatusÙ!isTypeParameterPossiblyReferenced²getConstEnumRelate´clearConstEnumRelateµdeleteConstEnumRelateÙ$getTypeArgumentsForResolvedSignatureµgetCheckedSourceFilesÙ"collectHaveTsNoCheckFilesForLinter·clearQualifiedNameCache®isStaticRecord²isStaticSourceFileÔ  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  ÃÃÚ2/*
  * Copyright (c) 2023 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -215,11 +261,16 @@ registerNamedRoute(() => new HomePage(undefined, {}), "", { bundleName: "com.hua
 
 import { CommonConstants as Const } from '../common/constants/CommonConstants';
 import { router } from '@kit.ArkUI';
+import { common } from '@kit.AbilityKit';
 import ClassifyComponent from '../view/ClassifyComponent';
 import SearchComponent from '../view/SearchComponent';
 import SwiperComponent from '../view/SwiperComponent';
 import WaterFlowComponent from '../view/WaterFlowComponent';
 import UserIconComponent from '../userprofile/view/UserIconComponent';
+import { DatabaseManager } from '../userprofile/database/DatabaseManager';
+import Logger from '../common/utils/Logger';
+
+const TAG = 'HomePage';
 
 /**
  * The home page consists of four components: search component,
@@ -230,6 +281,18 @@ import UserIconComponent from '../userprofile/view/UserIconComponent';
 @Component
 struct HomePage {
   @StorageLink('topRectHeight') topRectHeight: number = 0;
+  private context = getContext(this) as common.UIAbilityContext;
+  private dbManager: DatabaseManager = DatabaseManager.getInstance();
+
+  async aboutToAppear(): Promise<void> {
+    // åˆå§‹åŒ–æ•°æ®åº“
+    try {
+      await this.dbManager.initDatabase(this.context);
+    } catch (err) {
+      const error = err as Error;
+      Logger.error(TAG, `æ•°æ®åº“åˆå§‹åŒ–å¤±è´¥: ${error.message}`);
+    }
+  }
 
   build() {
     Stack({ alignContent: Alignment.Top }) {
@@ -255,12 +318,35 @@ struct HomePage {
             offsetY: 2
           })
           .margin({ left: $r('app.float.profile_icon_margin_left') })
-          .onClick(() => {
-            router.pushUrl({
-              url: 'userprofile/pages/ProfilePage'
-            }).catch((err: Error) => {
-              console.error(`Failed to navigate to profile page. Code: ${err.message}`);
-            });
+          .onClick(async () => {
+            try {
+              // æ£€æŸ¥ç™»å½•çŠ¶æ€
+              const currentUser = await this.dbManager.getCurrentUser();
+              if (currentUser) {
+                // å·²ç™»å½•ï¼Œè·³è½¬åˆ°ä¸ªäººä¿¡æ¯é¡µ
+                router.pushUrl({
+                  url: 'userprofile/pages/ProfilePage'
+                }).catch((err: Error) => {
+                  Logger.error(TAG, `è·³è½¬ä¸ªäººä¿¡æ¯é¡µå¤±è´¥: ${err.message}`);
+                });
+              } else {
+                // æœªç™»å½•ï¼Œè·³è½¬åˆ°ç™»å½•é¡µ
+                router.pushUrl({
+                  url: 'userprofile/pages/LoginPage'
+                }).catch((err: Error) => {
+                  Logger.error(TAG, `è·³è½¬ç™»å½•é¡µå¤±è´¥: ${err.message}`);
+                });
+              }
+            } catch (err) {
+              const error = err as Error;
+              Logger.error(TAG, `æ£€æŸ¥ç™»å½•çŠ¶æ€å¤±è´¥: ${error.message}`);
+              // å‡ºé”™æ—¶ä¹Ÿè·³è½¬åˆ°ç™»å½•é¡µ
+              router.pushUrl({
+                url: 'userprofile/pages/LoginPage'
+              }).catch((err: Error) => {
+                Logger.error(TAG, `è·³è½¬ç™»å½•é¡µå¤±è´¥: ${err.message}`);
+              });
+            }
           })
         }
         .width(Const.FULL_WIDTH)
@@ -277,11 +363,12 @@ struct HomePage {
     }
     .backgroundColor($r('app.color.home_background_color'))
   }
-}ÀÔrD—¬@ohos.routerÙ#../common/constants/CommonConstants·../view/SwiperComponent·../view/SearchComponentº../view/WaterFlowComponent¹../view/ClassifyComponentÙ%../userprofile/view/UserIconComponentÔrE—ªassertions¨external¢id¤meta±moduleSideEffectsªresolvedByµsyntheticNamedExportsAÃÙp hvigor_ignore_E:_devecostudio-windows-6.0.1.251_DevEco Studio_sdk_default_openharmony_ets_api_@ohos.router.d.tsAÃªoh-resolveÂEAÂÙQE:\homework_lab\WaterFlow\entry\src\main\ets\common\constants\CommonConstants.etsAÃªoh-resolveÂEAÂÙEE:\homework_lab\WaterFlow\entry\src\main\ets\view\SwiperComponent.etsAÃªoh-resolveÂEAÂÙEE:\homework_lab\WaterFlow\entry\src\main\ets\view\SearchComponent.etsAÃªoh-resolveÂEAÂÙHE:\homework_lab\WaterFlow\entry\src\main\ets\view\WaterFlowComponent.etsAÃªoh-resolveÂEAÂÙGE:\homework_lab\WaterFlow\entry\src\main\ets\view\ClassifyComponent.etsAÃªoh-resolveÂEAÂÙSE:\homework_lab\WaterFlow\entry\src\main\ets\userprofile\view\UserIconComponent.etsAÃªoh-resolveÂ“ÔrF–§version¤fileªsourceRoot§sources¥names¨mappings«HomePage.js ‘¬HomePage.etsÜ À‘”    ‘” š”   ” ”	 	” ” ”! !”# #”) )”ÌN ÌN”ÌO ÌO–”   ” 	” ” ”! #”" $–”   ” ” ” ”9 9”: :–”   ” ” ” ”5 5”6 6–”   ” ” ” ”5 5”6 6–”   ” ” ” ”; ;”< <–”   ” ” ” ”ÌE ÌE”ÌF ÌF’” ” ‘”  ””6 ”ÌE ”ÌG 8”ÌH 9‘” ÌF’”  ” -’”  ” -‘” !š” "” "	” "
-” "”' "”) "”2 "#”3 "$”6 "'”8 ")”” "” "	” ÌM”! ÌM’” #” #˜” #” #” $	” $” $” $” $”( $”” #” #” %	” %˜” #” #” &	” &” &”$ &”% &”* &!’” '” '•” '” '” ÌG” ÌG” ÌG“” ÌH” ÌH”Ì€ ÌH.“” ÌI” ÌI”Ì ÌI0” ÌJ” ÌJ” ÌJ” ÌJ” ÌJ”& ÌJ”( ÌJ ”) ÌJ!”. ÌJ&”/ ÌJ'”3 ÌJ+”4 ÌJ,”ÌA ÌJ9”ÌB ÌJ:‘” ÌK’” (” (’” )” )’” (” (˜” )” )” ÌA	” ÌA” ÌA” ÌA” ÌA”& ÌA’” (” (˜” )” )” ÌB	” ÌB” ÌB”( ÌB!”) ÌB"”/ ÌB(”” +”# +”$ +”% +’”, *
-”; *“” 2” 2” 2”” 3” 3” 3” 3”” 4” 4” 4”" 4”” 5” 5” 5” 5”” 6” 6” 6” 6‘” 7—” 8” 8” 8”  8”$ 8”Ì 8ÌB”Ì’ 8ÌD•” 9” 9” 9”" 9”$ 9•” :” :” :” :” :”” ;” ;” ;”8 ;2™” <” <” <” <” <” <” < ” <"”! <$œ” =” =” =”! =”" =”ÌO =ÌI”ÌR =ÌL”ÌS =ÌM”ÌZ =ÌT”Ì\ =ÌV”Ì] =ÌW”Ì^ =ÌX”” >” >” >” >’” ?
-” ?’” ,
-”) ,“” -
-”% -”, -“” .”! .”Ì .9”” /”  /”" /”$ /”” 0” 0” 0”! 0‘” 1’” .”% .”” /”$ /”& /”( /”” 0”  0”" 0”% 0’” (” (’” )” )’”, ÌC”= ÌC’”, ÌD”; ÌD’”, ÌE”> ÌE’” '” '’” "” "	‘” ÌNÔrG–§version¤file§sources®sourcesContent¥names¨mappingsÀ‘À‘ÀÜ É‘”    ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”  	 ‘”  
- ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”    ‘”  ! ‘”  " ‘”  # ‘”  $ ‘”  % ‘”  & ‘”  ' ‘”  ( ‘”  ) ‘”  * ‘”  + ‘”  , ‘”  - ‘”  . ‘”  / ‘”  0 ‘”  1 ‘”  2 ‘”  3 ‘”  4 ‘”  5 ‘”  6 ‘”  7 ‘”  8 ‘”  9 ‘”  : ‘”  ; ‘”  < ‘”  = ‘”  > ‘”  ? ‘”  Ì@ ‘”  ÌA ‘”  ÌB ‘”  ÌC ‘”  ÌD ‘”  ÌE ‘”  ÌF ‘”  ÌG ‘”  ÌH ‘”  ÌI ‘”  ÌJ ‘”  ÌK ‘”  ÌL ‘”  ÌM ‘”  ÌN ‘”  ÌO ‘”  ÌP ‘”  ÌQ ‘”  ÌR ‘”  ÌS ‘”  ÌT ‘”  ÌU ‘”  ÌV ‘”  ÌW ‘”  ÌX ‘”  ÌY ‘”  ÌZ ‘”  Ì[ ‘”  Ì\ ‘”  Ì] ‘”  Ì^ ‘”  Ì_ ‘”  Ì` ‘”  Ìa ‘”  Ìb ‘”  Ìc ‘”  Ìd ‘”  Ìe ‘”  Ìf ‘”  Ìg ‘”  Ìh ‘”  Ìi ‘”  Ìj ‘”  Ìk ‘”  Ìl ‘”  Ìm ‘”  Ìn ‘”  Ìo ‘”  Ìp ‘”  Ìq ‘”  Ìr ‘”  Ìs ‘”  Ìt ‘”  Ìu ‘”  Ìv ‘”  Ìw ‘”  Ìx ‘”  Ìy ‘”  Ìz ‘”  Ì{ ‘”  Ì| ‘”  Ì} ‘”  Ì~ ‘”  Ì ‘”  Ì€ ‘”  Ì ‘”  Ì‚ ‘”  Ìƒ ‘”  Ì„ ‘”  Ì… ‘”  Ì† ‘”  Ì‡ ‘”  Ìˆ ‘”  Ì‰ ‘”  ÌŠ ‘”  Ì‹ ‘”  ÌŒ ‘”  Ì ‘”  Ì ‘”  Ì ‘”  Ì ‘”  Ì‘ ‘”  Ì’ ‘”  Ì“ ‘”  Ì” ‘”  Ì• ‘”  Ì– ‘”  Ì— ‘”  Ì˜ ‘”  Ì™ ‘”  Ìš ‘”  Ì› ‘”  Ìœ ‘”  Ì ‘”  Ì ‘”  ÌŸ ‘”  Ì  ‘”  Ì¡ ‘”  Ì¢ ‘”  Ì£ ‘”  Ì¤ ‘”  Ì¥ ‘”  Ì¦ ‘”  Ì§ ‘”  Ì¨ ‘”  Ì© ‘”  Ìª ‘”  Ì« ‘”  Ì¬ ‘”  Ì­ ‘”  Ì® ‘”  Ì¯ ‘”  Ì° ‘”  Ì± ‘”  Ì² ‘”  Ì³ ‘”  Ì´ ‘”  Ìµ ‘”  Ì¶ ‘”  Ì· ‘”  Ì¸ ‘”  Ì¹ ‘”  Ìº ‘”  Ì» ‘”  Ì¼ ‘”  Ì½ ‘”  Ì¾ ‘”  Ì¿ ‘”  ÌÀ ‘”  ÌÁ ‘”  ÌÂ ‘”  ÌÃ ‘”  ÌÄ ‘”  ÌÅ ‘”  ÌÆ ‘”  ÌÇ ‘”  ÌÈ ÔrH’§missing¦pluginÃ¦genAbcÂÔ  ÔrI”²dynamicImportCache¹exportAllDeclarationCache»exportNamedDeclarationCache«importCache—ÔrJ•¤type¥start£endªspecifiers¦source±ImportDeclarationÍîÍ=‘ÔrK•¤type¥start£end¨imported¥local¯ImportSpecifierÍ÷ÍÔrL”¤type¥start£end¤nameªIdentifierÍ÷Í¯CommonConstantsLªIdentifierÍ
-Í¥ConstÔrM•¤type¥start£end¥value£raw§LiteralÍÍ<Ù#../common/constants/CommonConstantsÙ%'../common/constants/CommonConstants'J±ImportDeclarationÍ?Ía‘ÔrN”¤type¥start£end¥local¶ImportDefaultSpecifierÍFÍLLªIdentifierÍFÍL¦routerM§LiteralÍRÍ`¬@ohos.router®"@ohos.router"J±ImportDeclarationÍcÍ‘N¶ImportDefaultSpecifierÍjÍ{LªIdentifierÍjÍ{±ClassifyComponentM§LiteralÍÍœ¹../view/ClassifyComponent»'../view/ClassifyComponent'J±ImportDeclarationÍŸÍÕ‘N¶ImportDefaultSpecifierÍ¦ÍµLªIdentifierÍ¦Íµ¯SearchComponentM§LiteralÍ»ÍÔ·../view/SearchComponent¹'../view/SearchComponent'J±ImportDeclarationÍ×Í‘N¶ImportDefaultSpecifierÍŞÍíLªIdentifierÍŞÍí¯SwiperComponentM§LiteralÍóÍ·../view/SwiperComponent¹'../view/SwiperComponent'J±ImportDeclarationÍÍK‘N¶ImportDefaultSpecifierÍÍ(LªIdentifierÍÍ(²WaterFlowComponentM§LiteralÍ.ÍJº../view/WaterFlowComponent¼'../view/WaterFlowComponent'J±ImportDeclarationÍMÍ“‘N¶ImportDefaultSpecifierÍTÍeLªIdentifierÍTÍe±UserIconComponentM§LiteralÍkÍ’Ù%../userprofile/view/UserIconComponentÙ''../userprofile/view/UserIconComponent'
+}ÀÔrD™¬@ohos.router¹../view/ClassifyComponent·../view/SearchComponent·../view/SwiperComponentÙ'../userprofile/database/DatabaseManager¶../common/utils/LoggerÙ#../common/constants/CommonConstantsÙ%../userprofile/view/UserIconComponentº../view/WaterFlowComponentÔrE—ªassertions¨external¢id¤meta±moduleSideEffectsªresolvedByµsyntheticNamedExportsAÃÙp hvigor_ignore_E:_devecostudio-windows-6.0.1.251_DevEco Studio_sdk_default_openharmony_ets_api_@ohos.router.d.tsAÃªoh-resolveÂEAÂÙGE:\homework_lab\WaterFlow\entry\src\main\ets\view\ClassifyComponent.etsAÃªoh-resolveÂEAÂÙEE:\homework_lab\WaterFlow\entry\src\main\ets\view\SearchComponent.etsAÃªoh-resolveÂEAÂÙEE:\homework_lab\WaterFlow\entry\src\main\ets\view\SwiperComponent.etsAÃªoh-resolveÂEAÂÙUE:\homework_lab\WaterFlow\entry\src\main\ets\userprofile\database\DatabaseManager.etsAÃªoh-resolveÂEAÂÙDE:\homework_lab\WaterFlow\entry\src\main\ets\common\utils\Logger.etsAÃªoh-resolveÂEAÂÙQE:\homework_lab\WaterFlow\entry\src\main\ets\common\constants\CommonConstants.etsAÃªoh-resolveÂEAÂÙSE:\homework_lab\WaterFlow\entry\src\main\ets\userprofile\view\UserIconComponent.etsAÃªoh-resolveÂEAÂÙHE:\homework_lab\WaterFlow\entry\src\main\ets\view\WaterFlowComponent.etsAÃªoh-resolveÂ“ÔrF–§version¤fileªsourceRoot§sources¥names¨mappings«HomePage.js ‘¬HomePage.etsÜ î‘”    ‘” š”   ” ”	 	” ” ”! !”# #”) )”ÌN ÌN”ÌO ÌO–”   ” 	” ” ”! #”" $–”   ” ” ” ”9 9”: :–”   ” ” ” ”5 5”6 6–”   ” ” ” ”5 5”6 6–”   ” ” ” ”; ;”< <–”   ” ” ” ”ÌE ÌE”ÌF ÌF˜”   ” ”	 	” ” ”   ”ÌI ÌI”ÌJ ÌJ–”   ” ” ” ”+ +”, ,–”   ” ”	 	” ” ” ’” #” #‘” ! ””6 $”ÌE $”ÌG $8”ÌH $9•” %”! %”" %”& %#”' %?•” &'”( &6”) &7”4 &ÌB”6 &ÌD‘” ’” $ ” $-’” $ ” $-”” (”	 (”
+ (” (’” )” )’” *” *” +” +” +” +”  +”! +”- +'”. +(”2 +,”3 +-”: +4”; +5”< +6‘”	 ,”” ,” ,” ,” ,–” -” -” -” -” - ” -!” .” .” .” .” .” .” .”+ .%”0 .*”1 .+”8 .2”: .4”; .5”< .6‘”	 /’” 0” 0‘” 2š” 3” 3	” 3
+” 3”' 3”) 3”2 3#”3 3$”6 3'”8 3)”” 3” 3	” Ìu”! Ìu’” 4” 4˜” 4” 4” 5	” 5” 5” 5” 5”( 5”” 4” 4” 6	” 6˜” 4” 4” 7	” 7” 7”$ 7”% 7”* 7!’” 8” 8•” 8” 8” Ìo” Ìo” Ìo“” Ìp” Ìp”Ì€ Ìp.“” Ìq” Ìq”Ì Ìq0” Ìr” Ìr” Ìr” Ìr” Ìr”& Ìr”( Ìr ”) Ìr!”. Ìr&”/ Ìr'”3 Ìr+”4 Ìr,”ÌA Ìr9”ÌB Ìr:‘” Ìs’” 9” 9’” :” :’” 9” 9˜” :” :” Ìi	” Ìi” Ìi” Ìi” Ìi”& Ìi’” 9” 9˜” :” :” Ìj	” Ìj” Ìj”( Ìj!”) Ìj"”/ Ìj(”” <”# <”$ <”% <’”, ;
+”; ;“” ÌC” ÌC” ÌC”” ÌD” ÌD” ÌD” ÌD”” ÌE” ÌE” ÌE”" ÌE”” ÌF” ÌF” ÌF” ÌF”” ÌG” ÌG” ÌG” ÌG‘” ÌH—” ÌI” ÌI” ÌI”  ÌI”$ ÌI”Ì ÌIÌB”Ì’ ÌIÌD–” ÌJ” ÌJ” ÌJ”$ ÌJ”( ÌJ”* ÌJ’” ÌK” ÌK’” ÌL” ÌLœ” ÌM” ÌM”% ÌM”( ÌM"”. ÌM(”2 ÌM,”3 ÌM-”< ÌM6”= ÌM7”ÌK ÌMÌE”ÌM ÌMÌG”ÌN ÌMÌH”” ÌN” ÌN”# ÌN”% ÌN’” ÌO”' ÌO•” ÌP” ÌP” ÌP”& ÌP”' ÌP”” ÌQ” ÌQ”! ÌQ”Ì@ ÌQ6™” ÌR” ÌR” ÌR”  ÌR”! ÌR”" ÌR”% ÌR$”' ÌR&”) ÌR(” ÌS”" ÌS”# ÌS”( ÌS”) ÌS”, ÌS"”. ÌS$”< ÌS2”? ÌS5”Ì@ ÌS6”ÌG ÌS=”ÌI ÌS?”ÌJ ÌSÌ@”ÌK ÌSÌA”” ÌT” ÌT” ÌT” ÌT‘” ÌU‘” ÌU’” ÌV”% ÌV•” ÌW” ÌW” ÌW”& ÌW”' ÌW”” ÌX” ÌX”! ÌX”> ÌX4™” ÌY” ÌY” ÌY”  ÌY”! ÌY”" ÌY”% ÌY$”' ÌY&”) ÌY(” ÌZ”" ÌZ”# ÌZ”( ÌZ”) ÌZ”, ÌZ"”. ÌZ$”: ÌZ0”= ÌZ3”> ÌZ4”ÌE ÌZ;”ÌG ÌZ=”ÌH ÌZ>”ÌI ÌZ?”” Ì[” Ì[” Ì[” Ì[‘” Ì\‘” Ì]”” Ì]” Ì]” Ì]” Ì]–” Ì^” Ì^” Ì^”" Ì^”% Ì^(”& Ì^)” Ì_” Ì_” Ì_”  Ì_”! Ì_”$ Ì_”& Ì_ ”3 Ì_-”8 Ì_2”9 Ì_3”Ì@ Ì_:”ÌB Ì_<”ÌC Ì_=”ÌD Ì_>’” Ì`”! Ì`•” Ìa” Ìa” Ìa”" Ìa”# Ìa”” Ìb” Ìb” Ìb”: Ìb2™” Ìc” Ìc” Ìc” Ìc” Ìc” Ìc”! Ìc"”# Ìc$”% Ìc&” Ìd” Ìd” Ìd”$ Ìd”% Ìd”( Ìd ”* Ìd"”6 Ìd.”9 Ìd1”: Ìd2”ÌA Ìd9”ÌC Ìd;”ÌD Ìd<”ÌE Ìd=”” Ìe” Ìe” Ìe” Ìe‘” Ìf’” Ìg
+” Ìg’” =
+”) =“” >
+”% >”, >“” ?”! ?”Ì ?9”” Ì@”  Ì@”" Ì@”$ Ì@”” ÌA” ÌA” ÌA”! ÌA‘” ÌB’” ?”% ?”” Ì@”$ Ì@”& Ì@”( Ì@”” ÌA”  ÌA”" ÌA”% ÌA’” 9” 9’” :” :’”, Ìk”= Ìk’”, Ìl”; Ìl’”, Ìm”> Ìm’” 8” 8’” 3” 3	‘” ÌvÔrG–§version¤file§sources®sourcesContent¥names¨mappingsÀ‘À‘ÀÜ ÷‘”    ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”  	 ‘”  
+ ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”    ‘”  ! ‘”  " ‘”  # ‘”  $ ‘”  % ‘”  & ‘”  ' ‘”  ( ‘”  ) ‘”  * ‘”  + ‘”  , ‘”  - ‘”  . ‘”  / ‘”  0 ‘”  1 ‘”  2 ‘”  3 ‘”  4 ‘”  5 ‘”  6 ‘”  7 ‘”  8 ‘”  9 ‘”  : ‘”  ; ‘”  < ‘”  = ‘”  > ‘”  ? ‘”  Ì@ ‘”  ÌA ‘”  ÌB ‘”  ÌC ‘”  ÌD ‘”  ÌE ‘”  ÌF ‘”  ÌG ‘”  ÌH ‘”  ÌI ‘”  ÌJ ‘”  ÌK ‘”  ÌL ‘”  ÌM ‘”  ÌN ‘”  ÌO ‘”  ÌP ‘”  ÌQ ‘”  ÌR ‘”  ÌS ‘”  ÌT ‘”  ÌU ‘”  ÌV ‘”  ÌW ‘”  ÌX ‘”  ÌY ‘”  ÌZ ‘”  Ì[ ‘”  Ì\ ‘”  Ì] ‘”  Ì^ ‘”  Ì_ ‘”  Ì` ‘”  Ìa ‘”  Ìb ‘”  Ìc ‘”  Ìd ‘”  Ìe ‘”  Ìf ‘”  Ìg ‘”  Ìh ‘”  Ìi ‘”  Ìj ‘”  Ìk ‘”  Ìl ‘”  Ìm ‘”  Ìn ‘”  Ìo ‘”  Ìp ‘”  Ìq ‘”  Ìr ‘”  Ìs ‘”  Ìt ‘”  Ìu ‘”  Ìv ‘”  Ìw ‘”  Ìx ‘”  Ìy ‘”  Ìz ‘”  Ì{ ‘”  Ì| ‘”  Ì} ‘”  Ì~ ‘”  Ì ‘”  Ì€ ‘”  Ì ‘”  Ì‚ ‘”  Ìƒ ‘”  Ì„ ‘”  Ì… ‘”  Ì† ‘”  Ì‡ ‘”  Ìˆ ‘”  Ì‰ ‘”  ÌŠ ‘”  Ì‹ ‘”  ÌŒ ‘”  Ì ‘”  Ì ‘”  Ì ‘”  Ì ‘”  Ì‘ ‘”  Ì’ ‘”  Ì“ ‘”  Ì” ‘”  Ì• ‘”  Ì– ‘”  Ì— ‘”  Ì˜ ‘”  Ì™ ‘”  Ìš ‘”  Ì› ‘”  Ìœ ‘”  Ì ‘”  Ì ‘”  ÌŸ ‘”  Ì  ‘”  Ì¡ ‘”  Ì¢ ‘”  Ì£ ‘”  Ì¤ ‘”  Ì¥ ‘”  Ì¦ ‘”  Ì§ ‘”  Ì¨ ‘”  Ì© ‘”  Ìª ‘”  Ì« ‘”  Ì¬ ‘”  Ì­ ‘”  Ì® ‘”  Ì¯ ‘”  Ì° ‘”  Ì± ‘”  Ì² ‘”  Ì³ ‘”  Ì´ ‘”  Ìµ ‘”  Ì¶ ‘”  Ì· ‘”  Ì¸ ‘”  Ì¹ ‘”  Ìº ‘”  Ì» ‘”  Ì¼ ‘”  Ì½ ‘”  Ì¾ ‘”  Ì¿ ‘”  ÌÀ ‘”  ÌÁ ‘”  ÌÂ ‘”  ÌÃ ‘”  ÌÄ ‘”  ÌÅ ‘”  ÌÆ ‘”  ÌÇ ‘”  ÌÈ ‘”  ÌÉ ‘”  ÌÊ ‘”  ÌË ‘”  ÌÌ ‘”  ÌÍ ‘”  ÌÎ ‘”  ÌÏ ‘”  ÌĞ ‘”  ÌÑ ‘”  ÌÒ ‘”  ÌÓ ‘”  ÌÔ ‘”  ÌÕ ‘”  ÌÖ ‘”  Ì× ‘”  ÌØ ‘”  ÌÙ ‘”  ÌÚ ‘”  ÌÛ ‘”  ÌÜ ‘”  Ìİ ‘”  ÌŞ ‘”  Ìß ‘”  Ìà ‘”  Ìá ‘”  Ìâ ‘”  Ìã ‘”  Ìä ‘”  Ìå ‘”  Ìæ ‘”  Ìç ‘”  Ìè ‘”  Ìé ‘”  Ìê ‘”  Ìë ‘”  Ìì ‘”  Ìí ‘”  Ìî ‘”  Ìï ‘”  Ìğ ‘”  Ìñ ‘”  Ìò ‘”  Ìó ‘”  Ìô ‘”  Ìõ ‘”  Ìö ÔrH’§missing¦pluginÃ¦genAbcÂÔ  ÔrI”²dynamicImportCache¹exportAllDeclarationCache»exportNamedDeclarationCache«importCache™ÔrJ•¤type¥start£endªspecifiers¦source±ImportDeclarationÍîÍ=‘ÔrK•¤type¥start£end¨imported¥local¯ImportSpecifierÍ÷ÍÔrL”¤type¥start£end¤nameªIdentifierÍ÷Í¯CommonConstantsLªIdentifierÍ
+Í¥ConstÔrM•¤type¥start£end¥value£raw§LiteralÍÍ<Ù#../common/constants/CommonConstantsÙ%'../common/constants/CommonConstants'J±ImportDeclarationÍ?Ía‘ÔrN”¤type¥start£end¥local¶ImportDefaultSpecifierÍFÍLLªIdentifierÍFÍL¦routerM§LiteralÍRÍ`¬@ohos.router®"@ohos.router"J±ImportDeclarationÍcÍ‘N¶ImportDefaultSpecifierÍjÍ{LªIdentifierÍjÍ{±ClassifyComponentM§LiteralÍÍœ¹../view/ClassifyComponent»'../view/ClassifyComponent'J±ImportDeclarationÍŸÍÕ‘N¶ImportDefaultSpecifierÍ¦ÍµLªIdentifierÍ¦Íµ¯SearchComponentM§LiteralÍ»ÍÔ·../view/SearchComponent¹'../view/SearchComponent'J±ImportDeclarationÍ×Í‘N¶ImportDefaultSpecifierÍŞÍíLªIdentifierÍŞÍí¯SwiperComponentM§LiteralÍóÍ·../view/SwiperComponent¹'../view/SwiperComponent'J±ImportDeclarationÍÍK‘N¶ImportDefaultSpecifierÍÍ(LªIdentifierÍÍ(²WaterFlowComponentM§LiteralÍ.ÍJº../view/WaterFlowComponent¼'../view/WaterFlowComponent'J±ImportDeclarationÍMÍ“‘N¶ImportDefaultSpecifierÍTÍeLªIdentifierÍTÍe±UserIconComponentM§LiteralÍkÍ’Ù%../userprofile/view/UserIconComponentÙ''../userprofile/view/UserIconComponent'J±ImportDeclarationÍ•Íß‘K¯ImportSpecifierÍÍ­LªIdentifierÍÍ­¯DatabaseManagerLªIdentifierÍÍ­¯DatabaseManagerM§LiteralÍµÍŞÙ'../userprofile/database/DatabaseManagerÙ)'../userprofile/database/DatabaseManager'J±ImportDeclarationÍáÍ‘N¶ImportDefaultSpecifierÍèÍîLªIdentifierÍèÍî¦LoggerM§LiteralÍôÍ¶../common/utils/Logger¸'../common/utils/Logger'

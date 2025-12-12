@@ -18,6 +18,11 @@
  */
 export class UserInfo {
   /**
+   * User ID (关联到user_account表)
+   */
+  userId: number = 0;
+
+  /**
    * User name.
    */
   userName: string = '';

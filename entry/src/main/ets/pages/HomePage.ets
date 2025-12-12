@@ -15,11 +15,16 @@
 
 import { CommonConstants as Const } from '../common/constants/CommonConstants';
 import { router } from '@kit.ArkUI';
+import { common } from '@kit.AbilityKit';
 import ClassifyComponent from '../view/ClassifyComponent';
 import SearchComponent from '../view/SearchComponent';
 import SwiperComponent from '../view/SwiperComponent';
 import WaterFlowComponent from '../view/WaterFlowComponent';
 import UserIconComponent from '../userprofile/view/UserIconComponent';
+import { DatabaseManager } from '../userprofile/database/DatabaseManager';
+import Logger from '../common/utils/Logger';
+
+const TAG = 'HomePage';
 
 /**
  * The home page consists of four components: search component,
@@ -30,6 +35,18 @@ import UserIconComponent from '../userprofile/view/UserIconComponent';
 @Component
 struct HomePage {
   @StorageLink('topRectHeight') topRectHeight: number = 0;
+  private context = getContext(this) as common.UIAbilityContext;
+  private dbManager: DatabaseManager = DatabaseManager.getInstance();
+
+  async aboutToAppear(): Promise<void> {
+    // 初始化数据库
+    try {
+      await this.dbManager.initDatabase(this.context);
+    } catch (err) {
+      const error = err as Error;
+      Logger.error(TAG, `数据库初始化失败: ${error.message}`);
+    }
+  }
 
   build() {
     Stack({ alignContent: Alignment.Top }) {
@@ -55,12 +72,35 @@ struct HomePage {
             offsetY: 2
           })
           .margin({ left: $r('app.float.profile_icon_margin_left') })
-          .onClick(() => {
-            router.pushUrl({
-              url: 'userprofile/pages/ProfilePage'
-            }).catch((err: Error) => {
-              console.error(`Failed to navigate to profile page. Code: ${err.message}`);
-            });
+          .onClick(async () => {
+            try {
+              // 检查登录状态
+              const currentUser = await this.dbManager.getCurrentUser();
+              if (currentUser) {
+                // 已登录，跳转到个人信息页
+                router.pushUrl({
+                  url: 'userprofile/pages/ProfilePage'
+                }).catch((err: Error) => {
+                  Logger.error(TAG, `跳转个人信息页失败: ${err.message}`);
+                });
+              } else {
+                // 未登录，跳转到登录页
+                router.pushUrl({
+                  url: 'userprofile/pages/LoginPage'
+                }).catch((err: Error) => {
+                  Logger.error(TAG, `跳转登录页失败: ${err.message}`);
+                });
+              }
+            } catch (err) {
+              const error = err as Error;
+              Logger.error(TAG, `检查登录状态失败: ${error.message}`);
+              // 出错时也跳转到登录页
+              router.pushUrl({
+                url: 'userprofile/pages/LoginPage'
+              }).catch((err: Error) => {
+                Logger.error(TAG, `跳转登录页失败: ${err.message}`);
+              });
+            }
           })
         }
         .width(Const.FULL_WIDTH)

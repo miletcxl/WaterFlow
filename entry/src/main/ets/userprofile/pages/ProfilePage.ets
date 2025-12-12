@@ -5,20 +5,28 @@
 
 import { CommonConstants as Const } from '../../common/constants/CommonConstants';
 import { router } from '@kit.ArkUI';
-import { BusinessError } from '@kit.BasicServicesKit';
+import { common } from '@kit.AbilityKit';
 import { ProfileViewModel, QuickEntryModel, RecentOrderModel } from '../viewmodel/ProfileViewModel';
 import { ProfileMenuItem } from '../model/UserInfo';
 import ProfileHeaderComponent from '../view/ProfileHeaderComponent';
 import ProfileItemComponent from '../view/ProfileItemComponent';
+import { DatabaseManager } from '../database/DatabaseManager';
+import Logger from '../../common/utils/Logger';
+
+const TAG = 'ProfilePage';
 
 @Entry
 @Component
 struct ProfilePage {
   @State viewModel: ProfileViewModel = new ProfileViewModel();
   @StorageLink('topRectHeight') topRectHeight: number = 0;
+  @State isLoggedIn: boolean = false;
+  @State isLoading: boolean = true;
 
   // 快捷入口图标
   private quickIcons: string[] = ['👛', '🎫', '🎁', '🎧'];
+  private context = getContext(this) as common.UIAbilityContext;
+  private dbManager: DatabaseManager = DatabaseManager.getInstance();
 
   @Styles cardStyle() {
     .width('100%')
@@ -33,14 +41,73 @@ struct ProfilePage {
     .padding(16)
   }
 
-  aboutToAppear(): void {
-    this.viewModel.initUserInfo();
-    this.viewModel.initMenuItems();
-    this.viewModel.initQuickEntries();
-    this.viewModel.initRecentOrders();
+  async aboutToAppear(): Promise<void> {
+    await this.loadData();
+  }
+
+  async onPageShow(): Promise<void> {
+    // 页面显示时重新加载数据（从编辑页面返回时）
+    await this.loadData();
+  }
+
+  private async loadData(): Promise<void> {
+    try {
+      this.isLoading = true;
+      // 初始化数据库
+      await this.dbManager.initDatabase(this.context);
+      
+      // 检查登录状态
+      const currentUser = await this.dbManager.getCurrentUser();
+      this.isLoggedIn = currentUser !== null;
+      
+      if (this.isLoggedIn) {
+        // 加载用户信息
+        await this.viewModel.initUserInfo();
+      } else {
+        // 未登录，跳转到登录页
+        router.replaceUrl({
+          url: 'userprofile/pages/LoginPage'
+        }).catch((err: Error) => {
+          Logger.error(TAG, `跳转登录页失败: ${err.message}`);
+        });
+        return;
+      }
+      
+      this.viewModel.initMenuItems();
+      this.viewModel.initQuickEntries();
+      await this.viewModel.initRecentOrders();
+    } catch (err) {
+      const error = err as Error;
+      Logger.error(TAG, `页面初始化失败: ${error.message}`);
+    } finally {
+      this.isLoading = false;
+    }
   }
 
   build() {
+    if (this.isLoading) {
+      // 加载中状态
+      Column() {
+        LoadingProgress()
+          .width(50)
+          .height(50)
+          .color('#FF6B00')
+        Text('加载中...')
+          .fontSize(16)
+          .fontColor('#999999')
+          .margin({ top: 16 })
+      }
+      .width('100%')
+      .height('100%')
+      .justifyContent(FlexAlign.Center)
+      .backgroundColor('#F6F6F6')
+    } else {
+      this.buildContent()
+    }
+  }
+
+  @Builder
+  buildContent() {
     Stack({ alignContent: Alignment.Top }) {
       // 1. 渐变背景
       Column()
@@ -100,11 +167,11 @@ struct ProfilePage {
                   .margin({ right: 8 })
 
                 Column() {
-                  Text('钻石会员 Lv.5')
+                  Text(`${this.viewModel.memberLevel} Lv.${this.viewModel.memberLevelNum}`)
                     .fontSize(14)
                     .fontColor('#FFE4B5') // 浅金色
                     .fontWeight(FontWeight.Bold)
-                  Text('本月已省 88 元')
+                  Text(`本月已省 ${this.viewModel.monthlySaved.toFixed(0)} 元`)
                     .fontSize(10)
                     .fontColor('rgba(255,228,181, 0.7)') // 半透明金
                     .margin({ top: 2 })
@@ -148,11 +215,11 @@ struct ProfilePage {
         // --- 悬浮统计卡片 ---
         ListItem() {
           Row() {
-            this.buildStatItem($r('app.string.profile_stat_orders'), '12', $r('app.color.profile_stat_icon_1'))
+            this.buildStatItem($r('app.string.profile_stat_orders'), this.viewModel.orderCount.toString(), $r('app.color.profile_stat_icon_1'))
             Divider().vertical(true).height(24).color('#F1F3F5')
-            this.buildStatItem($r('app.string.profile_stat_favorites'), '85', $r('app.color.profile_stat_icon_2'))
+            this.buildStatItem($r('app.string.profile_stat_favorites'), this.viewModel.favoriteCount.toString(), $r('app.color.profile_stat_icon_2'))
             Divider().vertical(true).height(24).color('#F1F3F5')
-            this.buildStatItem($r('app.string.profile_stat_points'), '2041', $r('app.color.profile_stat_icon_3'))
+            this.buildStatItem($r('app.string.profile_stat_points'), this.viewModel.points.toString(), $r('app.color.profile_stat_icon_3'))
           }
           .cardStyle()
           .justifyContent(FlexAlign.SpaceEvenly)
@@ -228,11 +295,41 @@ struct ProfilePage {
         // --- 常用菜单 ---
         ListItem() {
           Column() {
-            this.buildMenuItem($r('app.string.profile_phone'), '138****0000', true)
+            Row() {
+              this.buildMenuItem($r('app.string.profile_phone'), this.viewModel.userInfo.phone || '未设置', true)
+            }
+            .width('100%')
+            .onClick(() => {
+              router.pushUrl({
+                url: 'userprofile/pages/EditProfilePage'
+              }).catch((err: Error) => {
+                Logger.error(TAG, `跳转编辑页失败: ${err.message}`);
+              });
+            })
             Divider().color('#F1F3F5').margin({ left: 44 })
-            this.buildMenuItem($r('app.string.profile_address'), '我的收货地址', true)
+            Row() {
+              this.buildMenuItem($r('app.string.profile_address'), this.viewModel.userInfo.address || '未设置', true)
+            }
+            .width('100%')
+            .onClick(() => {
+              router.pushUrl({
+                url: 'userprofile/pages/EditProfilePage'
+              }).catch((err: Error) => {
+                Logger.error(TAG, `跳转编辑页失败: ${err.message}`);
+              });
+            })
             Divider().color('#F1F3F5').margin({ left: 44 })
-            this.buildMenuItem($r('app.string.profile_settings_account'), '', true)
+            Row() {
+              this.buildMenuItem('编辑个人信息', '', true)
+            }
+            .width('100%')
+            .onClick(() => {
+              router.pushUrl({
+                url: 'userprofile/pages/EditProfilePage'
+              }).catch((err: Error) => {
+                Logger.error(TAG, `跳转编辑页失败: ${err.message}`);
+              });
+            })
             Divider().color('#F1F3F5').margin({ left: 44 })
             this.buildMenuItem($r('app.string.profile_settings_notify'), '', true)
           }
@@ -324,6 +421,8 @@ struct ProfilePage {
           .fontSize(14)
           .fontColor('#999')
           .margin({ right: 4 })
+          .maxLines(1)
+          .textOverflow({ overflow: TextOverflow.Ellipsis })
       }
 
       if (showArrow) {
