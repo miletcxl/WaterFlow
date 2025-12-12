@@ -1,5 +1,6 @@
 import { router, window } from '@kit.ArkUI';
 import { common } from '@kit.AbilityKit';
+import { AiService } from '../../common/utils/AiService';
 
 // 消息数据模型
 class ChatMessage {
@@ -15,6 +16,7 @@ struct AiServicePage {
     { content: '有什么可以帮您？我可以为您查询订单📦、领取优惠券🎫或解答售后问题。', isSelf: false }
   ];
   @State inputText: string = '';
+  @State isSending: boolean = false;
 
   // 【核心】手动控制键盘避让高度
   @State keyboardHeight: number = 0;
@@ -268,6 +270,7 @@ struct AiServicePage {
         .borderRadius(20)
         .padding({ left: 16, right: 16 })
         .enterKeyType(EnterKeyType.Send)
+        .enabled(!this.isSending)
         .onChange((value) => {
           this.inputText = value;
         })
@@ -276,7 +279,7 @@ struct AiServicePage {
         })
 
       Button() {
-        Text('发送')
+        Text(this.isSending ? '发送中' : '发送')
           .fontSize(14)
           .fontWeight(FontWeight.Medium)
           .fontColor(Color.White)
@@ -284,9 +287,9 @@ struct AiServicePage {
       .height(36)
       .width(64)
       .margin({ left: 10 })
-      .backgroundColor(this.inputText.trim().length > 0 ? this.THEME_COLOR : '#FFD9B3')
+      .backgroundColor((this.inputText.trim().length > 0 && !this.isSending) ? this.THEME_COLOR : '#FFD9B3')
       .borderRadius(18)
-      .enabled(this.inputText.trim().length > 0)
+      .enabled(this.inputText.trim().length > 0 && !this.isSending)
       .onClick(() => {
         this.sendMessage();
       })
@@ -299,16 +302,38 @@ struct AiServicePage {
   // --- 业务逻辑 ---
   sendMessage() {
     const text = this.inputText.trim();
-    if (!text) return;
+    if (!text || this.isSending) return;
+
+    // 添加用户消息
     this.messages.push({ content: text, isSelf: true });
     this.inputText = '';
-    // 延迟滚动，确保键盘动画开始后再滚动
+    this.isSending = true;
+    
+    // 延迟滚动
     setTimeout(() => { this.scroller.scrollEdge(Edge.Bottom); }, 50);
 
-    // 固定回复"你好"
-    setTimeout(() => {
-      this.messages.push({ content: '你好', isSelf: false });
-      this.scroller.scrollEdge(Edge.Bottom);
-    }, 500);
+    // 添加一个空的 AI 消息，用于流式更新
+    const aiMessageIndex = this.messages.length;
+    this.messages.push({ content: '', isSelf: false });
+
+    // 调用 AI 服务
+    AiService.streamChat(
+      text,
+      // 内容回调 - 流式更新消息
+      (content: string) => {
+        this.messages[aiMessageIndex].content += content;
+        setTimeout(() => { this.scroller.scrollEdge(Edge.Bottom); }, 50);
+      },
+      // 错误回调
+      (error: string) => {
+        this.messages[aiMessageIndex].content = `❌ ${error}`;
+        this.isSending = false;
+      },
+      // 完成回调
+      () => {
+        this.isSending = false;
+        setTimeout(() => { this.scroller.scrollEdge(Edge.Bottom); }, 50);
+      }
+    );
   }
 }
