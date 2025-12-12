@@ -123,37 +123,32 @@ struct HomePage {
       .height('100%')
       
       // AI客服按钮（固定在窗口右下角）
-      Row() {
-        Column() {
-          Text('💬')
-            .fontSize(24)
-        }
-        .width(56)
-        .height(56)
-        .backgroundColor('#FF8A3C')
-        .borderRadius(28)
-        .shadow({
-          radius: 8,
-          color: 'rgba(255,138,60,0.4)',
-          offsetX: 0,
-          offsetY: 4
-        })
-        .justifyContent(FlexAlign.Center)
-        .alignItems(HorizontalAlign.Center)
-        .onClick(() => {
-          router.pushUrl({
-            url: 'userprofile/pages/AiServicePage'
-          }).catch((err: Error) => {
-            Logger.error(TAG, `跳转AI客服页面失败: ${err.message}`);
-          });
-        })
+      Column() {
+        Text('💬')
+          .fontSize(24)
       }
-      .width('100%')
-      .height('100%')
-      .justifyContent(FlexAlign.End)
-      .alignItems(VerticalAlign.Bottom)
-      .padding({ right: 16, bottom: 16 })
+      .width(56)
+      .height(56)
+      .backgroundColor('#FF8A3C')
+      .borderRadius(28)
+      .shadow({
+        radius: 8,
+        color: 'rgba(255,138,60,0.4)',
+        offsetX: 0,
+        offsetY: 4
+      })
+      .justifyContent(FlexAlign.Center)
+      .alignItems(HorizontalAlign.Center)
+      .position({ x: '100%', y: '100%' }) // 绝对定位到右下角
+      .markAnchor({ x: 56 + 16, y: 56 + 16 }) // 锚点偏移：宽度+右边距, 高度+下边距
       .zIndex(999) // 提高层级，确保在最上层
+      .onClick(() => {
+        router.pushUrl({
+          url: 'userprofile/pages/AiServicePage'
+        }).catch((err: Error) => {
+          Logger.error(TAG, `跳转AI客服页面失败: ${err.message}`);
+        });
+      })
     }
     .width('100%')
     .height('100%')
