@@ -1,16 +1,21 @@
 """
 FastAPI 服务器 - 模型调用服务（SSE 流式响应）
 从环境变量加载配置：BASE_URL, API_KEY, MODEL
+自动从 .env 文件加载环境变量
 """
 import os
 import json
 from typing import Optional
+from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import httpx
 import asyncio
+
+# 自动加载 .env 文件中的环境变量
+load_dotenv()
 
 app = FastAPI(title="Model API Server", version="1.0.0")
 
