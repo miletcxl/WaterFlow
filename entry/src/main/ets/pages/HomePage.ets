@@ -50,10 +50,14 @@ struct HomePage {
 
   build() {
     Stack({ alignContent: Alignment.Top }) {
+      // 背景图片
       Image($r('app.media.ic_app_background'))
         .width(Const.FULL_WIDTH)
         .height($r('app.float.image_background_height'))
         .objectFit(ImageFit.Cover)
+        .align(Alignment.TopStart) // 顶部对齐
+      
+      // 主要内容区域
       Column() {
         // 顶部导航栏：搜索框和个人信息入口
         Row() {
@@ -114,8 +118,11 @@ struct HomePage {
         right: $r('app.float.home_margin_right'),
         top: this.getUIContext().px2vp(this.topRectHeight)
       })
+      .align(Alignment.TopStart) // 顶部对齐
+      .width('100%')
+      .height('100%')
       
-      // AI客服按钮（位于右下角，不影响其他区域的点击）
+      // AI客服按钮（位于右下角）
       Column() {
         Text('💬')
           .fontSize(24)
@@ -142,6 +149,8 @@ struct HomePage {
       })
       .zIndex(100)
     }
+    .width('100%')
+    .height('100%')
     .backgroundColor($r('app.color.home_background_color'))
   }
 }
