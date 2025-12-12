@@ -220,21 +220,25 @@ struct AiServicePage {
           .shadow({ radius: 4, color: '#0F000000', offsetY: 1 })
       }
 
-      // 消息气泡
-      Text(item.content)
-        .fontSize(15)
-        .fontColor(item.isSelf ? Color.White : '#333333')
-        .lineHeight(24)
-        .padding({ left: 14, right: 14, top: 11, bottom: 11 })
-        .backgroundColor(item.isSelf ? this.THEME_COLOR : Color.White)
-        .borderRadius({
-          topLeft: 12,
-          topRight: 12,
-          bottomLeft: item.isSelf ? 12 : 2,
-          bottomRight: item.isSelf ? 2 : 12
-        })
-        .constraintSize({ maxWidth: '72%' })
-        .shadow({ radius: 2, color: '#0A000000', offsetY: 1 })
+      // 消息气泡 - 如果内容为空且正在发送，显示加载动画
+      if (!item.isSelf && item.content === '' && this.isSending) {
+        this.buildLoadingBubble()
+      } else {
+        Text(item.content)
+          .fontSize(15)
+          .fontColor(item.isSelf ? Color.White : '#333333')
+          .lineHeight(24)
+          .padding({ left: 14, right: 14, top: 11, bottom: 11 })
+          .backgroundColor(item.isSelf ? this.THEME_COLOR : Color.White)
+          .borderRadius({
+            topLeft: 12,
+            topRight: 12,
+            bottomLeft: item.isSelf ? 12 : 2,
+            bottomRight: item.isSelf ? 2 : 12
+          })
+          .constraintSize({ maxWidth: '72%' })
+          .shadow({ radius: 2, color: '#0A000000', offsetY: 1 })
+      }
 
       if (item.isSelf) {
         // 用户头像
@@ -255,6 +259,25 @@ struct AiServicePage {
     .justifyContent(item.isSelf ? FlexAlign.End : FlexAlign.Start)
     .alignItems(VerticalAlign.Top)
     .padding({ top: 8, bottom: 8 })
+  }
+
+  @Builder
+  buildLoadingBubble() {
+    Row() {
+      LoadingProgress()
+        .width(20)
+        .height(20)
+        .color(this.THEME_COLOR)
+    }
+    .padding({ left: 14, right: 14, top: 11, bottom: 11 })
+    .backgroundColor(Color.White)
+    .borderRadius({
+      topLeft: 12,
+      topRight: 12,
+      bottomLeft: 2,
+      bottomRight: 12
+    })
+    .shadow({ radius: 2, color: '#0A000000', offsetY: 1 })
   }
 
   @Builder
