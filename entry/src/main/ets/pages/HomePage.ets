@@ -114,6 +114,33 @@ struct HomePage {
         right: $r('app.float.home_margin_right'),
         top: this.getUIContext().px2vp(this.topRectHeight)
       })
+      
+      // AI客服按钮（位于右下角，不影响其他区域的点击）
+      Column() {
+        Text('💬')
+          .fontSize(24)
+      }
+      .width(56)
+      .height(56)
+      .backgroundColor('#FF8A3C')
+      .borderRadius(28)
+      .shadow({
+        radius: 8,
+        color: 'rgba(255,138,60,0.4)',
+        offsetX: 0,
+        offsetY: 4
+      })
+      .justifyContent(FlexAlign.Center)
+      .align(Alignment.BottomEnd) // 在 Stack 中定位到右下角
+      .margin({ right: 16, bottom: 16 })
+      .onClick(() => {
+        router.pushUrl({
+          url: 'userprofile/pages/AiServicePage'
+        }).catch((err: Error) => {
+          Logger.error(TAG, `跳转AI客服页面失败: ${err.message}`);
+        });
+      })
+      .zIndex(100)
     }
     .backgroundColor($r('app.color.home_background_color'))
   }

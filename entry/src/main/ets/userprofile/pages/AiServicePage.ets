@@ -305,10 +305,10 @@ struct AiServicePage {
     // 延迟滚动，确保键盘动画开始后再滚动
     setTimeout(() => { this.scroller.scrollEdge(Edge.Bottom); }, 50);
 
-    // 模拟回复
+    // 固定回复"你好"
     setTimeout(() => {
-      this.messages.push({ content: '收到！正在为您连接人工客服...', isSelf: false });
+      this.messages.push({ content: '你好', isSelf: false });
       this.scroller.scrollEdge(Edge.Bottom);
-    }, 600);
+    }, 500);
   }
 }
