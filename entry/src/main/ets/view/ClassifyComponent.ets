@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import { classifyTitle } from '../viewmodel/HomeViewModel';
+import { classifyTabs, IClassifyTab } from '../viewmodel/HomeViewModel';
 import { CommonConstants as Const } from '../common/constants/CommonConstants';
 import Logger from '../common/utils/Logger';
 
@@ -25,57 +25,46 @@ const TAG = 'ClassifyComponent';
  */
 @Component
 export default struct ClassifyComponent {
-  @Link selectedCategoryIndex: number;
-  onCategoryChange?: (index: number) => void;
+  @Link selectedCategory: number;
+  onCategoryChange?: (category: number) => void;
+
+  private handleSelect(category: number): void {
+    this.selectedCategory = category;
+    Logger.info(TAG, `selectedCategory 更新为: ${this.selectedCategory}`);
+    if (this.onCategoryChange) {
+      this.onCategoryChange(category);
+    }
+  }
+
+  @Builder
+  private buildChip(tab: IClassifyTab) {
+    Row() {
+      Text(tab.title)
+        .fontSize($r('app.float.small_font_size'))
+        .fontColor(this.selectedCategory === tab.category ? $r('app.color.focus_color') : '#243144')
+        .fontWeight(this.selectedCategory === tab.category ? Const.FONT_WEIGHT_FIVE : FontWeight.Normal)
+    }
+    .padding({ left: 8, right: 8, top: 6, bottom: 6 })
+    .backgroundColor(this.selectedCategory === tab.category ? '#FFF2EC' : '#F3F5F7')
+    .borderRadius(10)
+    .shadow(this.selectedCategory === tab.category ? { radius: 8, color: '#1A000000', offsetX: 0, offsetY: 2 } : {
+      radius: 0, color: Color.Transparent, offsetX: 0, offsetY: 0
+    })
+    .margin({ right: 6, bottom: 6 })
+    .onClick(() => this.handleSelect(tab.category))
+  }
 
   build() {
-    Flex({ justifyContent: FlexAlign.SpaceBetween }) {
-      ForEach(classifyTitle, (item: Resource, index: number | undefined) => {
-        if (index !== undefined) {
-          Text(item)
-            .fontSize($r('app.float.middle_font_size'))
-            .opacity(this.selectedCategoryIndex === index ? Const.FULL_OPACITY : Const.EIGHTY_OPACITY)
-            .fontWeight(this.selectedCategoryIndex === index ? Const.FONT_WEIGHT_FIVE : FontWeight.Normal)
-            .fontColor(Color.White)
-            .onClick(() => {
-              Logger.info(TAG, `点击分类按钮，索引: ${index}`);
-              this.selectedCategoryIndex = index;
-              Logger.info(TAG, `selectedCategoryIndex 已更新为: ${this.selectedCategoryIndex}`);
-              if (this.onCategoryChange) {
-                Logger.info(TAG, `调用回调函数 onCategoryChange，索引: ${index}`);
-                this.onCategoryChange(index);
-              } else {
-                Logger.warn(TAG, `回调函数 onCategoryChange 未定义`);
-              }
-            })
-        }
-      }, (item: Resource) => JSON.stringify(item))
-
-      Row() {
-        Image($r('app.media.ic_split_line'))
-          .width($r('app.float.split_line_width'))
-          .height($r('app.float.split_line_height'))
-        Image($r('app.media.ic_more'))
-          .width($r('app.float.more_width'))
-          .height($r('app.float.more_height'))
-          .margin({
-            left: $r('app.float.more_margin_left'),
-            right: $r('app.float.more_margin_right')
-          })
-        Text($r('app.string.title_bar_classification'))
-          .fontSize($r('app.float.middle_font_size'))
-          .fontColor(Color.White)
-          .opacity(this.selectedCategoryIndex === Const.INVALID_INDEX ? Const.FULL_OPACITY : Const.EIGHTY_OPACITY)
-          .fontWeight(this.selectedCategoryIndex === Const.INVALID_INDEX ? Const.FONT_WEIGHT_FIVE : FontWeight.Normal)
-      }
-      .onClick(() => {
-        this.selectedCategoryIndex = Const.INVALID_INDEX;
-        if (this.onCategoryChange) {
-          this.onCategoryChange(Const.INVALID_INDEX);
-        }
-      })
+    Flex({ wrap: FlexWrap.Wrap, justifyContent: FlexAlign.Start, alignItems: ItemAlign.Center }) {
+      ForEach(classifyTabs, (tab: IClassifyTab) => {
+        this.buildChip(tab);
+      }, (tab: IClassifyTab) => tab.category.toString())
     }
     .width(Const.FULL_WIDTH)
+    .backgroundColor('#FDFDFD')
+    .borderRadius(18)
+    .padding({ left: 8, right: 8, top: 6, bottom: 2 })
     .margin({ top: $r('app.float.classify_title_margin') })
+    .shadow({ radius: 12, color: '#14000000', offsetX: 0, offsetY: 4 })
   }
 }

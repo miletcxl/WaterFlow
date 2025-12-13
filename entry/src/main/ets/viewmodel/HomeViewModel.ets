@@ -15,17 +15,25 @@
 
 import { IProductItem } from './ProductItem';
 
+export interface IClassifyTab {
+  title: Resource;
+  /**
+   * 0: 首页/全部, 1: 手机, 2: 电脑, 3: 食品, 4: 男装, 5: 生鲜, 6: 家具
+   */
+  category: number;
+}
+
 /**
  * Home page classify title data.
  */
-const classifyTitle: Resource[] = [
-  $r('app.string.title_bar_homepage'),
-  $r('app.string.title_bar_phone'),
-  $r('app.string.title_bar_computer'),
-  $r('app.string.title_bar_foods'),
-  $r('app.string.title_bar_men_wear'),
-  $r('app.string.title_bar_fresh'),
-  $r('app.string.title_bar_furniture_kitchenware')
+const classifyTabs: IClassifyTab[] = [
+  { title: $r('app.string.title_bar_homepage'), category: 0 },
+  { title: $r('app.string.title_bar_phone'), category: 1 },
+  { title: $r('app.string.title_bar_computer'), category: 2 },
+  { title: $r('app.string.title_bar_foods'), category: 3 },
+  { title: $r('app.string.title_bar_men_wear'), category: 4 },
+  { title: $r('app.string.title_bar_fresh'), category: 5 },
+  { title: $r('app.string.title_bar_furniture_kitchenware'), category: 6 }
 ];
 
 /**
@@ -265,4 +273,4 @@ const waterFlowData: IProductItem[] = [
   }
 ];
 
-export { classifyTitle, swiperImage, waterFlowData };
+export { classifyTabs, swiperImage, waterFlowData };

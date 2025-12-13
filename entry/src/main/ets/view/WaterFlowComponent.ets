@@ -33,40 +33,17 @@ export default struct WaterFlowComponent {
   @StorageLink('bottomRectHeight') bottomRectHeight: number = 0;
   @Prop productData: IProductItem[] = waterFlowData;
   private datasource: WaterFlowDataSource = new WaterFlowDataSource();
-  private lastDataLength: number = -1;
-  private lastFirstItemName: string = '';
-
-  private updateDataSourceIfNeeded(): void {
-    const currentFirstItemName = this.productData.length > 0 ? this.productData[0].name : '';
-    if (this.lastDataLength !== this.productData.length ||
-        this.lastFirstItemName !== currentFirstItemName) {
-      Logger.info(TAG, `同步数据源，商品数量: ${this.productData.length}`);
-      this.lastDataLength = this.productData.length;
-      this.lastFirstItemName = currentFirstItemName;
-      this.datasource.setDataArray(this.productData);
-      Logger.info(TAG, `数据源已更新，总数: ${this.datasource.totalCount()}`);
-    }
-  }
 
   aboutToAppear() {
     Logger.info(TAG, `WaterFlowComponent aboutToAppear, 商品数量: ${this.productData.length}`);
     // 初次同步数据
-    this.updateDataSourceIfNeeded();
+    this.datasource.setDataArray(this.productData);
   }
 
   aboutToUpdate() {
-    Logger.info(TAG, `WaterFlowComponent aboutToUpdate 被调用`);
-    Logger.info(TAG, `上次数据长度: ${this.lastDataLength}, 当前数据长度: ${this.productData.length}`);
-
-    if (this.productData.length === 0) {
-      if (this.lastDataLength !== 0) {
-        this.datasource.setDataArray([]);
-        this.lastDataLength = 0;
-        this.lastFirstItemName = '';
-      }
-    } else {
-      this.updateDataSourceIfNeeded();
-    }
+    Logger.info(TAG, `WaterFlowComponent aboutToUpdate 被调用，当前数据长度: ${this.productData.length}`);
+    // 无论数组长度是否变化都强制同步，确保分类过滤后的数据立即刷新
+    this.datasource.setDataArray(this.productData);
   }
 
   @Builder
@@ -76,7 +53,7 @@ export default struct WaterFlowComponent {
         FlowItem() {
           FlowItemComponent({ item: item })
         }
-      }, (item: ProductItem) => JSON.stringify(item))
+      }, (item: ProductItem) => `${item.name}-${item.category}`)
     }
     .layoutWeight(Const.WATER_FLOW_LAYOUT_WEIGHT)
     .layoutDirection(FlexDirection.Column)
