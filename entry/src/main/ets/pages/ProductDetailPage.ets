@@ -53,6 +53,7 @@ struct ProductDetailPage {
             .width(40)
             .height(40)
             .textAlign(TextAlign.Center)
+            .padding({ top: 8 })
             .onClick(() => {
               router.back();
             })
@@ -67,7 +68,9 @@ struct ProductDetailPage {
         }
         .width('100%')
         .height(56)
-        .padding({ left: 16, right: 16 })
+        .padding({ left: 16, right: 16, top: 8 })
+        .alignItems(VerticalAlign.Top)
+        .justifyContent(FlexAlign.Start)
         .backgroundColor(Color.White)
         .shadow({
           radius: 4,
@@ -96,50 +99,13 @@ struct ProductDetailPage {
                 .margin({ top: 16, bottom: 8 })
                 .width('100%')
 
-              // 价格和优惠信息
-              Row() {
-                Text(this.product.price)
-                  .fontSize(28)
-                  .fontColor($r('app.color.focus_color'))
-                  .fontWeight(FontWeight.Bold)
-                
-                if (this.product.discount) {
-                  Text(this.product.discount)
-                    .fontSize(14)
-                    .fontColor('#999999')
-                    .margin({ left: 12 })
-                }
-              }
-              .width('100%')
-              .margin({ bottom: 16 })
-
-              // 促销标签
-              if (this.product.promotion || this.product.bonus_points) {
-                Row() {
-                  if (this.product.promotion) {
-                    Text(this.product.promotion)
-                      .height(24)
-                      .fontSize(12)
-                      .fontColor(Color.White)
-                      .borderRadius(4)
-                      .backgroundColor($r('app.color.focus_color'))
-                      .padding({ left: 8, right: 8 })
-                      .margin({ right: 8 })
-                  }
-                  if (this.product.bonus_points) {
-                    Text(this.product.bonus_points)
-                      .height(24)
-                      .fontSize(12)
-                      .fontColor($r('app.color.focus_color'))
-                      .borderRadius(4)
-                      .borderWidth(1)
-                      .borderColor($r('app.color.focus_color'))
-                      .padding({ left: 8, right: 8 })
-                  }
-                }
+              // 价格信息
+              Text(this.product.price)
+                .fontSize(28)
+                .fontColor($r('app.color.focus_color'))
+                .fontWeight(FontWeight.Bold)
                 .width('100%')
-                .margin({ bottom: 24 })
-              }
+                .margin({ bottom: 16 })
 
               Divider()
                 .color('#F0F0F0')

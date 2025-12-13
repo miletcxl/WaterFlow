@@ -83,6 +83,8 @@ export default struct WaterFlowComponent {
     .columnsTemplate(Const.WATER_FLOW_COLUMNS_TEMPLATE)
     .columnsGap($r('app.float.water_flow_columns_gap'))
     .rowsGap($r('app.float.water_flow_row_gap'))
+    .scrollBar(BarState.Auto)
+    .edgeEffect(EdgeEffect.Spring)
   }
 
   @Builder
@@ -122,9 +124,10 @@ export default struct WaterFlowComponent {
           .height($r('app.float.footer_text_height'))
           .textAlign(TextAlign.Center)
       }
+      .width('100%')
       .margin({
         top: $r('app.float.water_flow_row_gap'),
-        bottom: this.getUIContext().px2vp(this.bottomRectHeight)
+        bottom: Math.max(this.getUIContext().px2vp(this.bottomRectHeight) + 100, 120)
       })
     }
   }

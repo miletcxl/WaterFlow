@@ -177,6 +177,7 @@ struct HomePage {
         })
         SwiperComponent()
         WaterFlowComponent({ productData: this.filteredProductData })
+          .layoutWeight(1)
       }
       .padding({
         left: $r('app.float.home_margin_left'),
@@ -186,6 +187,7 @@ struct HomePage {
       .align(Alignment.TopStart) // 顶部对齐
       .width('100%')
       .height('100%')
+      .justifyContent(FlexAlign.Start)
       
       // AI客服按钮（固定在窗口右下角）
       Column() {

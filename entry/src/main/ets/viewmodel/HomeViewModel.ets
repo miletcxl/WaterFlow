@@ -134,15 +134,6 @@ const waterFlowData: IProductItem[] = [
     bonus_points: '',
     category: 1
   },
-  {
-    image_url: $r('app.media.phone_HUAWEI_Enjoy_80'),
-    name: 'HUAWEI Enjoy 80',
-    discount: '限时省100',
-    price: '¥1899',
-    promotion: '限时',
-    bonus_points: '',
-    category: 1
-  },
   // 电脑类 (category: 2) - 5个商品
   {
     image_url: $r('app.media.laptop_MateBook_X_Pro_Core_Ultra'),

@@ -44,61 +44,44 @@ export default struct FlowItemComponent {
         .fontColor(Color.Black)
         .fontWeight(FontWeight.Normal)
         .alignSelf(ItemAlign.Start)
-      Text(this.item?.discount)
-        .fontSize($r('app.float.smaller_font_size'))
-        .fontColor(Color.Black)
-        .fontWeight(FontWeight.Normal)
-        .opacity(Const.SIXTY_OPACITY)
-        .alignSelf(ItemAlign.Start)
-        .margin({
-          bottom: $r('app.float.discount_text_bottom')
-        })
+        .maxLines(2)
+        .textOverflow({ overflow: TextOverflow.Ellipsis })
+        .width(Const.FULL_WIDTH)
+        .height(40)
+        .margin({ bottom: 4 })
+      if (this.item?.discount && this.item.discount.trim() !== '') {
+        Text(this.item.discount)
+          .fontSize($r('app.float.smaller_font_size'))
+          .fontColor(Color.Black)
+          .fontWeight(FontWeight.Normal)
+          .opacity(Const.SIXTY_OPACITY)
+          .alignSelf(ItemAlign.Start)
+          .height(18)
+          .margin({
+            bottom: $r('app.float.discount_text_bottom')
+          })
+      } else {
+        Blank()
+          .height(18)
+          .margin({
+            bottom: $r('app.float.discount_text_bottom')
+          })
+      }
       Text(this.item?.price)
         .fontSize($r('app.float.middle_font_size'))
         .fontColor($r('app.color.focus_color'))
         .fontWeight(FontWeight.Normal)
         .alignSelf(ItemAlign.Start)
         .lineHeight($r('app.float.piece_line_height'))
-      Row() {
-        if (this.item?.promotion) {
-          Text(`${this.item?.promotion}`)
-            .height($r('app.float.promotion_text_height'))
-            .fontSize($r('app.float.promotion_font_size'))
-            .fontColor(Color.White)
-            .borderRadius($r('app.float.promotion_radius'))
-            .backgroundColor($r('app.color.focus_color'))
-            .padding({
-              left: $r('app.float.promotion_padding_left'),
-              right: $r('app.float.promotion_padding_right')
-            })
-            .margin({
-              top: $r('app.float.promotion_margin_top'),
-              right: $r('app.float.promotion_margin_right')
-            })
-        }
-        if (this.item?.bonus_points) {
-          Text(`${this.item?.bonus_points}`)
-            .height($r('app.float.promotion_text_height'))
-            .fontSize($r('app.float.promotion_font_size'))
-            .fontColor($r('app.color.focus_color'))
-            .borderRadius($r('app.float.promotion_radius'))
-            .borderWidth($r('app.float.bonus_points_radius_width'))
-            .borderColor($r('app.color.focus_color'))
-            .padding({
-              left: $r('app.float.bonus_points_padding_left'),
-              right: $r('app.float.bonus_points_padding_right')
-            })
-            .margin({ top: $r('app.float.bonus_points_margin_top') })
-        }
-      }
-      .width(Const.FULL_WIDTH)
-      .justifyContent(FlexAlign.Start)
+        .height(19)
     }
+    .width(Const.FULL_WIDTH)
     .borderRadius($r('app.float.product_layout_radius'))
     .backgroundColor(Color.White)
     .padding({
       left: $r('app.float.product_layout_margin_left'),
       right: $r('app.float.product_layout_margin_right'),
+      top: 0,
       bottom: $r('app.float.product_layout_margin_bottom')
     })
     .onClick(() => {
