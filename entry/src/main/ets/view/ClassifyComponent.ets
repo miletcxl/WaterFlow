@@ -40,11 +40,11 @@ export default struct ClassifyComponent {
   private buildChip(tab: IClassifyTab) {
     Row() {
       Text(tab.title)
-        .fontSize($r('app.float.small_font_size'))
+        .fontSize($r('app.float.smaller_font_size'))
         .fontColor(this.selectedCategory === tab.category ? $r('app.color.focus_color') : '#243144')
         .fontWeight(this.selectedCategory === tab.category ? Const.FONT_WEIGHT_FIVE : FontWeight.Normal)
     }
-    .padding({ left: 8, right: 8, top: 4, bottom: 4 })
+    .padding({ left: 6, right: 6, top: 4, bottom: 4 })
     .backgroundColor(this.selectedCategory === tab.category ? '#FFF2EC' : '#F3F5F7')
     .borderRadius(10)
     .shadow(this.selectedCategory === tab.category ? { radius: 8, color: '#1A000000', offsetX: 0, offsetY: 2 } : {
@@ -60,7 +60,7 @@ export default struct ClassifyComponent {
         this.buildChip(tab);
       }, (tab: IClassifyTab) => tab.category.toString())
     }
-    .justifyContent(FlexAlign.SpaceBetween)
+    .justifyContent(FlexAlign.Start)
     .alignItems(VerticalAlign.Center)
     .width(Const.FULL_WIDTH)
     .backgroundColor('#FDFDFD')

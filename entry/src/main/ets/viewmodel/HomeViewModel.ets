@@ -55,7 +55,7 @@ const waterFlowData: IProductItem[] = [
   {
     image_url: $r('app.media.phone_Mate_80_Pro'),
     name: 'HUAWEI Mate 80 Pro',
-    discount: '限时省500',
+    discount: '',
     price: '¥8999',
     promotion: '限时',
     bonus_points: '',
@@ -73,7 +73,7 @@ const waterFlowData: IProductItem[] = [
   {
     image_url: $r('app.media.phone_Pura_80_Ultra'),
     name: 'HUAWEI Pura 80 Ultra',
-    discount: '限时省800',
+    discount: '',
     price: '¥9999',
     promotion: '限时',
     bonus_points: '赠送积分',
@@ -91,7 +91,7 @@ const waterFlowData: IProductItem[] = [
   {
     image_url: $r('app.media.phone_Pura_80_Pro'),
     name: 'HUAWEI Pura 80 Pro',
-    discount: '限时省300',
+    discount: '',
     price: '¥7499',
     promotion: '限时',
     bonus_points: '',
@@ -109,7 +109,7 @@ const waterFlowData: IProductItem[] = [
   {
     image_url: $r('app.media.phone_Mate_X7'),
     name: 'HUAWEI Mate X7',
-    discount: '限时省1000',
+    discount: '',
     price: '¥12999',
     promotion: '限时',
     bonus_points: '赠送积分',
@@ -127,7 +127,7 @@ const waterFlowData: IProductItem[] = [
   {
     image_url: $r('app.media.phone_nova_14'),
     name: 'HUAWEI nova 14',
-    discount: '限时省200',
+    discount: '',
     price: '¥2999',
     promotion: '限时',
     bonus_points: '',
@@ -146,7 +146,7 @@ const waterFlowData: IProductItem[] = [
   {
     image_url: $r('app.media.laptop_MateBook_X_Pro_Core_Ultra'),
     name: 'HUAWEI MateBook X Pro Core Ultra',
-    discount: '限时省1000',
+    discount: '',
     price: '¥12999',
     promotion: '限时',
     bonus_points: '赠送积分',
@@ -164,7 +164,7 @@ const waterFlowData: IProductItem[] = [
   {
     image_url: $r('app.media.laptop_MateBook_Fold_Ultimate'),
     name: 'HUAWEI MateBook Fold Ultimate',
-    discount: '限时省1500',
+    discount: '',
     price: '¥14999',
     promotion: '限时',
     bonus_points: '',
@@ -173,7 +173,7 @@ const waterFlowData: IProductItem[] = [
   {
     image_url: $r('app.media.laptop_MateBook_D_14'),
     name: 'HUAWEI MateBook D 14',
-    discount: '限时省500',
+    discount: '',
     price: '¥4999',
     promotion: '限时',
     bonus_points: '',
@@ -192,7 +192,7 @@ const waterFlowData: IProductItem[] = [
   {
     image_url: $r('app.media.food_Egg_yolk_pie'),
     name: '蛋黄派',
-    discount: '限时省5',
+    discount: '',
     price: '¥15',
     promotion: '限时',
     bonus_points: '',
@@ -210,7 +210,7 @@ const waterFlowData: IProductItem[] = [
   {
     image_url: $r('app.media.food_Pork_jerky'),
     name: '猪肉脯',
-    discount: '限时省3',
+    discount: '',
     price: '¥28',
     promotion: '限时',
     bonus_points: '',
@@ -229,7 +229,7 @@ const waterFlowData: IProductItem[] = [
   {
     image_url: $r('app.media.Smart_furniture_Huawei_Smart_TV_MateTV'),
     name: '华为智慧屏 MateTV',
-    discount: '限时省2000',
+    discount: '',
     price: '¥7999',
     promotion: '限时',
     bonus_points: '赠送积分',
@@ -247,7 +247,7 @@ const waterFlowData: IProductItem[] = [
   {
     image_url: $r('app.media.Smart_furniture_Huawei_Smart_Speaker'),
     name: '华为智能音箱',
-    discount: '限时省200',
+    discount: '',
     price: '¥799',
     promotion: '限时',
     bonus_points: '',
@@ -265,7 +265,7 @@ const waterFlowData: IProductItem[] = [
   {
     image_url: $r('app.media.Smart_furniture_Huawei_Smart_Gateway'),
     name: '华为全屋智能蓝牙网关',
-    discount: '限时省300',
+    discount: '',
     price: '¥699',
     promotion: '限时',
     bonus_points: '',
