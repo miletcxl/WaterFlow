@@ -53,7 +53,7 @@ struct ProductDetailPage {
             .width(40)
             .height(40)
             .textAlign(TextAlign.Center)
-            .padding({ top: 8 })
+            .padding({ top: 6 })
             .onClick(() => {
               router.back();
             })
@@ -68,8 +68,8 @@ struct ProductDetailPage {
         }
         .width('100%')
         .height(56)
-        .padding({ left: 16, right: 16, top: 8 })
-        .alignItems(VerticalAlign.Top)
+        .padding({ left: 16, right: 16, top: 35, bottom: 6 })
+        .alignItems(VerticalAlign.Center)
         .justifyContent(FlexAlign.Start)
         .backgroundColor(Color.White)
         .shadow({
