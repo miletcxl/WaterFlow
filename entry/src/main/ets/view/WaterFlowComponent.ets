@@ -19,6 +19,9 @@ import { CommonConstants as Const } from '../common/constants/CommonConstants';
 import { waterFlowData } from '../viewmodel/HomeViewModel';
 import FlowItemComponent from '../view/FlowItemComponent';
 import { IProductItem } from '../viewmodel/ProductItem';
+import Logger from '../common/utils/Logger';
+
+const TAG = 'WaterFlowComponent';
 
 /**
  * Water flow component.
@@ -30,41 +33,82 @@ export default struct WaterFlowComponent {
   @StorageLink('bottomRectHeight') bottomRectHeight: number = 0;
   @Prop productData: IProductItem[] = waterFlowData;
   private datasource: WaterFlowDataSource = new WaterFlowDataSource();
+  private lastDataLength: number = -1;
+  private lastFirstItemName: string = '';
+
+  private updateDataSourceIfNeeded(): void {
+    const currentFirstItemName = this.productData.length > 0 ? this.productData[0].name : '';
+    if (this.lastDataLength !== this.productData.length ||
+        this.lastFirstItemName !== currentFirstItemName) {
+      Logger.info(TAG, `同步数据源，商品数量: ${this.productData.length}`);
+      this.lastDataLength = this.productData.length;
+      this.lastFirstItemName = currentFirstItemName;
+      this.datasource.setDataArray(this.productData);
+      Logger.info(TAG, `数据源已更新，总数: ${this.datasource.totalCount()}`);
+    }
+  }
 
   aboutToAppear() {
-    this.datasource.setDataArray(this.productData);
+    Logger.info(TAG, `WaterFlowComponent aboutToAppear, 商品数量: ${this.productData.length}`);
+    // 初次同步数据
+    this.updateDataSourceIfNeeded();
   }
 
   aboutToUpdate() {
-    this.datasource.setDataArray(this.productData);
+    Logger.info(TAG, `WaterFlowComponent aboutToUpdate 被调用`);
+    Logger.info(TAG, `上次数据长度: ${this.lastDataLength}, 当前数据长度: ${this.productData.length}`);
+
+    if (this.productData.length === 0) {
+      if (this.lastDataLength !== 0) {
+        this.datasource.setDataArray([]);
+        this.lastDataLength = 0;
+        this.lastFirstItemName = '';
+      }
+    } else {
+      this.updateDataSourceIfNeeded();
+    }
+  }
+
+  @Builder
+  buildWaterFlow() {
+    WaterFlow({ footer: (): void => this.itemFoot() }) {
+      LazyForEach(this.datasource, (item: ProductItem) => {
+        FlowItem() {
+          FlowItemComponent({ item: item })
+        }
+      }, (item: ProductItem) => JSON.stringify(item))
+    }
+    .layoutWeight(Const.WATER_FLOW_LAYOUT_WEIGHT)
+    .layoutDirection(FlexDirection.Column)
+    .columnsTemplate(Const.WATER_FLOW_COLUMNS_TEMPLATE)
+    .columnsGap($r('app.float.water_flow_columns_gap'))
+    .rowsGap($r('app.float.water_flow_row_gap'))
+  }
+
+  @Builder
+  buildEmptyState() {
+    Column() {
+      Text($r('app.string.no_search_result'))
+        .fontColor(Color.Gray)
+        .fontSize($r('app.float.footer_text_size'))
+        .textAlign(TextAlign.Center)
+        .margin({ top: $r('app.float.water_flow_row_gap') })
+    }
+    .width(Const.FULL_WIDTH)
+    .layoutWeight(Const.WATER_FLOW_LAYOUT_WEIGHT)
   }
 
   build() {
-    if (this.productData.length > 0) {
-      WaterFlow({ footer: (): void => this.itemFoot() }) {
-        LazyForEach(this.datasource, (item: ProductItem) => {
-          FlowItem() {
-            FlowItemComponent({ item: item })
-
-          }
-        }, (item: ProductItem) => JSON.stringify(item))
+    // 使用 Column 作为单一根节点，根据条件调用不同的 Builder
+    Column() {
+      if (this.productData.length > 0) {
+        this.buildWaterFlow()
+      } else {
+        this.buildEmptyState()
       }
-      .layoutWeight(Const.WATER_FLOW_LAYOUT_WEIGHT)
-      .layoutDirection(FlexDirection.Column)
-      .columnsTemplate(Const.WATER_FLOW_COLUMNS_TEMPLATE)
-      .columnsGap($r('app.float.water_flow_columns_gap'))
-      .rowsGap($r('app.float.water_flow_row_gap'))
-    } else {
-      Column() {
-        Text($r('app.string.no_search_result'))
-          .fontColor(Color.Gray)
-          .fontSize($r('app.float.footer_text_size'))
-          .textAlign(TextAlign.Center)
-          .margin({ top: $r('app.float.water_flow_row_gap') })
-      }
-      .width(Const.FULL_WIDTH)
-      .layoutWeight(Const.WATER_FLOW_LAYOUT_WEIGHT)
     }
+    .width('100%')
+    .height('100%')
   }
 
   @Builder

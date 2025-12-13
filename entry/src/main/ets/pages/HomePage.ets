@@ -23,6 +23,8 @@ import WaterFlowComponent from '../view/WaterFlowComponent';
 import UserIconComponent from '../userprofile/view/UserIconComponent';
 import { DatabaseManager } from '../userprofile/database/DatabaseManager';
 import Logger from '../common/utils/Logger';
+import { waterFlowData } from '../viewmodel/HomeViewModel';
+import { IProductItem } from '../viewmodel/ProductItem';
 
 const TAG = 'HomePage';
 
@@ -35,6 +37,9 @@ const TAG = 'HomePage';
 @Component
 struct HomePage {
   @StorageLink('topRectHeight') topRectHeight: number = 0;
+  @State selectedCategoryIndex: number = 0;
+  @State filteredProductData: IProductItem[] = waterFlowData;
+  private lastCategoryIndex: number = -1; // 跟踪上一次的分类索引
   private context = getContext(this) as common.UIAbilityContext;
   private dbManager: DatabaseManager = DatabaseManager.getInstance();
 
@@ -46,6 +51,58 @@ struct HomePage {
       const error = err as Error;
       Logger.error(TAG, `数据库初始化失败: ${error.message}`);
     }
+    // 初始化商品数据
+    this.lastCategoryIndex = this.selectedCategoryIndex;
+    this.updateFilteredProducts(this.selectedCategoryIndex);
+  }
+
+  aboutToUpdate(): void {
+    // 只在 selectedCategoryIndex 真正变化时才更新过滤后的商品数据
+    if (this.lastCategoryIndex !== this.selectedCategoryIndex) {
+      Logger.info(TAG, `分类索引从 ${this.lastCategoryIndex} 变为 ${this.selectedCategoryIndex}`);
+      this.lastCategoryIndex = this.selectedCategoryIndex;
+      this.updateFilteredProducts(this.selectedCategoryIndex);
+    }
+  }
+
+  /**
+   * 根据当前选中的分类索引更新过滤后的商品数据
+   */
+  updateFilteredProducts(categoryIndex?: number): void {
+    const targetIndex = categoryIndex !== undefined ? categoryIndex : this.selectedCategoryIndex;
+    Logger.info(TAG, `更新过滤商品，分类索引: ${targetIndex}`);
+    Logger.info(TAG, `更新前 filteredProductData 长度: ${this.filteredProductData.length}`);
+    
+    let newData: IProductItem[];
+    
+    if (targetIndex === 0) {
+      // 显示全部商品
+      newData = [...waterFlowData];
+      Logger.info(TAG, `显示全部商品，共 ${newData.length} 个`);
+    } else {
+      // 根据分类过滤商品
+      // 分类索引映射：1-手机(category:1), 2-电脑(category:2), 3-食品(category:3), 6-家具(category:6)
+      // 注意：索引4和5（男装、生鲜）没有商品，所以直接返回空数组
+      if (targetIndex === 4 || targetIndex === 5) {
+        newData = [];
+        Logger.info(TAG, `分类 ${targetIndex} 没有商品`);
+      } else {
+        const filtered = waterFlowData.filter((item: IProductItem) => {
+          const match = item.category === targetIndex;
+          if (match) {
+            Logger.info(TAG, `匹配商品: ${item.name}, category: ${item.category}`);
+          }
+          return match;
+        });
+        newData = [...filtered];
+        Logger.info(TAG, `分类 ${targetIndex} 过滤后共 ${newData.length} 个商品`);
+      }
+    }
+    
+    // 强制创建新数组引用，确保 ArkTS 检测到变化
+    this.filteredProductData = newData;
+    Logger.info(TAG, `更新后 filteredProductData 长度: ${this.filteredProductData.length}`);
+    Logger.info(TAG, `数组引用是否改变: ${newData !== waterFlowData}`);
   }
 
   build() {
@@ -109,9 +166,17 @@ struct HomePage {
         }
         .width(Const.FULL_WIDTH)
         .alignItems(VerticalAlign.Center)
-        ClassifyComponent()
+        ClassifyComponent({ 
+          selectedCategoryIndex: $selectedCategoryIndex,
+          onCategoryChange: (index: number) => {
+            Logger.info(TAG, `分类变化回调，索引: ${index}, 当前selectedCategoryIndex: ${this.selectedCategoryIndex}`);
+            // 同步状态并立刻按最新索引过滤，避免读到旧值
+            this.selectedCategoryIndex = index;
+            this.updateFilteredProducts(index);
+          }
+        })
         SwiperComponent()
-        WaterFlowComponent()
+        WaterFlowComponent({ productData: this.filteredProductData })
       }
       .padding({
         left: $r('app.float.home_margin_left'),

@@ -40,119 +40,237 @@ const swiperImage: Resource[] = [
 
 /**
  * Home page water flow item init data.
+ * 根据 CATEGORY_MAPPING.md 中的分类信息组织商品数据
  */
 const waterFlowData: IProductItem[] = [
+  // 手机类 (category: 1) - 11个商品
   {
-    image_url: $r('app.media.ic_holder_50e'),
-    name: 'XXX50E',
-    discount: '',
-    price: '¥4088',
-    promotion: '',
-    bonus_points: ''
-  },
-  {
-    image_url: $r('app.media.ic_holder_xs2'),
-    name: 'XXXPadMate Xs 2 \n8GB+256GB （雅黑）',
-    discount: '',
-    price: '¥9999',
-    promotion: '限时',
-    bonus_points: ''
-  },
-  {
-    image_url: $r('app.media.ic_holder_computer'),
-    name: 'XX设备  新品优惠！新品优惠！机不可失！失不再来！快来购买！快来购买！',
-    discount: '限时省200',
-    price: '¥10099',
-    promotion: '商品',
-    bonus_points: ''
-  },
-  {
-    image_url: $r('app.media.ic_holder_mouse'),
-    name: '送给亲人  快速购买！',
-    discount: '限时省200',
-    price: '¥199',
-    promotion: '',
-    bonus_points: ''
-  },
-  {
-    image_url: $r('app.media.ic_holder_pad'),
-    name: 'XXXPad Pro',
-    discount: '',
-    price: '¥3499',
-    promotion: '',
-    bonus_points: ''
-  },
-  {
-    image_url: $r('app.media.ic_holder_mate50'),
-    name: 'XXXMate 50 8GB+256GB',
-    discount: '',
-    price: '¥5499',
-    promotion: '',
-    bonus_points: ''
-  },
-  {
-    image_url: $r('app.media.ic_holder_60pro'),
-    name: 'XXX60 Pro 新品上市！\n你值得拥有！\n限时折扣！\n速速购买！',
-    discount: '限时省200',
-    price: '¥1299',
-    promotion: '限时',
-    bonus_points: ''
-  },
-  {
-    image_url: $r('app.media.ic_holder_50e'),
-    name: 'XXX50E',
-    discount: '',
-    price: '¥4088',
-    promotion: '',
-    bonus_points: ''
-  },
-  {
-    image_url: $r('app.media.ic_holder_xs2'),
-    name: 'XXXPadMate Xs 2 \n8GB+256GB （雅黑）',
-    discount: '限时省200',
-    price: '¥9999',
-    promotion: '限时',
-    bonus_points: ''
-  },
-  {
-    image_url: $r('app.media.ic_holder_computer'),
-    name: 'XX设备  新品优惠！新品优惠！',
-    discount: '限时省200',
-    price: '¥10099',
-    promotion: '商品',
-    bonus_points: ''
-  },
-  {
-    image_url: $r('app.media.ic_holder_mouse'),
-    name: '送给亲人  快速购买！',
-    discount: '限时省200',
-    price: '¥199',
-    promotion: '限时',
-    bonus_points: '赠送积分'
-  },
-  {
-    image_url: $r('app.media.ic_holder_pad'),
-    name: 'XXXPad Pro\n限时折扣！\n速速购买！\n机不可失！失不再来！',
-    discount: '限时省200',
-    price: '¥3499',
-    promotion: '',
-    bonus_points: '赠送积分'
-  },
-  {
-    image_url: $r('app.media.ic_holder_mate50'),
-    name: 'XXXMate 50 \n8GB+256GB',
-    discount: '',
-    price: '¥5499',
-    promotion: '',
-    bonus_points: ''
-  },
-  {
-    image_url: $r('app.media.ic_holder_60pro'),
-    name: 'XXX60 Pro',
-    discount: '限时省200',
-    price: '¥1299',
+    image_url: $r('app.media.phone_Mate_80_Pro'),
+    name: 'HUAWEI Mate 80 Pro',
+    discount: '限时省500',
+    price: '¥8999',
     promotion: '限时',
     bonus_points: '',
+    category: 1
+  },
+  {
+    image_url: $r('app.media.phone_Mate_80'),
+    name: 'HUAWEI Mate 80',
+    discount: '',
+    price: '¥6999',
+    promotion: '',
+    bonus_points: '',
+    category: 1
+  },
+  {
+    image_url: $r('app.media.phone_Pura_80_Ultra'),
+    name: 'HUAWEI Pura 80 Ultra',
+    discount: '限时省800',
+    price: '¥9999',
+    promotion: '限时',
+    bonus_points: '赠送积分',
+    category: 1
+  },
+  {
+    image_url: $r('app.media.phone_Pura_80_Pro_Plus'),
+    name: 'HUAWEI Pura 80 Pro Plus',
+    discount: '',
+    price: '¥8499',
+    promotion: '',
+    bonus_points: '',
+    category: 1
+  },
+  {
+    image_url: $r('app.media.phone_Pura_80_Pro'),
+    name: 'HUAWEI Pura 80 Pro',
+    discount: '限时省300',
+    price: '¥7499',
+    promotion: '限时',
+    bonus_points: '',
+    category: 1
+  },
+  {
+    image_url: $r('app.media.phone_Pura_80'),
+    name: 'HUAWEI Pura 80',
+    discount: '',
+    price: '¥5999',
+    promotion: '',
+    bonus_points: '',
+    category: 1
+  },
+  {
+    image_url: $r('app.media.phone_Mate_X7'),
+    name: 'HUAWEI Mate X7',
+    discount: '限时省1000',
+    price: '¥12999',
+    promotion: '限时',
+    bonus_points: '赠送积分',
+    category: 1
+  },
+  {
+    image_url: $r('app.media.phone_Mate_XTs_Ultimate'),
+    name: 'HUAWEI Mate XTs Ultimate',
+    discount: '',
+    price: '¥14999',
+    promotion: '',
+    bonus_points: '',
+    category: 1
+  },
+  {
+    image_url: $r('app.media.phone_nova_14'),
+    name: 'HUAWEI nova 14',
+    discount: '限时省200',
+    price: '¥2999',
+    promotion: '限时',
+    bonus_points: '',
+    category: 1
+  },
+  {
+    image_url: $r('app.media.phone_HUAWEI_Enjoy_80'),
+    name: 'HUAWEI Enjoy 80',
+    discount: '',
+    price: '¥1999',
+    promotion: '',
+    bonus_points: '',
+    category: 1
+  },
+  {
+    image_url: $r('app.media.phone_HUAWEI_Enjoy_80'),
+    name: 'HUAWEI Enjoy 80',
+    discount: '限时省100',
+    price: '¥1899',
+    promotion: '限时',
+    bonus_points: '',
+    category: 1
+  },
+  // 电脑类 (category: 2) - 5个商品
+  {
+    image_url: $r('app.media.laptop_MateBook_X_Pro_Core_Ultra'),
+    name: 'HUAWEI MateBook X Pro Core Ultra',
+    discount: '限时省1000',
+    price: '¥12999',
+    promotion: '限时',
+    bonus_points: '赠送积分',
+    category: 2
+  },
+  {
+    image_url: $r('app.media.laptop_MateBook_Pro'),
+    name: 'HUAWEI MateBook Pro',
+    discount: '',
+    price: '¥9999',
+    promotion: '',
+    bonus_points: '',
+    category: 2
+  },
+  {
+    image_url: $r('app.media.laptop_MateBook_Fold_Ultimate'),
+    name: 'HUAWEI MateBook Fold Ultimate',
+    discount: '限时省1500',
+    price: '¥14999',
+    promotion: '限时',
+    bonus_points: '',
+    category: 2
+  },
+  {
+    image_url: $r('app.media.laptop_MateBook_D_14'),
+    name: 'HUAWEI MateBook D 14',
+    discount: '限时省500',
+    price: '¥4999',
+    promotion: '限时',
+    bonus_points: '',
+    category: 2
+  },
+  {
+    image_url: $r('app.media.laptop_Hi_MateBook_14_Ryzen_200'),
+    name: 'Hi-MateBook 14 Ryzen 200',
+    discount: '',
+    price: '¥4499',
+    promotion: '',
+    bonus_points: '',
+    category: 2
+  },
+  // 食品类 (category: 3) - 4个商品
+  {
+    image_url: $r('app.media.food_Egg_yolk_pie'),
+    name: '蛋黄派',
+    discount: '限时省5',
+    price: '¥15',
+    promotion: '限时',
+    bonus_points: '',
+    category: 3
+  },
+  {
+    image_url: $r('app.media.food_Lays_Potato_chips'),
+    name: '乐事薯片',
+    discount: '',
+    price: '¥12',
+    promotion: '',
+    bonus_points: '',
+    category: 3
+  },
+  {
+    image_url: $r('app.media.food_Pork_jerky'),
+    name: '猪肉脯',
+    discount: '限时省3',
+    price: '¥28',
+    promotion: '限时',
+    bonus_points: '',
+    category: 3
+  },
+  {
+    image_url: $r('app.media.food_Xizhilang_jelly'),
+    name: '喜之郎果冻',
+    discount: '',
+    price: '¥18',
+    promotion: '',
+    bonus_points: '',
+    category: 3
+  },
+  // 智能家居类 (category: 6) - 5个商品
+  {
+    image_url: $r('app.media.Smart_furniture_Huawei_Smart_TV_MateTV'),
+    name: '华为智慧屏 MateTV',
+    discount: '限时省2000',
+    price: '¥7999',
+    promotion: '限时',
+    bonus_points: '赠送积分',
+    category: 6
+  },
+  {
+    image_url: $r('app.media.Smart_furniture_Yunjing_Robot'),
+    name: '云鲸智能扫托一体机器人',
+    discount: '',
+    price: '¥3999',
+    promotion: '',
+    bonus_points: '',
+    category: 6
+  },
+  {
+    image_url: $r('app.media.Smart_furniture_Huawei_Smart_Speaker'),
+    name: '华为智能音箱',
+    discount: '限时省200',
+    price: '¥799',
+    promotion: '限时',
+    bonus_points: '',
+    category: 6
+  },
+  {
+    image_url: $r('app.media.Smart_furniture_Huawei_Smart_Lock'),
+    name: '华为智能门锁',
+    discount: '',
+    price: '¥2499',
+    promotion: '',
+    bonus_points: '',
+    category: 6
+  },
+  {
+    image_url: $r('app.media.Smart_furniture_Huawei_Smart_Gateway'),
+    name: '华为全屋智能蓝牙网关',
+    discount: '限时省300',
+    price: '¥699',
+    promotion: '限时',
+    bonus_points: '',
+    category: 6
   }
 ];
 

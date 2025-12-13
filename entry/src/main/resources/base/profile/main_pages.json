@@ -1,6 +1,7 @@
 {
   "src": [
     "pages/HomePage",
+    "pages/ProductDetailPage",
     "userprofile/pages/ProfilePage",
     "userprofile/pages/AiServicePage",
     "userprofile/pages/LoginPage",

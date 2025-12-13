@@ -15,6 +15,9 @@
 
 import { classifyTitle } from '../viewmodel/HomeViewModel';
 import { CommonConstants as Const } from '../common/constants/CommonConstants';
+import Logger from '../common/utils/Logger';
+
+const TAG = 'ClassifyComponent';
 
 /**
  * Classify component.
@@ -22,7 +25,8 @@ import { CommonConstants as Const } from '../common/constants/CommonConstants';
  */
 @Component
 export default struct ClassifyComponent {
-  @State titleIndex: number = 0;
+  @Link selectedCategoryIndex: number;
+  onCategoryChange?: (index: number) => void;
 
   build() {
     Flex({ justifyContent: FlexAlign.SpaceBetween }) {
@@ -30,11 +34,19 @@ export default struct ClassifyComponent {
         if (index !== undefined) {
           Text(item)
             .fontSize($r('app.float.middle_font_size'))
-            .opacity(this.titleIndex === index ? Const.FULL_OPACITY : Const.EIGHTY_OPACITY)
-            .fontWeight(this.titleIndex === index ? Const.FONT_WEIGHT_FIVE : FontWeight.Normal)
+            .opacity(this.selectedCategoryIndex === index ? Const.FULL_OPACITY : Const.EIGHTY_OPACITY)
+            .fontWeight(this.selectedCategoryIndex === index ? Const.FONT_WEIGHT_FIVE : FontWeight.Normal)
             .fontColor(Color.White)
             .onClick(() => {
-              this.titleIndex = index;
+              Logger.info(TAG, `点击分类按钮，索引: ${index}`);
+              this.selectedCategoryIndex = index;
+              Logger.info(TAG, `selectedCategoryIndex 已更新为: ${this.selectedCategoryIndex}`);
+              if (this.onCategoryChange) {
+                Logger.info(TAG, `调用回调函数 onCategoryChange，索引: ${index}`);
+                this.onCategoryChange(index);
+              } else {
+                Logger.warn(TAG, `回调函数 onCategoryChange 未定义`);
+              }
             })
         }
       }, (item: Resource) => JSON.stringify(item))
@@ -53,11 +65,14 @@ export default struct ClassifyComponent {
         Text($r('app.string.title_bar_classification'))
           .fontSize($r('app.float.middle_font_size'))
           .fontColor(Color.White)
-          .opacity(this.titleIndex === Const.INVALID_INDEX ? Const.FULL_OPACITY : Const.EIGHTY_OPACITY)
-          .fontWeight(this.titleIndex === Const.INVALID_INDEX ? Const.FONT_WEIGHT_FIVE : FontWeight.Normal)
+          .opacity(this.selectedCategoryIndex === Const.INVALID_INDEX ? Const.FULL_OPACITY : Const.EIGHTY_OPACITY)
+          .fontWeight(this.selectedCategoryIndex === Const.INVALID_INDEX ? Const.FONT_WEIGHT_FIVE : FontWeight.Normal)
       }
       .onClick(() => {
-        this.titleIndex = Const.INVALID_INDEX;
+        this.selectedCategoryIndex = Const.INVALID_INDEX;
+        if (this.onCategoryChange) {
+          this.onCategoryChange(Const.INVALID_INDEX);
+        }
       })
     }
     .width(Const.FULL_WIDTH)

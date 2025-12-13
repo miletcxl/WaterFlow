@@ -16,6 +16,10 @@
 import { CommonConstants as Const } from '../common/constants/CommonConstants';
 import ProductItem from '../viewmodel/ProductItem';
 import { waterFlowData } from '../viewmodel/HomeViewModel';
+import { router } from '@kit.ArkUI';
+import Logger from '../common/utils/Logger';
+
+const TAG = 'FlowItemComponent';
 
 /**
  * Flow item component.
@@ -96,6 +100,26 @@ export default struct FlowItemComponent {
       left: $r('app.float.product_layout_margin_left'),
       right: $r('app.float.product_layout_margin_right'),
       bottom: $r('app.float.product_layout_margin_bottom')
+    })
+    .onClick(() => {
+      Logger.info(TAG, `点击商品: ${this.item?.name}`);
+      // 跳转到商品详情页，传递商品信息（转换为可序列化的对象）
+      router.pushUrl({
+        url: 'pages/ProductDetailPage',
+        params: {
+          product: {
+            image_url: this.item.image_url,
+            name: this.item.name,
+            discount: this.item.discount,
+            price: this.item.price,
+            promotion: this.item.promotion,
+            bonus_points: this.item.bonus_points,
+            category: this.item.category
+          }
+        }
+      }).catch((err: Error) => {
+        Logger.error(TAG, `跳转商品详情页失败: ${err.message}`);
+      });
     })
   }
 }

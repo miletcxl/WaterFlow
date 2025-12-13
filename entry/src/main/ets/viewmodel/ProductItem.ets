@@ -43,6 +43,12 @@ export interface IProductItem {
    * Product bonus points.
    */
   bonus_points: string;
+
+  /**
+   * Product category.
+   * 0: 首页/全部, 1: 手机, 2: 电脑, 3: 食品, 4: 男装, 5: 生鲜, 6: 家具
+   */
+  category: number;
 }
 
 /**
@@ -55,6 +61,7 @@ export default class ProductItem implements IProductItem {
   price: string;
   promotion: string;
   bonus_points: string;
+  category: number;
 
   constructor(props: IProductItem) {
     this.image_url = props.image_url;
@@ -63,5 +70,6 @@ export default class ProductItem implements IProductItem {
     this.price = props.price;
     this.promotion = props.promotion;
     this.bonus_points = props.bonus_points;
+    this.category = props.category;
   }
 }
