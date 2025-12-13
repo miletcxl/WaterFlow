@@ -21,9 +21,10 @@ import SearchComponent from '../view/SearchComponent';
 import SwiperComponent from '../view/SwiperComponent';
 import WaterFlowComponent from '../view/WaterFlowComponent';
 import UserIconComponent from '../userprofile/view/UserIconComponent';
-import { DatabaseManager } from '../userprofile/database/DatabaseManager';
+import { DatabaseManager, ProductRow } from '../userprofile/database/DatabaseManager';
 import Logger from '../common/utils/Logger';
 import { waterFlowData } from '../viewmodel/HomeViewModel';
+import { productSeeds, getProductImage, seedProductsAsItems } from '../viewmodel/ProductSeeds';
 import { IProductItem } from '../viewmodel/ProductItem';
 
 const TAG = 'HomePage';
@@ -38,7 +39,8 @@ const TAG = 'HomePage';
 struct HomePage {
   @StorageLink('topRectHeight') topRectHeight: number = 0;
   @State selectedCategory: number = 0;
-  @State filteredProductData: IProductItem[] = waterFlowData;
+  @State filteredProductData: IProductItem[] = seedProductsAsItems();
+  @State searchKeyword: string = '';
   private lastCategory: number = -1; // 跟踪上一次的分类
   private context = getContext(this) as common.UIAbilityContext;
   private dbManager: DatabaseManager = DatabaseManager.getInstance();
@@ -47,13 +49,14 @@ struct HomePage {
     // 初始化数据库
     try {
       await this.dbManager.initDatabase(this.context);
+      await this.dbManager.initProducts(productSeeds);
     } catch (err) {
       const error = err as Error;
       Logger.error(TAG, `数据库初始化失败: ${error.message}`);
     }
     // 初始化商品数据
     this.lastCategory = this.selectedCategory;
-    this.updateFilteredProducts(this.selectedCategory);
+    await this.updateFilteredProducts(this.selectedCategory);
   }
 
   aboutToUpdate(): void {
@@ -61,29 +64,45 @@ struct HomePage {
     if (this.lastCategory !== this.selectedCategory) {
       Logger.info(TAG, `分类从 ${this.lastCategory} 变为 ${this.selectedCategory}`);
       this.lastCategory = this.selectedCategory;
-      this.updateFilteredProducts(this.selectedCategory);
+      this.updateFilteredProducts(this.selectedCategory).catch((err: Error) => {
+        Logger.error(TAG, `更新过滤商品失败: ${err.message}`);
+      });
     }
   }
 
   /**
    * 根据当前选中的分类更新过滤后的商品数据
    */
-  updateFilteredProducts(categoryId?: number): void {
+  async updateFilteredProducts(categoryId?: number, keyword?: string): Promise<void> {
     const targetCategory = categoryId !== undefined ? categoryId : this.selectedCategory;
-    Logger.info(TAG, `更新过滤商品，分类: ${targetCategory}`);
+    Logger.info(TAG, `更新过滤商品，分类: ${targetCategory}, 关键词: ${keyword ?? ''}`);
     Logger.info(TAG, `更新前 filteredProductData 长度: ${this.filteredProductData.length}`);
 
     let newData: IProductItem[];
 
-    if (targetCategory === 0) {
-      // 显示全部商品
-      newData = [...waterFlowData];
-      Logger.info(TAG, `显示全部商品，共 ${newData.length} 个`);
-    } else {
-      // 根据分类过滤商品
-      const filtered = waterFlowData.filter((item: IProductItem) => item.category === targetCategory);
-      newData = [...filtered];
-      Logger.info(TAG, `分类 ${targetCategory} 过滤后共 ${newData.length} 个商品`);
+    try {
+      const rows: ProductRow[] = await this.dbManager.getProducts(targetCategory, keyword);
+      newData = rows.map((row: ProductRow): IProductItem => {
+        const imageRes = getProductImage(row.imageKey);
+        return {
+          image_url: imageRes,
+          name: row.name,
+          discount: row.discount,
+          price: row.price,
+          promotion: row.promotion,
+          bonus_points: row.bonus_points,
+          category: row.category
+        };
+      });
+      Logger.info(TAG, `DB 查询后共 ${newData.length} 个商品`);
+    } catch (err) {
+      const error = err as Error;
+      Logger.error(TAG, `数据库查询失败: ${error.message}，回退到静态数据`);
+      if (targetCategory === 0) {
+        newData = [...waterFlowData];
+      } else {
+        newData = waterFlowData.filter((item: IProductItem) => item.category === targetCategory);
+      }
     }
 
     // 强制创建新数组引用，确保 ArkTS 检测到变化
@@ -105,7 +124,15 @@ struct HomePage {
       Column() {
         // 顶部导航栏：搜索框和个人信息入口
         Row() {
-          SearchComponent()
+          SearchComponent({
+            onSearchChange: async (kw: string) => {
+              this.searchKeyword = kw;
+              await this.updateFilteredProducts(this.selectedCategory, this.searchKeyword);
+            },
+            onSearch: async () => {
+              await this.updateFilteredProducts(this.selectedCategory, this.searchKeyword);
+            }
+          })
             .layoutWeight(1)
           // 个人信息入口按钮 - 圆形图标加文字
           UserIconComponent({
@@ -159,7 +186,7 @@ struct HomePage {
             Logger.info(TAG, `分类变化回调，分类: ${category}, 当前selectedCategory: ${this.selectedCategory}`);
             // 同步状态并立刻按最新分类过滤，避免读到旧值
             this.selectedCategory = category;
-            this.updateFilteredProducts(category);
+            this.updateFilteredProducts(category, this.searchKeyword);
           }
         })
         SwiperComponent()

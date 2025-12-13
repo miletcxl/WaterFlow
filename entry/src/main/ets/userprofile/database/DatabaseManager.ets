@@ -22,6 +22,17 @@ import { Order } from '../model/Order';
 import { Favorite } from '../model/Favorite';
 import { MemberInfo } from '../model/MemberInfo';
 import Logger from '../../common/utils/Logger';
+import { ProductSeed } from '../../viewmodel/ProductSeeds';
+
+export interface ProductRow {
+  name: string;
+  price: string;
+  discount: string;
+  promotion: string;
+  bonus_points: string;
+  category: number;
+  imageKey: string;
+}
 
 const TAG = 'DatabaseManager';
 const STORE_CONFIG: relationalStore.StoreConfig = {
@@ -73,6 +84,20 @@ export class DatabaseManager {
     if (!this.rdbStore) {
       throw new Error('数据库未初始化');
     }
+
+    // 商品表
+    const productTable = `
+      CREATE TABLE IF NOT EXISTS products (
+        productId INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        price TEXT NOT NULL,
+        discount TEXT,
+        promotion TEXT,
+        bonus_points TEXT,
+        category INTEGER NOT NULL,
+        imageKey TEXT NOT NULL
+      )
+    `;
 
     // 创建用户账户表
     const userAccountTable = `
@@ -141,12 +166,93 @@ export class DatabaseManager {
       )
     `;
 
+    await this.rdbStore.executeSql(productTable);
     await this.rdbStore.executeSql(userAccountTable);
     await this.rdbStore.executeSql(userInfoTable);
     await this.rdbStore.executeSql(orderTable);
     await this.rdbStore.executeSql(favoriteTable);
     await this.rdbStore.executeSql(memberInfoTable);
     Logger.info(TAG, '数据表创建成功');
+  }
+
+  /**
+   * 商品行模型
+   */
+  public static readonly ProductRowKeys = ['name', 'price', 'discount', 'promotion', 'bonus_points', 'category', 'imageKey'];
+
+  /**
+   * 商品行类型
+   */
+  public static createProductRow(): ProductRow {
+    return {
+      name: '',
+      price: '',
+      discount: '',
+      promotion: '',
+      bonus_points: '',
+      category: 0,
+      imageKey: ''
+    };
+  }
+
+  /**
+   * 初始化商品数据（仅在表为空时插入种子数据）
+   */
+  async initProducts(seedData: ProductSeed[]): Promise<void> {
+    if (!this.rdbStore) {
+      throw new Error('数据库未初始化');
+    }
+    const predicates = new relationalStore.RdbPredicates('products');
+    const result = await this.rdbStore.query(predicates);
+    if (result.rowCount > 0) {
+      return;
+    }
+    for (const item of seedData) {
+      const valueBucket: relationalStore.ValuesBucket = {
+        name: item.name,
+        price: item.price,
+        discount: item.discount,
+        promotion: item.promotion,
+        bonus_points: item.bonus_points,
+        category: item.category,
+        imageKey: item.imageKey
+      };
+      await this.rdbStore.insert('products', valueBucket);
+    }
+    Logger.info(TAG, `商品种子数据初始化完成，共插入 ${seedData.length} 条`);
+  }
+
+  /**
+   * 获取商品列表，可按分类/关键词过滤
+   */
+  async getProducts(category?: number, keyword?: string): Promise<ProductRow[]> {
+    if (!this.rdbStore) {
+      throw new Error('数据库未初始化');
+    }
+
+    const predicates = new relationalStore.RdbPredicates('products');
+    if (category !== undefined && category !== 0) {
+      predicates.equalTo('category', category);
+    }
+    if (keyword && keyword.trim().length > 0) {
+      predicates.like('name', `%${keyword.trim()}%`);
+    }
+
+    const result = await this.rdbStore.query(predicates);
+    const products: ProductRow[] = [];
+
+    while (result.goToNextRow()) {
+      const row: ProductRow = DatabaseManager.createProductRow();
+      row.name = result.getString(result.getColumnIndex('name')) || '';
+      row.price = result.getString(result.getColumnIndex('price')) || '';
+      row.discount = result.getString(result.getColumnIndex('discount')) || '';
+      row.promotion = result.getString(result.getColumnIndex('promotion')) || '';
+      row.bonus_points = result.getString(result.getColumnIndex('bonus_points')) || '';
+      row.category = result.getLong(result.getColumnIndex('category'));
+      row.imageKey = result.getString(result.getColumnIndex('imageKey')) || '';
+      products.push(row);
+    }
+    return products;
   }
 
   /**
@@ -644,4 +750,3 @@ export class DatabaseManager {
     }
   }
 }
-
