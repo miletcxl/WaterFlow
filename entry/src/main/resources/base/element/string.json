@@ -29,6 +29,14 @@
       "value": "Food"
     },
     {
+      "name": "title_bar_audio",
+      "value": "Audio"
+    },
+    {
+      "name": "title_bar_smart_screen",
+      "value": "Smart Screen"
+    },
+    {
       "name": "title_bar_men_wear",
       "value": "Menswear"
     },
@@ -39,6 +47,10 @@
     {
       "name": "title_bar_furniture_kitchenware",
       "value": "Smart Home"
+    },
+    {
+      "name": "title_bar_grain_oil_wine",
+      "value": "Grain & Wine"
     },
     {
       "name": "title_bar_classification",

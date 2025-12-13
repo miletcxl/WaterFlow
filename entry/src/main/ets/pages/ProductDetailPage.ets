@@ -231,9 +231,9 @@ struct ProductDetailPage {
       1: '手机',
       2: '电脑',
       3: '食品',
-      4: '男装',
-      5: '生鲜',
-      6: '家具厨具'
+      6: '智能家居',
+      7: '耳机音箱',
+      8: '智慧屏'
     };
     return categoryMap[category] || '未知';
   }

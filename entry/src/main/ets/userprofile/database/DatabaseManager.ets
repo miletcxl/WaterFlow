@@ -202,11 +202,10 @@ export class DatabaseManager {
     if (!this.rdbStore) {
       throw new Error('数据库未初始化');
     }
-    const predicates = new relationalStore.RdbPredicates('products');
-    const result = await this.rdbStore.query(predicates);
-    if (result.rowCount > 0) {
-      return;
-    }
+
+    // 每次启动都刷新种子商品，避免旧版本数据导致搜索/分类缺少新商品
+    await this.rdbStore.executeSql('DELETE FROM products');
+
     for (const item of seedData) {
       const valueBucket: relationalStore.ValuesBucket = {
         name: item.name,

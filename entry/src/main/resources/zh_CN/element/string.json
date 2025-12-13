@@ -29,6 +29,14 @@
       "value": "食品"
     },
     {
+      "name": "title_bar_audio",
+      "value": "音频设备"
+    },
+    {
+      "name": "title_bar_smart_screen",
+      "value": "智慧屏"
+    },
+    {
       "name": "title_bar_men_wear",
       "value": "男装"
     },
@@ -39,6 +47,10 @@
     {
       "name": "title_bar_furniture_kitchenware",
       "value": "智能家居"
+    },
+    {
+      "name": "title_bar_grain_oil_wine",
+      "value": "粮油酒水"
     },
     {
       "name": "title_bar_classification",
