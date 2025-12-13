@@ -14,12 +14,10 @@
  */
 
 import ProductItem from '../viewmodel/ProductItem';
-import { WaterFlowDataSource } from '../viewmodel/WaterFlowDataSource';
 import { CommonConstants as Const } from '../common/constants/CommonConstants';
 import { waterFlowData } from '../viewmodel/HomeViewModel';
 import FlowItemComponent from '../view/FlowItemComponent';
 import { IProductItem } from '../viewmodel/ProductItem';
-import Logger from '../common/utils/Logger';
 
 const TAG = 'WaterFlowComponent';
 
@@ -32,28 +30,15 @@ const TAG = 'WaterFlowComponent';
 export default struct WaterFlowComponent {
   @StorageLink('bottomRectHeight') bottomRectHeight: number = 0;
   @Prop productData: IProductItem[] = waterFlowData;
-  private datasource: WaterFlowDataSource = new WaterFlowDataSource();
-
-  aboutToAppear() {
-    Logger.info(TAG, `WaterFlowComponent aboutToAppear, 商品数量: ${this.productData.length}`);
-    // 初次同步数据
-    this.datasource.setDataArray(this.productData);
-  }
-
-  aboutToUpdate() {
-    Logger.info(TAG, `WaterFlowComponent aboutToUpdate 被调用，当前数据长度: ${this.productData.length}`);
-    // 无论数组长度是否变化都强制同步，确保分类过滤后的数据立即刷新
-    this.datasource.setDataArray(this.productData);
-  }
 
   @Builder
   buildWaterFlow() {
     WaterFlow({ footer: (): void => this.itemFoot() }) {
-      LazyForEach(this.datasource, (item: ProductItem) => {
+      ForEach(this.productData, (item: IProductItem) => {
         FlowItem() {
-          FlowItemComponent({ item: item })
+          FlowItemComponent({ item: new ProductItem(item) })
         }
-      }, (item: ProductItem) => `${item.name}-${item.category}`)
+      }, (item: IProductItem) => `${item.name}-${item.category}`)
     }
     .layoutWeight(Const.WATER_FLOW_LAYOUT_WEIGHT)
     .layoutDirection(FlexDirection.Column)
