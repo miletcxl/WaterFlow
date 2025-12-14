@@ -2,6 +2,7 @@
   "src": [
     "pages/HomePage",
     "pages/ProductDetailPage",
+    "pages/ActivityPage",
     "userprofile/pages/ProfilePage",
     "userprofile/pages/AiServicePage",
     "userprofile/pages/LoginPage",
@@ -10,6 +11,7 @@
     "userprofile/pages/OrderListPage",
     "userprofile/pages/FavoriteListPage",
     "userprofile/pages/CouponListPage",
-    "userprofile/pages/AddressListPage"
+    "userprofile/pages/AddressListPage",
+    "userprofile/pages/MemberBenefitPage"
   ]
 }

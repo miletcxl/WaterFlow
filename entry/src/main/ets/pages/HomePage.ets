@@ -189,7 +189,6 @@ struct HomePage {
             this.updateFilteredProducts(category, this.searchKeyword);
           }
         })
-        this.buildActivityBanner()
         SwiperComponent()
         WaterFlowComponent({ productData: this.filteredProductData })
           .layoutWeight(1)
@@ -237,34 +236,6 @@ struct HomePage {
     .backgroundColor($r('app.color.home_background_color'))
   }
   @Builder
-  buildActivityBanner() {
-    Column() {
-      Text('?????')
-        .fontSize(20)
-        .fontWeight(FontWeight.Bold)
-        .fontColor(Color.White)
-        .margin({ bottom: 6 })
-      Text('???500????')
-        .fontSize(14)
-        .fontColor('rgba(255,255,255,0.85)')
-        .margin({ bottom: 12 })
-      Button('????')
-        .type(ButtonType.Capsule)
-        .backgroundColor('#FFFFFF')
-        .fontColor('#6D4BFF')
-        .height(34)
-        .padding({ left: 14, right: 14 })
-        .onClick(() => {
-          router.pushUrl({ url: 'userprofile/pages/CouponListPage' }).catch(() => {});
-        })
-    }
-    .padding({ left: 18, right: 18, top: 18, bottom: 18 })
-    .width('100%')
-    .height(140)
-    .backgroundColor('#6D4BFF')
-    .shadow({ radius: 12, color: '#22000000', offsetY: 4 })
-    .borderRadius(16)
-    .margin({ top: 12, bottom: 12 })
-  }
+  buildActivityBanner() {}
 
 }

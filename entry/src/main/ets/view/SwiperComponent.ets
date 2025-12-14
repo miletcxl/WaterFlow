@@ -15,6 +15,7 @@
 
 import { CommonConstants as Const } from '../common/constants/CommonConstants';
 import { swiperImage } from '../viewmodel/HomeViewModel';
+import { router } from '@kit.ArkUI';
 
 /**
  * Swiper component.
@@ -37,6 +38,9 @@ export default struct SwiperComponent {
           .height($r('app.float.swiper_image_height'))
           .borderRadius($r('app.float.swiper_radius'))
           .backgroundColor(Color.White)
+          .onClick(() => {
+            router.pushUrl({ url: 'pages/ActivityPage' }).catch(() => {});
+          })
       }, (item: Resource) => JSON.stringify(item))
     }
     .indicator(this.dotIndicator)

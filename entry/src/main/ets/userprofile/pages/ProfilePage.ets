@@ -158,76 +158,59 @@ struct ProfilePage {
             // 1. ????????
             ProfileHeaderComponent({ userInfo: this.viewModel.userInfo })
 
-            // 2. ????
-            Column() {
+            // 2. ??????
+            Row() {
+              // ????????
               Row() {
-                Column() {
-                  Text('????')
-                    .fontSize(12)
-                    .fontColor('rgba(255,255,255,0.85)')
-                  Row() {
-                    Text('??')
-                      .fontSize(18)
-                      .margin({ right: 6 })
-                    Text(`${this.viewModel.memberLevel} ? Lv.${this.viewModel.memberLevelNum}`)
-                      .fontSize(16)
-                      .fontWeight(FontWeight.Bold)
-                      .fontColor(Color.White)
-                  }
-                  Text(`???? ${this.viewModel.monthlySaved.toFixed(0)} ?`)
-                    .fontSize(12)
-                    .fontColor('rgba(255,255,255,0.9)')
-                    .margin({ top: 6 })
-                }
-                .layoutWeight(1)
-                .alignItems(HorizontalAlign.Start)
+                Text('??')
+                  .fontSize(18)
+                  .margin({ right: 8 })
 
                 Column() {
-                  Text('????')
-                    .fontSize(12)
-                    .fontColor('#1F1B2E')
-                    .padding({ left: 10, right: 10, top: 6, bottom: 6 })
-                    .backgroundColor(Color.White)
-                    .borderRadius(14)
-                    .onClick(() => this.viewModel.onMenuItemClick('coupon'))
-                  Text('?? ' + this.viewModel.points.toString())
-                    .fontSize(12)
-                    .fontColor('rgba(255,255,255,0.85)')
-                    .margin({ top: 6 })
+                  Text(`${this.viewModel.memberLevel} Lv.${this.viewModel.memberLevelNum}`)
+                    .fontSize(14)
+                    .fontColor('#FFE4B5')
+                    .fontWeight(FontWeight.Bold)
+                  Text(`???? ${this.viewModel.monthlySaved.toFixed(0)} ?`)
+                    .fontSize(10)
+                    .fontColor('rgba(255,228,181, 0.7)')
+                    .margin({ top: 2 })
                 }
-                .alignItems(HorizontalAlign.End)
+                .alignItems(HorizontalAlign.Start)
               }
-              .width('100%')
+
+              Blank()
+
+              // ???????
+              Row() {
+                Text('????')
+                  .fontSize(12)
+                  .fontColor('#FFE4B5')
+                Text(' ?')
+                  .fontSize(18)
+                  .fontColor('#FFE4B5')
+                  .margin({ bottom: 2 })
+              }
+              .backgroundColor('rgba(255,255,255,0.1)')
+              .padding({ left: 10, right: 8, top: 4, bottom: 4 })
+              .borderRadius(12)
+              .onClick(() => this.viewModel.onMenuItemClick('coupon'))
             }
-            .padding({ left: 18, right: 18, top: 14, bottom: 14 })
             .width('100%')
-            .backgroundColor('#7A5CFF')
+            .height(60)
             .linearGradient({
-              angle: 120,
-              colors: [['#7A5CFF', 0.0], ['#4A3DC1', 1.0]]
+              angle: 90,
+              colors: [['#333333', 0.0], ['#454545', 1.0]]
             })
-            .borderRadius(18)
+            .borderRadius(16)
+            .padding({ left: 16, right: 16 })
+            .alignItems(VerticalAlign.Center)
             .margin({ top: 16 })
-            .shadow({ radius: 14, color: '#1A000000', offsetY: 6 })
+            .shadow({ radius: 10, color: 'rgba(0,0,0,0.15)', offsetY: 4 })
           }
           .width('100%')
           .padding({ left: 16, right: 16, bottom: 20 })
         }
-ListItem() {
-          Row() {
-            this.buildStatItem($r('app.string.profile_stat_orders'), this.viewModel.orderCount.toString(), $r('app.color.profile_stat_icon_1'))
-            Divider().vertical(true).height(24).color('#F1F3F5')
-            this.buildStatItem($r('app.string.profile_stat_favorites'), this.viewModel.favoriteCount.toString(), $r('app.color.profile_stat_icon_2'))
-            Divider().vertical(true).height(24).color('#F1F3F5')
-            this.buildStatItem($r('app.string.profile_stat_points'), this.viewModel.points.toString(), $r('app.color.profile_stat_icon_3'))
-          }
-          .cardStyle()
-          .justifyContent(FlexAlign.SpaceEvenly)
-          .height(90)
-        }
-        .padding({ left: 16, right: 16 })
-        .margin({ top: -30 })
-
         // --- 快捷入口 ---
         ListItem() {
           Column() {
