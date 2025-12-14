@@ -16,6 +16,7 @@
 import { CommonConstants as Const } from '../../common/constants/CommonConstants';
 import { router } from '@kit.ArkUI';
 import { common } from '@kit.AbilityKit';
+import promptAction from '@ohos.promptAction';
 import { ProfileViewModel, QuickEntryModel, RecentOrderModel } from '../viewmodel/ProfileViewModel';
 import { ProfileMenuItem } from '../model/UserInfo';
 import ProfileHeaderComponent from '../view/ProfileHeaderComponent';
@@ -156,7 +157,26 @@ struct ProfilePage {
         // 头像 / 数据 / 会员卡
         ListItem() {
           Column() {
-            ProfileHeaderComponent({ userInfo: this.viewModel.userInfo })
+            Row() {
+              ProfileHeaderComponent({ userInfo: this.viewModel.userInfo })
+                .layoutWeight(1)
+              Button('📅 签到领积分')
+                .type(ButtonType.Capsule)
+                .backgroundColor('#2E7BFF')
+                .fontColor(Color.White)
+                .fontSize(12)
+                .padding({ left: 12, right: 12, top: 6, bottom: 6 })
+                .borderRadius(16)
+                .height(34)
+                .onClick(() => {
+                  router.pushUrl({ url: 'userprofile/pages/SignInPage' }).catch(() => {
+                    promptAction.showToast({ message: '打开签到页失败' });
+                  });
+                })
+            }
+            .width('100%')
+            .padding({ right: 12 })
+            .alignItems(VerticalAlign.Center)
 
             Row() {
               this.buildStatItem($r('app.string.profile_stat_orders'), this.viewModel.orderCount.toString(), '#FF8A3C')

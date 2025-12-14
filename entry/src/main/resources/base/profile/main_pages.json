@@ -12,6 +12,7 @@
     "userprofile/pages/FavoriteListPage",
     "userprofile/pages/CouponListPage",
     "userprofile/pages/AddressListPage",
-    "userprofile/pages/MemberBenefitPage"
+    "userprofile/pages/MemberBenefitPage",
+    "userprofile/pages/SignInPage"
   ]
 }

@@ -203,33 +203,24 @@ struct HomePage {
       .height('100%')
       .justifyContent(FlexAlign.Start)
       
-      // AI客服按钮（固定在窗口右下角）
-      Column() {
-        Text('💬')
-          .fontSize(24)
+      // 悬浮按钮组：签到金币 + AI 客服
+      Column({ space: 12 }) {
+        this.buildFloatButton('¥', '#FFC94A', () => {
+          router.pushUrl({ url: 'userprofile/pages/SignInPage' }).catch((err: Error) => {
+            Logger.error(TAG, `跳转签到页失败: ${err.message}`);
+          });
+        })
+        this.buildFloatButton('客服', '#FF8A3C', () => {
+          router.pushUrl({
+            url: 'userprofile/pages/AiServicePage'
+          }).catch((err: Error) => {
+            Logger.error(TAG, `跳转AI客服页面失败: ${err.message}`);
+          });
+        })
       }
-      .width(56)
-      .height(56)
-      .backgroundColor('#FF8A3C')
-      .borderRadius(28)
-      .shadow({
-        radius: 8,
-        color: 'rgba(255,138,60,0.4)',
-        offsetX: 0,
-        offsetY: 4
-      })
-      .justifyContent(FlexAlign.Center)
-      .alignItems(HorizontalAlign.Center)
-      .position({ x: '100%', y: '100%' }) // 绝对定位到右下角
-      .markAnchor({ x: 56 + 16, y: 56 + 16 }) // 锚点偏移：宽度+右边距, 高度+下边距
-      .zIndex(999) // 提高层级，确保在最上层
-      .onClick(() => {
-        router.pushUrl({
-          url: 'userprofile/pages/AiServicePage'
-        }).catch((err: Error) => {
-          Logger.error(TAG, `跳转AI客服页面失败: ${err.message}`);
-        });
-      })
+      .position({ x: '100%', y: '100%' })
+      .markAnchor({ x: 56 + 16, y: 56 * 2 + 12 + 16 })
+      .zIndex(999)
     }
     .width('100%')
     .height('100%')
@@ -237,5 +228,28 @@ struct HomePage {
   }
   @Builder
   buildActivityBanner() {}
+
+  @Builder
+  buildFloatButton(iconText: string, bgColor: string, onTap: () => void) {
+    Column() {
+      Text(iconText)
+        .fontSize(18)
+        .fontColor(Color.White)
+        .fontWeight(FontWeight.Medium)
+    }
+    .width(56)
+    .height(56)
+    .backgroundColor(bgColor)
+    .borderRadius(28)
+    .shadow({
+      radius: 8,
+      color: 'rgba(0,0,0,0.2)',
+      offsetX: 0,
+      offsetY: 4
+    })
+    .justifyContent(FlexAlign.Center)
+    .alignItems(HorizontalAlign.Center)
+    .onClick(onTap)
+  }
 
 }
