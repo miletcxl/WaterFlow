@@ -197,7 +197,9 @@ struct ProfilePage {
                     .border({ width: 1, color: '#E0C7A8' })
                     .height(36)
                     .padding({ left: 14, right: 14 })
-                    .onClick(() => this.viewModel.onMenuItemClick('coupon'))
+                    .onClick(() => {
+                      router.pushUrl({ url: 'userprofile/pages/MemberBenefitPage' }).catch(() => {});
+                    })
                   Text(`积分 ${this.viewModel.points}`)
                     .fontSize(12)
                     .fontColor('#8A5A1F')
@@ -214,6 +216,9 @@ struct ProfilePage {
                 Text('去看看  ›')
                   .fontSize(12)
                   .fontColor('#9B6D38')
+                  .onClick(() => {
+                    router.pushUrl({ url: 'userprofile/pages/MemberBenefitPage' }).catch(() => {});
+                  })
               }
               .width('100%')
               .margin({ top: 10 })
