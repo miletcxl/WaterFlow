@@ -183,7 +183,7 @@ struct ActivityPage {
           .fontSize(22)
           .fontWeight(FontWeight.Bold)
           .fontColor('#0B9B00')
-        Text('¥4199')
+        Text('¥4088')
           .fontSize(14)
           .fontColor('#FFFFFF')
           .opacity(0.8)

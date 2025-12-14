@@ -1,6 +1,16 @@
 /*
  * Copyright (c) 2023 Huawei Device Co., Ltd.
- * ...
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 import { CommonConstants as Const } from '../../common/constants/CommonConstants';
@@ -23,8 +33,7 @@ struct ProfilePage {
   @State isLoggedIn: boolean = false;
   @State isLoading: boolean = true;
 
-  // 快捷入口图标
-  private quickIcons: string[] = ['👛', '🎫', '🎁', '🎧'];
+  private quickIcons: string[] = ['📦', '🎟️', '📬', '🎧'];
   private context = getContext(this) as common.UIAbilityContext;
   private dbManager: DatabaseManager = DatabaseManager.getInstance();
 
@@ -46,39 +55,33 @@ struct ProfilePage {
   }
 
   async onPageShow(): Promise<void> {
-    // 页面显示时重新加载数据（从编辑页面返回时）
     await this.loadData();
   }
 
   private async loadData(): Promise<void> {
     try {
       this.isLoading = true;
-      // 初始化数据库
       await this.dbManager.initDatabase(this.context);
-      
-      // 检查登录状态
       const currentUser = await this.dbManager.getCurrentUser();
       this.isLoggedIn = currentUser !== null;
-      
+
       if (this.isLoggedIn) {
-        // 加载用户信息
         await this.viewModel.initUserInfo();
       } else {
-        // 未登录，跳转到登录页
         router.replaceUrl({
           url: 'userprofile/pages/LoginPage'
         }).catch((err: Error) => {
-          Logger.error(TAG, `跳转登录页失败: ${err.message}`);
+          Logger.error(TAG, `跳转登录页失败 ${err.message}`);
         });
         return;
       }
-      
+
       this.viewModel.initMenuItems();
       this.viewModel.initQuickEntries();
       await this.viewModel.initRecentOrders();
     } catch (err) {
       const error = err as Error;
-      Logger.error(TAG, `页面初始化失败: ${error.message}`);
+      Logger.error(TAG, `页面初始化失败 ${error.message}`);
     } finally {
       this.isLoading = false;
     }
@@ -86,7 +89,6 @@ struct ProfilePage {
 
   build() {
     if (this.isLoading) {
-      // 加载中状态
       Column() {
         LoadingProgress()
           .width(50)
@@ -102,17 +104,16 @@ struct ProfilePage {
       .justifyContent(FlexAlign.Center)
       .backgroundColor('#F6F6F6')
     } else {
-      this.buildContent()
+      this.buildContent();
     }
   }
 
   @Builder
   buildContent() {
     Stack({ alignContent: Alignment.Top }) {
-      // 1. 渐变背景
       Column()
         .width('100%')
-        .height(320)
+        .height(340)
         .linearGradient({
           angle: 180,
           colors: [['#FF8A3C', 0.0], ['#FFB36B', 1.0]]
@@ -120,20 +121,19 @@ struct ProfilePage {
         .borderRadius({ bottomLeft: 24, bottomRight: 24 })
 
       List({ space: 12 }) {
-
-        // --- 顶部导航栏 ---
+        // 顶部导航
         ListItem() {
           Row() {
             Row() {
-              Text('❮')
-                .fontSize(18)
+              Text('←')
+                .fontSize(20)
                 .fontColor(Color.White)
                 .fontWeight(FontWeight.Bold)
+                .margin({ right: 6 })
               Text('返回')
                 .fontSize(16)
                 .fontColor(Color.White)
                 .fontWeight(FontWeight.Medium)
-                .margin({ left: 4 })
             }
             .padding({ left: 12, right: 16, top: 8, bottom: 8 })
             .backgroundColor('rgba(255,255,255,0.2)')
@@ -144,7 +144,8 @@ struct ProfilePage {
             })
             Blank()
             Text('⚙️')
-              .fontSize(24)
+              .fontSize(22)
+              .fontColor(Color.White)
               .onClick(() => this.viewModel.onMenuItemClick('account'))
           }
           .width('100%')
@@ -152,121 +153,166 @@ struct ProfilePage {
           .alignItems(VerticalAlign.Center)
         }
 
-        // --- 用户头像与信息 + 黑金会员卡 ---
+        // 头像 / 数据 / 会员卡
         ListItem() {
           Column() {
-            // 1. ????????
             ProfileHeaderComponent({ userInfo: this.viewModel.userInfo })
 
-            // 2. ??????
             Row() {
-              // ????????
-              Row() {
-                Text('??')
-                  .fontSize(18)
-                  .margin({ right: 8 })
-
-                Column() {
-                  Text(`${this.viewModel.memberLevel} Lv.${this.viewModel.memberLevelNum}`)
-                    .fontSize(14)
-                    .fontColor('#FFE4B5')
-                    .fontWeight(FontWeight.Bold)
-                  Text(`???? ${this.viewModel.monthlySaved.toFixed(0)} ?`)
-                    .fontSize(10)
-                    .fontColor('rgba(255,228,181, 0.7)')
-                    .margin({ top: 2 })
-                }
-                .alignItems(HorizontalAlign.Start)
-              }
-
-              Blank()
-
-              // ???????
-              Row() {
-                Text('????')
-                  .fontSize(12)
-                  .fontColor('#FFE4B5')
-                Text(' ?')
-                  .fontSize(18)
-                  .fontColor('#FFE4B5')
-                  .margin({ bottom: 2 })
-              }
-              .backgroundColor('rgba(255,255,255,0.1)')
-              .padding({ left: 10, right: 8, top: 4, bottom: 4 })
-              .borderRadius(12)
-              .onClick(() => this.viewModel.onMenuItemClick('coupon'))
+              this.buildStatItem($r('app.string.profile_stat_orders'), this.viewModel.orderCount.toString(), '#FF8A3C')
+              this.buildStatItem($r('app.string.profile_stat_favorites'), this.viewModel.favoriteCount.toString(), '#FF8A3C')
+              this.buildStatItem('积分', this.viewModel.points.toString(), '#FF8A3C')
             }
             .width('100%')
-            .height(60)
+            .justifyContent(FlexAlign.SpaceEvenly)
+            .padding({ top: 12, bottom: 12 })
+            .margin({ top: 12 })
+            .backgroundColor('rgba(255,255,255,0.16)')
+            .borderRadius(14)
+
+            Column() {
+              Row() {
+                Column() {
+                  Text('会员专属')
+                    .fontSize(14)
+                    .fontColor('#8A5A1F')
+                    .margin({ bottom: 6 })
+                  Text(`${this.viewModel.memberLevel}  Lv.${this.viewModel.memberLevelNum}`)
+                    .fontSize(18)
+                    .fontWeight(FontWeight.Bold)
+                    .fontColor('#2B1A0B')
+                  Text(`本月已省 ${this.viewModel.monthlySaved.toFixed(0)} 元`)
+                    .fontSize(12)
+                    .fontColor('#A36C2B')
+                    .margin({ top: 4 })
+                }
+                .layoutWeight(1)
+                .alignItems(HorizontalAlign.Start)
+
+                Column() {
+                  Button('权益中心')
+                    .type(ButtonType.Capsule)
+                    .backgroundColor('#FDF7F0')
+                    .fontColor('#8A5A1F')
+                    .border({ width: 1, color: '#E0C7A8' })
+                    .height(36)
+                    .padding({ left: 14, right: 14 })
+                    .onClick(() => this.viewModel.onMenuItemClick('coupon'))
+                  Text(`积分 ${this.viewModel.points}`)
+                    .fontSize(12)
+                    .fontColor('#8A5A1F')
+                    .margin({ top: 8 })
+                }
+                .alignItems(HorizontalAlign.End)
+              }
+
+              Row() {
+                Text('等级成长 · 每日秒杀 · 专属礼包')
+                  .fontSize(12)
+                  .fontColor('#9B6D38')
+                  .layoutWeight(1)
+                Text('去看看  ›')
+                  .fontSize(12)
+                  .fontColor('#9B6D38')
+              }
+              .width('100%')
+              .margin({ top: 10 })
+            }
+            .padding({ left: 18, right: 18, top: 14, bottom: 14 })
+            .width('100%')
+            .backgroundColor('#F2E6D9')
             .linearGradient({
-              angle: 90,
-              colors: [['#333333', 0.0], ['#454545', 1.0]]
+              angle: 120,
+              colors: [['#F5E7D9', 0.0], ['#ECD5BD', 1.0]]
             })
-            .borderRadius(16)
-            .padding({ left: 16, right: 16 })
-            .alignItems(VerticalAlign.Center)
+            .borderRadius(18)
             .margin({ top: 16 })
-            .shadow({ radius: 10, color: 'rgba(0,0,0,0.15)', offsetY: 4 })
+            .shadow({ radius: 12, color: '#1A000000', offsetY: 5 })
           }
           .width('100%')
-          .padding({ left: 16, right: 16, bottom: 20 })
+          .padding({ left: 16, right: 16, bottom: 8 })
         }
-        // --- 快捷入口 ---
+
+        // 快捷入口
         ListItem() {
           Column() {
-            this.buildSectionTitle($r('app.string.profile_quick_title'))
+            this.buildSectionTitle($r('app.string.profile_quick_title'), false)
             Grid() {
               ForEach(this.viewModel.quickEntries, (item: QuickEntryModel, index: number) => {
                 GridItem() {
                   Column() {
-                    Text(this.quickIcons[index % this.quickIcons.length])
-                      .fontSize(32)
-                      .margin({ bottom: 8 })
-                    Text(item.title)
-                      .fontSize(13)
-                      .fontColor('#333333')
-                  }
-                  .width('100%')
-                  .onClick(() => {
-                    if (item.actionType === 'service') {
-                      try { router.pushUrl({ url: 'userprofile/pages/AiServicePage' }); } catch (e) {}
-                      return;
+                    Stack({ alignContent: Alignment.Center }) {
+                      Circle({ width: 44, height: 44 })
+                        .fill('#FFF2E6')
+                        .shadow({ radius: 8, color: '#14000000', offsetY: 2 })
+                      Text(this.quickIcons[index % this.quickIcons.length])
+                        .fontSize(20)
                     }
-                    this.viewModel.onMenuItemClick(item.actionType);
-                  })
+                    .margin({ bottom: 8 })
+                    Text(item.title)
+                      .fontSize(14)
+                      .fontColor('#333')
+                      .margin({ top: 10 })
+                  }
+                  .alignItems(HorizontalAlign.Center)
+                  .justifyContent(FlexAlign.Center)
+                  .onClick(() => this.viewModel.onMenuItemClick(item.actionType))
                 }
               })
             }
             .columnsTemplate('1fr 1fr 1fr 1fr')
             .rowsGap(16)
-            .height(90)
+            .height(110)
             .margin({ top: 12 })
           }
           .cardStyle()
         }
         .padding({ left: 16, right: 16 })
 
-        // --- 最近订单 ---
+        // 最近订单 / 收藏
         ListItem() {
           Column() {
             this.buildSectionTitle($r('app.string.profile_recent_title'), true)
             Column() {
               ForEach(this.viewModel.recentOrders, (item: RecentOrderModel, index: number) => {
                 Row() {
-                  Image($r('app.media.ic_holder_pad')).width(40).height(40).borderRadius(8).objectFit(ImageFit.Cover).margin({ right: 12 })
+                  Image($r('app.media.ic_holder_pad'))
+                    .width(44)
+                    .height(44)
+                    .borderRadius(8)
+                    .objectFit(ImageFit.Cover)
+                    .margin({ right: 12 })
                   Column() {
-                    Text(item.name).fontSize(15).fontColor(Color.Black).fontWeight(FontWeight.Medium).maxLines(1).textOverflow({ overflow: TextOverflow.Ellipsis })
-                    Text(item.date).fontSize(12).fontColor('#999').margin({ top: 4 })
+                    Text(item.name)
+                      .fontSize(15)
+                      .fontColor(Color.Black)
+                      .fontWeight(FontWeight.Medium)
+                      .maxLines(1)
+                      .textOverflow({ overflow: TextOverflow.Ellipsis })
+                    Text(item.date)
+                      .fontSize(12)
+                      .fontColor('#999')
+                      .margin({ top: 4 })
                   }
-                  .layoutWeight(1).alignItems(HorizontalAlign.Start)
+                  .layoutWeight(1)
+                  .alignItems(HorizontalAlign.Start)
                   Column() {
-                    Text(item.price).fontSize(16).fontWeight(FontWeight.Bold).fontColor('#E95B27')
-                    Text(item.status).fontSize(12).fontColor(item.status === '进行中' ? '#E95B27' : '#999').margin({ top: 4 })
+                    Text(item.price)
+                      .fontSize(16)
+                      .fontWeight(FontWeight.Bold)
+                      .fontColor('#E95B27')
+                    Text(item.status)
+                      .fontSize(12)
+                      .fontColor('#999')
+                      .margin({ top: 4 })
                   }
                   .alignItems(HorizontalAlign.End)
                 }
-                .width('100%').padding({ top: 12, bottom: 12 })
-                if (index < this.viewModel.recentOrders.length - 1) { Divider().color('#F1F3F5') }
+                .width('100%')
+                .padding({ top: 12, bottom: 12 })
+                if (index < this.viewModel.recentOrders.length - 1) {
+                  Divider().color('#F1F3F5')
+                }
               })
             }
             .margin({ top: 8 })
@@ -275,53 +321,29 @@ struct ProfilePage {
         }
         .padding({ left: 16, right: 16 })
 
-        // --- 常用菜单 ---
+        // 常用菜单
         ListItem() {
           Column() {
-            Row() {
-              this.buildMenuItem($r('app.string.profile_phone'), this.viewModel.userInfo.phone || '未设置', true)
+            this.buildSectionTitle('个人中心', false)
+            Column() {
+              ForEach(this.viewModel.menuItems, (item: ProfileMenuItem, index: number) => {
+                ProfileItemComponent({
+                  menuItem: item,
+                  onItemClick: (action: string) => this.viewModel.onMenuItemClick(action)
+                })
+                if (index < this.viewModel.menuItems.length - 1) {
+                  Divider().color('#F1F3F5').margin({ left: 16 })
+                }
+              })
             }
-            .width('100%')
-            .onClick(() => {
-              router.pushUrl({
-                url: 'userprofile/pages/EditProfilePage'
-              }).catch((err: Error) => {
-                Logger.error(TAG, `跳转编辑页失败: ${err.message}`);
-              });
-            })
-            Divider().color('#F1F3F5').margin({ left: 44 })
-            Row() {
-              this.buildMenuItem($r('app.string.profile_address'), this.viewModel.userInfo.address || '未设置', true)
-            }
-            .width('100%')
-            .onClick(() => {
-              router.pushUrl({
-                url: 'userprofile/pages/EditProfilePage'
-              }).catch((err: Error) => {
-                Logger.error(TAG, `跳转编辑页失败: ${err.message}`);
-              });
-            })
-            Divider().color('#F1F3F5').margin({ left: 44 })
-            Row() {
-              this.buildMenuItem('编辑个人信息', '', true)
-            }
-            .width('100%')
-            .onClick(() => {
-              router.pushUrl({
-                url: 'userprofile/pages/EditProfilePage'
-              }).catch((err: Error) => {
-                Logger.error(TAG, `跳转编辑页失败: ${err.message}`);
-              });
-            })
-            Divider().color('#F1F3F5').margin({ left: 44 })
-            this.buildMenuItem($r('app.string.profile_settings_notify'), '', true)
+            .backgroundColor(Color.Transparent)
           }
           .cardStyle()
-          .padding({ top: 0, bottom: 0, left: 16, right: 16 })
+          .padding({ top: 0, bottom: 0, left: 0, right: 0 })
         }
         .padding({ left: 16, right: 16 })
 
-        // --- 退出登录 ---
+        // 退出登录
         ListItem() {
           Text($r('app.string.profile_settings_logout'))
             .width('100%')
@@ -344,8 +366,6 @@ struct ProfilePage {
     .backgroundColor('#F6F6F6')
     .padding({ top: this.getUIContext().px2vp(this.topRectHeight) })
   }
-
-  // --- 修复部分：将 Builders 展开为正确的格式 ---
 
   @Builder
   buildStatItem(title: ResourceStr, value: string, iconColor: ResourceColor) {
