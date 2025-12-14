@@ -281,7 +281,7 @@ struct ProfilePage {
             Column() {
               ForEach(this.viewModel.recentOrders, (item: RecentOrderModel, index: number) => {
                 Row() {
-                  Image($r('app.media.ic_holder_pad'))
+                  Image(this.getIconForProduct(item.name))
                     .width(44)
                     .height(44)
                     .borderRadius(8)
@@ -447,5 +447,19 @@ struct ProfilePage {
     .width('100%')
     .height(56)
     .alignItems(VerticalAlign.Center)
+  }
+
+  private getIconForProduct(name: string): Resource {
+    const lowerName = name.toLowerCase();
+    if (name.includes('鼠标') || lowerName.includes('mouse')) {
+      return $r('app.media.ic_holder_mouse');
+    }
+    if (name.includes('灯') || lowerName.includes('lamp')) {
+      return $r('app.media.Smart_furniture_Yadu_Humidifier_TJK600');
+    }
+    if (name.includes('咖啡') || name.includes('豆') || lowerName.includes('coffee')) {
+      return $r('app.media.food_Red_Wine');
+    }
+    return $r('app.media.ic_holder_pad');
   }
 }
