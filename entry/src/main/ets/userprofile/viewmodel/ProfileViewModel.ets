@@ -308,44 +308,41 @@ export class ProfileViewModel {
   /**
    * Handle menu item click.
    */
+  
   onMenuItemClick(actionType: string): void {
-    let message: string = '';
     switch (actionType) {
       case 'order':
-        message = '打开订单页面（占位）';
-        break;
+        router.pushUrl({ url: 'userprofile/pages/OrderListPage' }).catch(() => {});
+        return;
       case 'favorite':
-        message = '打开收藏页面（占位）';
-        break;
+        router.pushUrl({ url: 'userprofile/pages/FavoriteListPage' }).catch(() => {});
+        return;
       case 'address':
-        message = '打开收货地址页面（占位）';
-        break;
+        router.pushUrl({ url: 'userprofile/pages/AddressListPage' }).catch(() => {});
+        return;
       case 'settings':
-        message = '打开设置页面（占位）';
         break;
       case 'account':
-        message = '打开账号与安全页面（占位）';
         break;
       case 'notify':
-        message = '打开通知设置页面（占位）';
         break;
       case 'logout':
         this.handleLogout();
         return;
       case 'coupon':
-        message = '打开优惠券页面（占位）';
-        break;
+        router.pushUrl({ url: 'userprofile/pages/CouponListPage' }).catch(() => {});
+        return;
       case 'service':
-        // 导航由页面处理，这里仅提示
-        message = '正在为您连接 AI 客服…';
-        break;
+        router.pushUrl({ url: 'userprofile/pages/AiServicePage' }).catch(() => {});
+        return;
       default:
-        message = `点击：${actionType}`;
+        promptAction.showToast({ message: `???${actionType}` });
+        return;
     }
-    promptAction.showToast({ message: message });
+    promptAction.showToast({ message: '??????' });
   }
 
-  private createQuickEntry(title: ResourceStr, actionType: string): QuickEntryModel {
+private createQuickEntry(title: ResourceStr, actionType: string): QuickEntryModel {
     let entry = new QuickEntryModel();
     entry.title = title;
     entry.actionType = actionType;

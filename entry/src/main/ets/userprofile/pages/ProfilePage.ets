@@ -401,6 +401,11 @@ struct ProfilePage {
     }
     .width('100%')
     .padding({ bottom: 8 })
+    .onClick(() => {
+      if (showMore) {
+        router.pushUrl({ url: 'userprofile/pages/OrderListPage' }).catch(() => {});
+      }
+    })
   }
 
   @Builder

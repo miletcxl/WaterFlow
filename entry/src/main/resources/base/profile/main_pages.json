@@ -6,6 +6,10 @@
     "userprofile/pages/AiServicePage",
     "userprofile/pages/LoginPage",
     "userprofile/pages/RegisterPage",
-    "userprofile/pages/EditProfilePage"
+    "userprofile/pages/EditProfilePage",
+    "userprofile/pages/OrderListPage",
+    "userprofile/pages/FavoriteListPage",
+    "userprofile/pages/CouponListPage",
+    "userprofile/pages/AddressListPage"
   ]
 }

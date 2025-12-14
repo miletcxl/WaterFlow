@@ -14,9 +14,14 @@
  */
 
 import { router } from '@kit.ArkUI';
+import { common } from '@kit.AbilityKit';
 import ProductItem, { IProductItem } from '../viewmodel/ProductItem';
 import { CommonConstants as Const } from '../common/constants/CommonConstants';
 import Logger from '../common/utils/Logger';
+import { DatabaseManager } from '../userprofile/database/DatabaseManager';
+import { Favorite } from '../userprofile/model/Favorite';
+import { Order } from '../userprofile/model/Order';
+import promptAction from '@ohos.promptAction';
 
 interface SpecItem {
   label: string;
@@ -32,17 +37,30 @@ const TAG = 'ProductDetailPage';
 @Component
 struct ProductDetailPage {
   @State product: ProductItem | null = null;
-  private readonly bullet: string = '•';
+  @State isFavorite: boolean = false;
+  @State isOrdering: boolean = false;
+  private favoriteId: number = 0;
+  private readonly bullet: string = '*';
+  private context = getContext(this) as common.UIAbilityContext;
+  private dbManager: DatabaseManager = DatabaseManager.getInstance();
 
-  aboutToAppear() {
-    // 从路由参数中获取商品信息
+  async aboutToAppear(): Promise<void> {
+    try {
+      await this.dbManager.initDatabase(this.context);
+    } catch (err) {
+      const error = err as Error;
+      Logger.error(TAG, `????????: ${error.message}`);
+    }
+
+    // ????????????
     const params = router.getParams() as Record<string, IProductItem>;
     if (params && params['product']) {
-      // 将接口对象转换为 ProductItem 实例
+      // ???????? ProductItem ??
       this.product = new ProductItem(params['product']);
-      Logger.info(TAG, `商品详情页加载，商品名称: ${this.product.name}`);
+      Logger.info(TAG, `????????????: ${this.product.name}`);
+      await this.loadFavoriteStatus();
     } else {
-      Logger.error(TAG, '未获取到商品信息');
+      Logger.error(TAG, '????????');
     }
   }
 
@@ -283,16 +301,28 @@ struct ProductDetailPage {
 
         // 底部操作栏
         Row() {
-          Button('立即购买')
+          Button(this.isFavorite ? '取消收藏' : '收藏')
+            .type(ButtonType.Capsule)
+            .backgroundColor(this.isFavorite ? '#FFE1D6' : '#FFF2E5')
+            .fontColor('#FF6B00')
+            .fontSize(16)
+            .layoutWeight(1)
+            .height(48)
+            .enabled(!this.isOrdering)
+            .onClick(async () => {
+              await this.toggleFavorite();
+            })
+            .margin({ right: 12 })
+          Button(this.isOrdering ? '处理中...' : '立即购买')
             .type(ButtonType.Capsule)
             .backgroundColor($r('app.color.focus_color'))
             .fontColor(Color.White)
             .fontSize(16)
             .layoutWeight(1)
             .height(48)
-            .onClick(() => {
-              Logger.info(TAG, `点击立即购买: ${this.product?.name}`);
-              // TODO: 实现购买逻辑
+            .enabled(!this.isOrdering)
+            .onClick(async () => {
+              await this.handleBuyNow();
             })
         }
         .width('100%')
@@ -435,4 +465,112 @@ struct ProductDetailPage {
   getDeliveryInfo(): string {
     return '默认选择距您最近的仓发货，支持预约/加急配送，偏远地区时效略有差异。';
   }
+  /**
+   * Load favorite status for current user
+   */
+  private async loadFavoriteStatus(): Promise<void> {
+    if (!this.product) {
+      return;
+    }
+    try {
+      const user = await this.dbManager.getCurrentUser();
+      if (!user) {
+        this.isFavorite = false;
+        this.favoriteId = 0;
+        return;
+      }
+      const favorite = await this.dbManager.getFavoriteByName(user.userId, this.product.name);
+      if (favorite) {
+        this.isFavorite = true;
+        this.favoriteId = favorite.favoriteId;
+      } else {
+        this.isFavorite = false;
+        this.favoriteId = 0;
+      }
+    } catch (err) {
+      const error = err as Error;
+      Logger.error(TAG, `loadFavoriteStatus failed: ${error.message}`);
+    }
+  }
+
+  /**
+   * Toggle favorite state
+   */
+  private async toggleFavorite(): Promise<void> {
+    if (!this.product) {
+      return;
+    }
+    try {
+      const user = await this.dbManager.getCurrentUser();
+      if (!user) {
+        promptAction.showToast({ message: 'Please log in first', duration: 2000 });
+        router.pushUrl({ url: 'userprofile/pages/LoginPage' }).catch(() => {});
+        return;
+      }
+      if (!this.isFavorite) {
+        const favorite = new Favorite();
+        favorite.productName = this.product.name;
+        // image_url 是 Resource，这里存字符串占位，实际可用静态映射
+        favorite.productImage = '';
+        favorite.price = this.product.price;
+        const insertId = await this.dbManager.saveFavorite(user.userId, favorite);
+        this.favoriteId = insertId;
+        this.isFavorite = true;
+        promptAction.showToast({ message: 'Added to favorites', duration: 2000 });
+      } else {
+        const targetId = this.favoriteId ||
+          (await this.dbManager.getFavoriteByName(user.userId, this.product.name))?.favoriteId || 0;
+        if (targetId) {
+          await this.dbManager.deleteFavorite(user.userId, targetId);
+        }
+        this.isFavorite = false;
+        this.favoriteId = 0;
+        promptAction.showToast({ message: 'Favorite removed', duration: 2000 });
+      }
+    } catch (err) {
+      const error = err as Error;
+      Logger.error(TAG, `toggleFavorite failed: ${error.message}`);
+      promptAction.showToast({ message: 'Operation failed', duration: 2000 });
+    }
+  }
+
+  /**
+   * Save order when buying now
+   */
+  private async handleBuyNow(): Promise<void> {
+    if (!this.product || this.isOrdering) {
+      return;
+    }
+    this.isOrdering = true;
+    try {
+      const user = await this.dbManager.getCurrentUser();
+      if (!user) {
+        promptAction.showToast({ message: 'Please log in before buying', duration: 2000 });
+        router.pushUrl({ url: 'userprofile/pages/LoginPage' }).catch(() => {});
+        return;
+      }
+      const order = new Order();
+      order.productName = this.product.name;
+      order.price = this.product.price;
+      order.status = 'pending';
+      order.orderDate = this.formatToday();
+      await this.dbManager.saveOrder(user.userId, order);
+      promptAction.showToast({ message: 'Order placed', duration: 2000 });
+      Logger.info(TAG, `Order placed: ${this.product.name}`);
+    } catch (err) {
+      const error = err as Error;
+      Logger.error(TAG, `handleBuyNow failed: ${error.message}`);
+      promptAction.showToast({ message: 'Order failed', duration: 2000 });
+    } finally {
+      this.isOrdering = false;
+    }
+  }
+
+  private formatToday(): string {
+    const date = new Date();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${month}-${day}`;
+  }
+
 }

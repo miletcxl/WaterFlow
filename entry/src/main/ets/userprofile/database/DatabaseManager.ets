@@ -635,11 +635,11 @@ export class DatabaseManager {
   }
 
   /**
-   * 获取用户收藏数量
+   * Get favorite count by user.
    */
   async getFavoriteCount(userId: number): Promise<number> {
     if (!this.rdbStore) {
-      throw new Error('数据库未初始化');
+      throw new Error('Database not initialized');
     }
 
     try {
@@ -649,10 +649,45 @@ export class DatabaseManager {
       return result.rowCount;
     } catch (err) {
       const error = err as BusinessError;
-      Logger.error(TAG, `获取收藏数量失败: ${error.message}`);
+      Logger.error(TAG, `getFavoriteCount failed: ${error.message}`);
       return 0;
     }
   }
+
+  /**
+   * Find favorite by product name for the current user.
+   */
+  async getFavoriteByName(userId: number, productName: string): Promise<Favorite | null> {
+    if (!this.rdbStore) {
+      throw new Error('Database not initialized');
+    }
+
+    try {
+      const predicates = new relationalStore.RdbPredicates('favorites');
+      predicates.equalTo('userId', userId);
+      predicates.equalTo('productName', productName);
+      const result = await this.rdbStore.query(predicates);
+
+      if (result.rowCount === 0) {
+        return null;
+      }
+
+      await result.goToFirstRow();
+      const favorite = new Favorite();
+      favorite.favoriteId = result.getLong(result.getColumnIndex('favoriteId'));
+      favorite.userId = result.getLong(result.getColumnIndex('userId'));
+      favorite.productName = result.getString(result.getColumnIndex('productName'));
+      favorite.productImage = result.getString(result.getColumnIndex('productImage')) || '';
+      favorite.price = result.getString(result.getColumnIndex('price')) || '';
+      favorite.createTime = result.getLong(result.getColumnIndex('createTime'));
+      return favorite;
+    } catch (err) {
+      const error = err as BusinessError;
+      Logger.error(TAG, `getFavoriteByName failed: ${error.message}`);
+      return null;
+    }
+  }
+
 
   /**
    * 删除收藏
