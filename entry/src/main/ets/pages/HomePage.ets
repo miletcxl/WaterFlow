@@ -205,7 +205,7 @@ struct HomePage {
       
       // 悬浮按钮组：签到金币 + AI 客服
       Column({ space: 12 }) {
-        this.buildFloatButton('¥', '#FFC94A', () => {
+        this.buildFloatButton('💰', '#FFC94A', () => {
           router.pushUrl({ url: 'userprofile/pages/SignInPage' }).catch((err: Error) => {
             Logger.error(TAG, `跳转签到页失败: ${err.message}`);
           });
