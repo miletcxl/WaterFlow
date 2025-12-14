@@ -155,65 +155,65 @@ struct ProfilePage {
         // --- 用户头像与信息 + 黑金会员卡 ---
         ListItem() {
           Column() {
-            // 1. 用户基本信息组件
+            // 1. ????????
             ProfileHeaderComponent({ userInfo: this.viewModel.userInfo })
 
-            // 2. 黑金会员卡片
-            Row() {
-              // 左侧：等级与图标
+            // 2. ????
+            Column() {
               Row() {
-                Text('💎')
-                  .fontSize(18)
-                  .margin({ right: 8 })
+                Column() {
+                  Text('????')
+                    .fontSize(12)
+                    .fontColor('rgba(255,255,255,0.85)')
+                  Row() {
+                    Text('??')
+                      .fontSize(18)
+                      .margin({ right: 6 })
+                    Text(`${this.viewModel.memberLevel} ? Lv.${this.viewModel.memberLevelNum}`)
+                      .fontSize(16)
+                      .fontWeight(FontWeight.Bold)
+                      .fontColor(Color.White)
+                  }
+                  Text(`???? ${this.viewModel.monthlySaved.toFixed(0)} ?`)
+                    .fontSize(12)
+                    .fontColor('rgba(255,255,255,0.9)')
+                    .margin({ top: 6 })
+                }
+                .layoutWeight(1)
+                .alignItems(HorizontalAlign.Start)
 
                 Column() {
-                  Text(`${this.viewModel.memberLevel} Lv.${this.viewModel.memberLevelNum}`)
-                    .fontSize(14)
-                    .fontColor('#FFE4B5') // 浅金色
-                    .fontWeight(FontWeight.Bold)
-                  Text(`本月已省 ${this.viewModel.monthlySaved.toFixed(0)} 元`)
-                    .fontSize(10)
-                    .fontColor('rgba(255,228,181, 0.7)') // 半透明金
-                    .margin({ top: 2 })
+                  Text('????')
+                    .fontSize(12)
+                    .fontColor('#1F1B2E')
+                    .padding({ left: 10, right: 10, top: 6, bottom: 6 })
+                    .backgroundColor(Color.White)
+                    .borderRadius(14)
+                    .onClick(() => this.viewModel.onMenuItemClick('coupon'))
+                  Text('?? ' + this.viewModel.points.toString())
+                    .fontSize(12)
+                    .fontColor('rgba(255,255,255,0.85)')
+                    .margin({ top: 6 })
                 }
-                .alignItems(HorizontalAlign.Start)
+                .alignItems(HorizontalAlign.End)
               }
-
-              Blank()
-
-              // 右侧：查看权益
-              Row() {
-                Text('查看权益')
-                  .fontSize(12)
-                  .fontColor('#FFE4B5')
-                Text(' ›')
-                  .fontSize(18)
-                  .fontColor('#FFE4B5')
-                  .margin({ bottom: 2 })
-              }
-              .backgroundColor('rgba(255,255,255,0.1)') // 按钮背景微亮
-              .padding({ left: 10, right: 8, top: 4, bottom: 4 })
-              .borderRadius(12)
+              .width('100%')
             }
+            .padding({ left: 18, right: 18, top: 14, bottom: 14 })
             .width('100%')
-            .height(60)
-            // 黑金渐变背景
+            .backgroundColor('#7A5CFF')
             .linearGradient({
-              angle: 90,
-              colors: [['#333333', 0.0], ['#454545', 1.0]]
+              angle: 120,
+              colors: [['#7A5CFF', 0.0], ['#4A3DC1', 1.0]]
             })
-            .borderRadius(16)
-            .padding({ left: 16, right: 16 })
-            .alignItems(VerticalAlign.Center)
+            .borderRadius(18)
             .margin({ top: 16 })
-            .shadow({ radius: 10, color: 'rgba(0,0,0,0.15)', offsetY: 4 })
+            .shadow({ radius: 14, color: '#1A000000', offsetY: 6 })
           }
           .width('100%')
           .padding({ left: 16, right: 16, bottom: 20 })
         }
-
-        // --- 悬浮统计卡片 ---
-        ListItem() {
+ListItem() {
           Row() {
             this.buildStatItem($r('app.string.profile_stat_orders'), this.viewModel.orderCount.toString(), $r('app.color.profile_stat_icon_1'))
             Divider().vertical(true).height(24).color('#F1F3F5')
@@ -270,7 +270,7 @@ struct ProfilePage {
             Column() {
               ForEach(this.viewModel.recentOrders, (item: RecentOrderModel, index: number) => {
                 Row() {
-                  Rect().width(40).height(40).radius(4).fill('#F5F5F5').margin({ right: 12 })
+                  Image($r('app.media.ic_holder_pad')).width(40).height(40).borderRadius(8).objectFit(ImageFit.Cover).margin({ right: 12 })
                   Column() {
                     Text(item.name).fontSize(15).fontColor(Color.Black).fontWeight(FontWeight.Medium).maxLines(1).textOverflow({ overflow: TextOverflow.Ellipsis })
                     Text(item.date).fontSize(12).fontColor('#999').margin({ top: 4 })
